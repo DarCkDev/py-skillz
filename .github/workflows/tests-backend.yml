@@ -1,0 +1,26 @@
+name: Tests Backend
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas del backend
+        run: npm run test --workspace=py-skillz-backend
