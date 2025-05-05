@@ -249,7 +249,7 @@ enum UserRole {
 
 ### 7. Testing
 
-- Usar **Vitest** o **Jest** para pruebas unitarias.
+- Usar **Vitest** o **Testing Library** para pruebas unitarias.
 - Archivos de test terminan en `.test.tsx` o `.spec.tsx`.
 
 ```tsx
