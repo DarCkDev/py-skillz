@@ -23,4 +23,4 @@ jobs:
         run: npm install
 
       - name: Ejecutar pruebas del backend
-        run: npm workspace py-skillz-backend test
+        run: npm run test --workspace=py-skillz-backend
