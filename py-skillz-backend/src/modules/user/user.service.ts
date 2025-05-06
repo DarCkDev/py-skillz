@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { hashPassword } from 'src/utils/bcrypt.util';
+import { comparePassword, hashPassword } from 'src/utils/bcrypt.util';
 import { UserResponseDto } from './dto/user-response.dto';
 
 @Injectable()
@@ -37,6 +37,17 @@ export class UserService {
     });
     const newUser = await this.userRepository.save(user);
     return this.parseUserResponse(newUser);
+  }
+
+  async findUserByEmailAndPassword(
+    email: string,
+    password: string,
+  ): Promise<UserResponseDto | null> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) return user;
+    const validPassword = await comparePassword(password, user.password);
+    if (!validPassword) return null;
+    return this.parseUserResponse(user);
   }
 
   private parseUserResponse(user: User): UserResponseDto {
