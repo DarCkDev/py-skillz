@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import './i18n';
 import { MainLayout } from './layouts/MainLayout';
 import { BackButton } from './components/shared/BackButton';
+import EditorTexto from './components/editorTexto/pages/EditorTexto';
+import { Toaster } from './components/ui/toaster';
+import { useToast } from './components/ui/use-toast';
 
 //ejemplo de paginas
 const Home = () => (
@@ -129,6 +132,7 @@ const RoleBasedRoute = ({ requiredRoles, children }: RoleBasedRouteProps) => {
 function App() {
   const { i18n } = useTranslation();
   const { loading } = useAuth();
+  const { toasts } = useToast();
 
   useEffect(() => {
     const savedLang = localStorage.getItem('i18nextLng');
@@ -143,57 +147,61 @@ function App() {
   }
   
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
 
-        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="catalog" element={<MainLayout><Catalog /></MainLayout>} />
-        
-        {/* Rutas protegidas */}
-        <Route path="profile" element={
-          <ProtectedRoute>
-            <MainLayout><Profile /></MainLayout>
-          </ProtectedRoute>
-        } />
+          <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="catalog" element={<MainLayout><Catalog /></MainLayout>} />
+          <Route path="editor" element={<MainLayout><EditorTexto /></MainLayout>} />
+          
+          {/* Rutas protegidas */}
+          <Route path="profile" element={
+            <ProtectedRoute>
+              <MainLayout><Profile /></MainLayout>
+            </ProtectedRoute>
+          } />
 
-        {/* Rutas de admin */}
-        <Route path="admin" element={
-          <RoleBasedRoute requiredRoles={['admin']}>
-            <MainLayout><AdminPanel /></MainLayout>
-          </RoleBasedRoute>
-        } />
-        
-        <Route path="admin/users" element={
-          <RoleBasedRoute requiredRoles={['admin']}>
-            <MainLayout><UserManagement /></MainLayout>
-          </RoleBasedRoute>
-        } />
-        
-        <Route path="admin/courses" element={
-          <RoleBasedRoute requiredRoles={['admin']}>
-            <MainLayout><CourseManagement /></MainLayout>
-          </RoleBasedRoute>
-        } />
+          {/* Rutas de admin */}
+          <Route path="admin" element={
+            <RoleBasedRoute requiredRoles={['admin']}>
+              <MainLayout><AdminPanel /></MainLayout>
+            </RoleBasedRoute>
+          } />
+          
+          <Route path="admin/users" element={
+            <RoleBasedRoute requiredRoles={['admin']}>
+              <MainLayout><UserManagement /></MainLayout>
+            </RoleBasedRoute>
+          } />
+          
+          <Route path="admin/courses" element={
+            <RoleBasedRoute requiredRoles={['admin']}>
+              <MainLayout><CourseManagement /></MainLayout>
+            </RoleBasedRoute>
+          } />
 
-        {/* Rutas de profesor */}
-        <Route path="courses/create" element={
-          <RoleBasedRoute requiredRoles={['admin', 'teacher']}>
-            <MainLayout><CreateCourse /></MainLayout>
-          </RoleBasedRoute>
-        } />
-        
-        <Route path="reports" element={
-          <RoleBasedRoute requiredRoles={['admin', 'teacher']}>
-            <MainLayout><Reports /></MainLayout>
-          </RoleBasedRoute>
-        } />
+          {/* Rutas de profesor */}
+          <Route path="courses/create" element={
+            <RoleBasedRoute requiredRoles={['admin', 'teacher']}>
+              <MainLayout><CreateCourse /></MainLayout>
+            </RoleBasedRoute>
+          } />
+          
+          <Route path="reports" element={
+            <RoleBasedRoute requiredRoles={['admin', 'teacher']}>
+              <MainLayout><Reports /></MainLayout>
+            </RoleBasedRoute>
+          } />
 
-        {/* Ruta 404 */}
-        <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
-      </Routes>
-    </BrowserRouter>
+          {/* Ruta 404 */}
+          <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
+        </Routes>
+      </BrowserRouter>
+      <Toaster toasts={toasts} />
+    </>
   );
 }
 
