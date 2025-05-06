@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Pi-Skillz",
+    "loading": "Chaskispa...",
+    "error": "Pantay",
+    "retry": "Yapamanta qallariy",
+    "save": "Waqaychay",
+    "cancel": "T'atay",
+    "delete": "Qulluy",
+    "edit": "Allichay",
+    "create": "Kamariy",
+    "submit": "Kachay",
+    "back": "Kutiy",
+    "next": "Qatiq",
+    "previous": "Ñawpaq",
+    "search": "Maskay"
+  },
+  "auth": {
+    "login": "Yaykuy",
+    "logout": "Lluqsiy",
+    "register": "Qillqakuy",
+    "email": "Chaski imaymana",
+    "password": "Yaykuna rimay",
+    "confirmPassword": "Yaykuna rimayta takyachiy",
+    "forgotPassword": "¿Yaykuna rimayta qunqankichu?",
+    "resetPassword": "Yaykuna rimayta musuqmanta churay",
+    "loginSuccess": "Allinta yaykurqanki",
+    "loginFailed": "Yaykuypi pantasqa",
+    "registerSuccess": "Allinta qillqakurqanki",
+    "registerFailed": "Qillqakuypi pantasqa"
+  },
+  "nav": {
+    "home": "Qallariy",
+    "catalog": "Qillqasqa p'anqa",
+    "myCourses": "Ñuqap yachachiyninkuna",
+    "profile": "Ñuqamanta",
+    "progress": "Ñawpaqman",
+    "adminPanel": "Kamachiq panka",
+    "userManagement": "Runakuna kamachiy",
+    "courses": "Yachachiykuna",
+    "createCourse": "Yachachiyta kamariy",
+    "reports": "Willakuykuna",
+    "settings": "Churanakuna",
+    "help": "Yanapay"
+  },
+  "accessibility": {
+    "highContrast": "Ancha t'aqwi",
+    "fontSize": "Qillqa sayaynin",
+    "fontSizeSmall": "Huch'uy",
+    "fontSizeMedium": "Chawpi",
+    "fontSizeLarge": "Hatun",
+    "lineHeight": "Seq'e sayaynin",
+    "lineHeightSmall": "Kichki",
+    "lineHeightMedium": "Tupachisqa",
+    "lineHeightLarge": "Kichkirisqa"
+  },
+  "errors": {
+    "unknown": "Mana riqsisqa pantay",
+    "networkError": "Llika pantay",
+    "serverError": "Sirwiq pantay",
+    "authError": "Yaykuy pantay",
+    "notFound": "Mana tarisqachu",
+    "validationError": "Allin kaypi pantay"
+  }
+}
