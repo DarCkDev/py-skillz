@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Pi-Skillz",
+    "loading": "Oñemyenyhẽhína...",
+    "error": "Jejavy",
+    "retry": "Eha'ãjey",
+    "save": "Eñongatu",
+    "cancel": "Eheja",
+    "delete": "Emboguepáke",
+    "edit": "Emoambue",
+    "create": "Emoheñói",
+    "submit": "Emondo",
+    "back": "Ejevy",
+    "next": "Tenonderã",
+    "previous": "Mboyvegua",
+    "search": "Eheka"
+  },
+  "auth": {
+    "login": "Eike",
+    "logout": "Esẽ",
+    "register": "Eñemboguapy",
+    "email": "Ñanduti veve",
+    "password": "Ñe'ẽñemi",
+    "confirmPassword": "Emoneĩ ne ñe'ẽñemi",
+    "forgotPassword": "¿Nderesaráipa ne ñe'ẽñemígui?",
+    "resetPassword": "Emoambue ne ñe'ẽñemi",
+    "loginSuccess": "Reike porãma",
+    "loginFailed": "Ndaikatúi reike",
+    "registerSuccess": "Eñemboguapy porãma",
+    "registerFailed": "Ndaikatúi eñemboguapy"
+  },
+  "nav": {
+    "home": "Ñepyrũ",
+    "catalog": "Kuatiakuéra",
+    "myCourses": "Che mbo'esyry",
+    "profile": "Che rekuaaty",
+    "progress": "Che ñemoaranduha",
+    "adminPanel": "Ñangarekohára rembiapo",
+    "userManagement": "Puruhára ñangareko",
+    "courses": "Mbo'esyry",
+    "createCourse": "Emoheñói mbo'esyry",
+    "reports": "Marandu",
+    "settings": "Ñemboheko",
+    "help": "Pytyvõ"
+  },
+  "accessibility": {
+    "highContrast": "Ojuavy hatã",
+    "fontSize": "Tai tuichakue",
+    "fontSizeSmall": "Michĩ",
+    "fontSizeMedium": "Mbytegua",
+    "fontSizeLarge": "Tuicha",
+    "lineHeight": "Tysýi pa'ũ",
+    "lineHeightSmall": "Mbykymi",
+    "lineHeightMedium": "Mbytegua",
+    "lineHeightLarge": "Ipypuku"
+  },
+  "errors": {
+    "unknown": "Oiko peteĩ jejavy ojekuaa'ỹva",
+    "networkError": "Ñanduti jejavy",
+    "serverError": "Mohendahavusu jejavy",
+    "authError": "Jeike jejavy",
+    "notFound": "Ndojejuhúi",
+    "validationError": "Moneĩ jejavy"
+  }
+}

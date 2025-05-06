@@ -1,0 +1,65 @@
+{
+  "common": {
+    "appName": "Pi-Skillz",
+    "loading": "Suyasiskiwa...",
+    "error": "Pantjata",
+    "retry": "Wasitata qalltaña",
+    "save": "Imaña",
+    "cancel": "Jan ukhamti",
+    "delete": "Chhaqayaña",
+    "edit": "Askichaña",
+    "create": "Luraña",
+    "submit": "Apayaña",
+    "back": "Kutiña",
+    "next": "Jutiri",
+    "previous": "Nayra",
+    "search": "Thaqhaña"
+  },
+  "auth": {
+    "login": "Mantaña",
+    "logout": "Mistuña",
+    "register": "Qillqantasiña",
+    "email": "Correo electrónico",
+    "password": "Imt'ata",
+    "confirmPassword": "Imt'ata wasitata",
+    "forgotPassword": "¿Imt'ata armtati?",
+    "resetPassword": "Imt'ata mayampi wakichañana",
+    "loginSuccess": "Suma mantaña",
+    "loginFailed": "Jan walt'awi mantañanxa",
+    "registerSuccess": "Suma qillqantasiña",
+    "registerFailed": "Jan walt'awi qillqantasiñanxa"
+  },
+  "nav": {
+    "home": "Qalltawi",
+    "catalog": "Uñanchawi",
+    "myCourses": "Nayankiri yatiqañanaka",
+    "profile": "Jaqi uñt'añanaka",
+    "progress": "Sarantawi",
+    "adminPanel": "Mallku panka",
+    "userManagement": "Jaqinaka apnaqaña",
+    "courses": "Yatiqañanaka",
+    "createCourse": "Yatiqaña luraña",
+    "reports": "Uñt'ayañanaka",
+    "settings": "Wakichaña",
+    "help": "Yanapa"
+  },
+  "accessibility": {
+    "highContrast": "Jach'a uñtawi",
+    "fontSize": "Qillqañ tamaño",
+    "fontSizeSmall": "Jisk'a",
+    "fontSizeMedium": "Taypi",
+    "fontSizeLarge": "Jach'a",
+    "lineHeight": "Qillqa jakhthapiwi",
+    "lineHeightSmall": "Jisk'a",
+    "lineHeightMedium": "Taypi",
+    "lineHeightLarge": "Jach'a"
+  },
+  "errors": {
+    "unknown": "Mä jan uñt'ata pantjata utji",
+    "networkError": "Red uka pantjata",
+    "serverError": "Servidor uka pantjata",
+    "authError": "Mantañan pantjata",
+    "notFound": "Janiw jikiskiti",
+    "validationError": "Chiqanchañan pantjata"
+  }
+}
