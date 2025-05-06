@@ -11,8 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
     UserModule,
     JwtModule.register({
       global: true,
-      secret:
-        process.env.JWT_SECRET ?? 'etag:W/"34-rlKccw1E+/fV8niQk4oFitDfPro"',
+      secret: process.env.JWT_SECRET ?? 'CA19F18E64436BB3E965BA14843D7',
       signOptions: {
         expiresIn: '30d',
       },
