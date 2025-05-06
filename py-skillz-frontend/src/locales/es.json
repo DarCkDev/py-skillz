@@ -1,0 +1,68 @@
+{
+  "common": {
+    "appName": "Pi-Skillz",
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "submit": "Enviar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "languages": "Idiomas",
+    "quickLinks": "Enlaces rápidos"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer contraseña",
+    "loginSuccess": "Sesión iniciada correctamente",
+    "loginFailed": "Error al iniciar sesión",
+    "registerSuccess": "Registro exitoso",
+    "registerFailed": "Error al registrarse"
+  },
+  "nav": {
+    "home": "Inicio",
+    "catalog": "Catálogo",
+    "myCourses": "Mis cursos",
+    "profile": "Perfil",
+    "progress": "Progreso",
+    "adminPanel": "Panel Admin",
+    "userManagement": "Gestión de Usuarios",
+    "courses": "Cursos",
+    "createCourse": "Crear Curso",
+    "reports": "Reportes",
+    "settings": "Configuración",
+    "help": "Ayuda"
+  },
+  "accessibility": {
+    "highContrast": "Alto contraste",
+    "fontSize": "Tamaño de letra",
+    "fontSizeSmall": "Pequeño",
+    "fontSizeMedium": "Mediano",
+    "fontSizeLarge": "Grande",
+    "lineHeight": "Interlineado",
+    "lineHeightSmall": "Reducido",
+    "lineHeightMedium": "Normal",
+    "lineHeightLarge": "Amplio",
+    "settings": "Configuración"
+  },
+  "errors": {
+    "unknown": "Ha ocurrido un error desconocido",
+    "networkError": "Error de conexión a internet",
+    "serverError": "Error en el servidor",
+    "authError": "Error de autenticación",
+    "notFound": "No encontrado",
+    "validationError": "Error de validación"
+  }
+}
