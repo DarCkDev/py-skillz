@@ -1,7 +1,7 @@
 import { Link } from '../ui/link';
 import { useTranslation } from 'react-i18next';
 import { AccessibilityPanel } from './AccessibilityPanel';
-
+import iconPy from '../../../public/py.png';
 export function Footer() {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
@@ -12,7 +12,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Columna 1: Sobre la plataforma */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Pi-Skillz</h3>
+            <div className="flex items-center">
+              <img src={iconPy} alt="Py" className='w-5 h-5' />
+              <h3 className="text-lg font-semibold">Pi-Skillz</h3>
+            </div>
             <p className="text-muted-foreground">
               Plataforma educativa inclusiva y accesible para todos.
             </p>
