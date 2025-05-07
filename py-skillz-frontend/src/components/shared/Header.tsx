@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link } from '../ui/link';
 import { useTranslation } from 'react-i18next';
 import { MenuIcon, X } from 'lucide-react';
-
+import iconBolivia from '../../../public/bolivia.png';
+import iconPy from '../../../public/py.png';
 // Hook falso obtener el ro
 const useAuth = () => {
   return {
@@ -72,6 +73,7 @@ export function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold flex items-center gap-2">
+            <img src={iconPy} alt="Py" className='w-5 h-5' />
             <span className="text-accent">Pi-</span>
             <span>Skillz</span>
           </Link>
@@ -88,33 +90,38 @@ export function Header() {
             ))}
             
             
-            <div className="relative ml-4 group">
-              <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors">
+            <div className="relative ml-4 group text">
+              <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors border border-b-black flex">
+                <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                 {i18n.language.toUpperCase()}
               </button>
-              <div className="absolute right-0 mt-2 w-40 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10">
+              <div className="absolute right-0 w-40 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
                 <button 
                   onClick={() => changeLanguage('es')} 
-                  className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
+                  className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex"
                 >
+                  <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                   Español
                 </button>
                 <button 
                   onClick={() => changeLanguage('qu')} 
-                  className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
+                  className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex"
                 >
+                  <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                   Quechua
                 </button>
                 <button 
                   onClick={() => changeLanguage('ay')} 
-                  className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
+                  className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex"
                 >
+                  <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                   Aymara
                 </button>
                 <button 
                   onClick={() => changeLanguage('gn')} 
-                  className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
+                  className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex"
                 >
+                  <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                   Guaraní
                 </button>
               </div>
@@ -159,8 +166,9 @@ export function Header() {
                       changeLanguage('es');
                       setMobileMenuOpen(false);
                     }} 
-                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left"
+                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
+                   <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
                     Español
                   </button>
                   <button 
@@ -168,8 +176,9 @@ export function Header() {
                       changeLanguage('qu');
                       setMobileMenuOpen(false);
                     }} 
-                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left"
+                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
+                    <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
                     Quechua
                   </button>
                   <button 
@@ -177,8 +186,9 @@ export function Header() {
                       changeLanguage('ay');
                       setMobileMenuOpen(false);
                     }} 
-                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left"
+                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
+                    <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
                     Aymara
                   </button>
                   <button 
@@ -186,8 +196,9 @@ export function Header() {
                       changeLanguage('gn');
                       setMobileMenuOpen(false);
                     }} 
-                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left"
+                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
+                    <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
                     Guaraní
                   </button>
                 </div>

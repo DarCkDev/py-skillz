@@ -145,10 +145,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<MainLayout><Home /></MainLayout>}>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
-        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+        
         <Route path="catalog" element={<MainLayout><Catalog /></MainLayout>} />
         
         {/* Rutas protegidas */}
@@ -192,6 +193,7 @@ function App() {
 
         {/* Ruta 404 */}
         <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
