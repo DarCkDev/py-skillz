@@ -7,6 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcryptUtil from 'src/utils/bcrypt.util';
 import { BadRequestException } from '@nestjs/common';
 import { Role } from './entities/role.entity';
+import { I18nService } from 'nestjs-i18n';
 
 describe('UserService', () => {
   let service: UserService;
@@ -23,6 +24,9 @@ describe('UserService', () => {
   };
 
   beforeEach(async () => {
+    const mockI18nService = {
+      t: jest.fn((key: string) => key),
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
@@ -34,6 +38,10 @@ describe('UserService', () => {
             create: jest.fn(),
             save: jest.fn(),
           },
+        },
+        {
+          provide: I18nService,
+          useValue: mockI18nService,
         },
       ],
     }).compile();

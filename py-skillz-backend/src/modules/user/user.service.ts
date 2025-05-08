@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { comparePassword, hashPassword } from 'src/utils/bcrypt.util';
 import { UserResponseDto } from './dto/user-response.dto';
 
@@ -11,6 +12,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly i18n: I18nService,
   ) {}
 
   async findAll(): Promise<UserResponseDto[]> {
@@ -25,7 +27,11 @@ export class UserService {
     if (userExists) {
       throw new BadRequestException({
         statusCode: 400,
-        message: ['El email ya está en uso'],
+        message: [
+          this.i18n.t('validations.emailAlreadyExists', {
+            lang: I18nContext.current()?.lang,
+          }),
+        ],
         error: 'Bad Request',
       });
     }
