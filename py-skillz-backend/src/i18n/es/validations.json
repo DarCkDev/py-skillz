@@ -8,5 +8,6 @@
   "requiredPassword": "La contraseña es obligatoria",
   "invalidPassword": "La contraseña debe tener al menos 6 caracteres",
   "passwordsNotMatch": "Las contraseñas no coinciden",
-  "invalidRole": "El rol es inválido"
+  "invalidRole": "El rol es inválido",
+  "invalidCredentials": "Credenciales inválidas"
 }
