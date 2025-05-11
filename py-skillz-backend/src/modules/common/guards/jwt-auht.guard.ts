@@ -9,10 +9,15 @@ import { Role } from 'src/modules/user/entities/role.entity';
 import { Observable } from 'rxjs';
 import { Request } from 'express';
 import { PayloadDto } from 'src/modules/auth/dto/payload.dto';
+import { I18nService, I18nContext } from 'nestjs-i18n';
+import { CustomError } from '../response/custom-error';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly i18n: I18nService,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -21,11 +26,27 @@ export class JwtAuthGuard implements CanActivate {
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      throw new UnauthorizedException('No se ha proporcionado un token');
+      throw new UnauthorizedException(
+        new CustomError(
+          403,
+          this.i18n.t('auth.noToken', {
+            lang: I18nContext.current()?.lang,
+          }),
+          'Forbidden',
+        ),
+      );
     }
 
     if (!authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('No es un token válido');
+      throw new UnauthorizedException(
+        new CustomError(
+          403,
+          this.i18n.t('auth.invalidToken', {
+            lang: I18nContext.current()?.lang,
+          }),
+          'Forbidden',
+        ),
+      );
     }
 
     const token = authHeader.split(' ')[1];
@@ -35,12 +56,26 @@ export class JwtAuthGuard implements CanActivate {
 
       if (!payload || !payload.sub || !payload.role) {
         throw new UnauthorizedException(
-          'No se ha proporcionado un token válido',
+          new CustomError(
+            403,
+            this.i18n.t('auth.invalidToken', {
+              lang: I18nContext.current()?.lang,
+            }),
+            'Forbidden',
+          ),
         );
       }
 
       if (!Object.values(Role).includes(payload.role)) {
-        throw new UnauthorizedException('No se ha reconocido el rol del token');
+        throw new UnauthorizedException(
+          new CustomError(
+            403,
+            this.i18n.t('auth.invalidRole', {
+              lang: I18nContext.current()?.lang,
+            }),
+            'Forbidden',
+          ),
+        );
       }
 
       request.user = {
@@ -53,7 +88,15 @@ export class JwtAuthGuard implements CanActivate {
       return true;
     } catch (err) {
       console.log(err);
-      throw new UnauthorizedException('El token es inválido o ha expirado.');
+      throw new UnauthorizedException(
+        new CustomError(
+          403,
+          this.i18n.t('auth.invalidOrExpiredToken', {
+            lang: I18nContext.current()?.lang,
+          }),
+          'Forbidden',
+        ),
+      );
     }
   }
 }
