@@ -20,7 +20,7 @@ describe('AuthService', () => {
   };
 
   const mockI18nService = {
-    t: jest.fn((key: string) => key), // 👈 mock de traducción que solo devuelve la clave
+    t: jest.fn((key: string) => key),
   };
 
   beforeEach(async () => {
