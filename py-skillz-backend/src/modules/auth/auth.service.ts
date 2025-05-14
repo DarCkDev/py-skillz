@@ -5,6 +5,7 @@ import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { PayloadDto } from './dto/payload.dto';
 
 @Injectable()
 export class AuthService {
@@ -30,15 +31,17 @@ export class AuthService {
         error: 'Bad Request',
       });
     }
-    const payload = {
+    const payload: PayloadDto = {
       sub: user.id,
+      email: user.email,
       username: user.fullName,
       role: user.role,
     };
 
     const token = await this.jwtService.signAsync(payload);
     return {
-      email: user.email,
+      fullName: user.fullName,
+      role: user.role,
       token,
     };
   }

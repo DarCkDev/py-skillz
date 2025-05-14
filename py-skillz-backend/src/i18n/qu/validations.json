@@ -8,5 +8,6 @@
   "requiredPassword": "Chay chakraqa password",
   "invalidPassword": "Password chay qalqa",
   "passwordsNotMatch": "Passwords chay qalqa",
-  "invalidRole": "Role chay qalqa"
+  "invalidRole": "Role chay qalqa",
+  "invalidCredentials": "Credentials chay qalqa"
 }

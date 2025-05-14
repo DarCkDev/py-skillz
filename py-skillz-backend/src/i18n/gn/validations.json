@@ -8,5 +8,6 @@
   "requiredPassword": "Oñeikotevẽ pe kokue",
   "invalidPassword": "Oñeikotevẽ pe kokue",
   "passwordsNotMatch": "Oñeikotevẽ pe kokue",
-  "invalidRole": "Oñeikotevẽ pe kokue"
+  "invalidRole": "Oñeikotevẽ pe kokue",
+  "invalidCredentials": "Oñeikotevẽ pe kokue"
 }

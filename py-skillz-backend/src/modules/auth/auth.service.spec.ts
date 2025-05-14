@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
-// import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { Role } from '../user/entities/role.entity';
 import { I18nService } from 'nestjs-i18n';
@@ -21,7 +20,7 @@ describe('AuthService', () => {
   };
 
   const mockI18nService = {
-    t: jest.fn((key: string) => key), // 👈 mock de traducción que solo devuelve la clave
+    t: jest.fn((key: string) => key),
   };
 
   beforeEach(async () => {
@@ -67,7 +66,8 @@ describe('AuthService', () => {
         dto.password,
       );
       expect(result).toEqual({
-        email: mockUser.email,
+        fullName: mockUser.fullName,
+        role: mockUser.role,
         token: 'jwt-token',
       });
     });

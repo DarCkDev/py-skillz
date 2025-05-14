@@ -27,6 +27,8 @@ import { UserModule } from './modules/user/user.module';
       fallbacks: {
         es: 'es',
         qu: 'qu',
+        ay: 'ay',
+        gn: 'gn',
       },
       loaderOptions: {
         path: path.join(__dirname, '/i18n/'),
