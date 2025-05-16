@@ -1,33 +1,38 @@
 import { useTranslation } from 'react-i18next';
 import { useAccessibilityStore } from '@/hooks/useAccessibilityStore';
+import { useTheme } from '@/hooks/useTheme';
 import { Switch } from '@/components/ui/switch';
 
 export function AccessibilityPanel() {
   const { t } = useTranslation();
   const { 
-    highContrast, 
-    setHighContrast, 
     fontSize, 
     setFontSize, 
     lineHeight, 
     setLineHeight 
   } = useAccessibilityStore();
+  
+  const { theme, setTheme } = useTheme();
+  const isDarkHighContrast = theme === 'dark-highcontrast';
+
+  const handleThemeToggle = (checked: boolean) => {
+    setTheme(checked ? 'dark-highcontrast' : 'light');
+  };
 
   return (
     <div className="space-y-4">
       
-      <div className="flex items-center justify-between">
-        <label htmlFor="high-contrast" className="text-sm font-medium">
+      <div className="flex items-center justify-between bg-muted">
+        <label htmlFor="theme-toggle" className="text-sm font-medium">
           {t('accessibility.highContrast')}
         </label>
         <Switch
-          id="high-contrast"
-          checked={highContrast}
-          onCheckedChange={setHighContrast}
+          id="theme-toggle"
+          checked={isDarkHighContrast}
+          onCheckedChange={handleThemeToggle}
         />
       </div>
 
-      
       <div>
         <label htmlFor="font-size" className="text-sm font-medium block mb-2">
           {t('accessibility.fontSize')}
@@ -65,7 +70,6 @@ export function AccessibilityPanel() {
           </button>
         </div>
       </div>
-      
       
       <div>
         <label htmlFor="line-height" className="text-sm font-medium block mb-2">

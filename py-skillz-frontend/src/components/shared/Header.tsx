@@ -4,17 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { MenuIcon, X } from 'lucide-react';
 import iconBolivia from '../../../public/bolivia.png';
 import iconPy from '../../../public/py.png';
-// Hook falso obtener el ro
-const useAuth = () => {
-  return {
-    isAuthenticated: true,
-    role: 'admin',
-    user: {
-      name: 'Usuario Ejemplo',
-      email: 'usuario@ejemplo.com'
-    }
-  };
-};
+import { useAuth } from '../../hooks/useAuth';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const { t, i18n } = useTranslation();
@@ -74,7 +65,7 @@ export function Header() {
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-bold flex items-center gap-2">
             <img src={iconPy} alt="Py" className='w-5 h-5' />
-            <span className="text-accent">Pi-</span>
+            <span >Pi-</span>
             <span>Skillz</span>
           </Link>
           
@@ -89,6 +80,8 @@ export function Header() {
               </Link>
             ))}
             
+            {/* Selector de tema */}
+            <ThemeToggle />
             
             <div className="relative ml-4 group text">
               <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors border border-b-black flex">
@@ -157,6 +150,10 @@ export function Header() {
                 </Link>
               ))}
               
+              {/* Selector de tema móvil */}
+              <div className="py-2">
+                <ThemeToggle />
+              </div>
               
               <div className="mt-4 border-t border-primary-foreground/20 pt-4">
                 <div className="font-semibold mb-2">{t('common.language')}</div>
