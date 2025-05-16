@@ -3,9 +3,9 @@ import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
-// import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { Role } from '../user/entities/role.entity';
+import { I18nService } from 'nestjs-i18n';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -17,6 +17,10 @@ describe('AuthService', () => {
     fullName: 'Test User',
     email: 'test@example.com',
     role: Role.STUDENT,
+  };
+
+  const mockI18nService = {
+    t: jest.fn((key: string) => key),
   };
 
   beforeEach(async () => {
@@ -34,6 +38,7 @@ describe('AuthService', () => {
         AuthService,
         { provide: UserService, useValue: mockUserService },
         { provide: JwtService, useValue: mockJwtService },
+        { provide: I18nService, useValue: mockI18nService },
       ],
     }).compile();
 
@@ -61,7 +66,8 @@ describe('AuthService', () => {
         dto.password,
       );
       expect(result).toEqual({
-        email: mockUser.email,
+        fullName: mockUser.fullName,
+        role: mockUser.role,
         token: 'jwt-token',
       });
     });
@@ -74,22 +80,4 @@ describe('AuthService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
   });
-
-  /*describe('register', () => {
-    it('should delegate user creation to userService', async () => {
-      const dto: CreateUserDto = {
-        fullName: 'New User',
-        email: 'new@example.com',
-        password: 'secure123',
-        role: Role.STUDENT,
-      };
-
-      mockUserService.create.mockResolvedValue({ ...dto, id: '123' });
-
-      const result = await service.register(dto);
-
-      expect(mockUserService.create).toHaveBeenCalledWith(dto);
-      expect(result).toEqual({ ...dto, id: '123' });
-    });
-  });*/
 });

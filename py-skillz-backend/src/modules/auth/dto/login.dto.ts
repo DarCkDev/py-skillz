@@ -1,19 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { i18nValidationMessage } from 'nestjs-i18n';
 
 export class LoginDto {
   @ApiProperty({
     description: 'Email del usuario',
     example: 'dante@alighieri.com',
   })
-  @IsEmail({}, { message: 'El email es inválido' })
-  @IsNotEmpty({ message: 'El email es obligatorio' })
+  @IsNotEmpty({ message: i18nValidationMessage('validations.requiredEmail') })
   email: string;
 
   @ApiProperty({
     description: 'Contraseña del usuario',
     example: '123456&Lasd',
   })
-  @IsString()
+  @IsNotEmpty({
+    message: i18nValidationMessage('validations.requiredPassword'),
+  })
   password: string;
 }

@@ -1,15 +1,18 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { PayloadDto } from './dto/payload.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly i18n: I18nService,
   ) {}
 
   async login(loginDto: LoginDto): Promise<LoginResponseDto> {
@@ -20,19 +23,25 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException({
         statusCode: 401,
-        message: ['Los credenciales no son correctos.'],
+        message: [
+          this.i18n.t('validations.invalidCredentials', {
+            lang: I18nContext.current()?.lang,
+          }),
+        ],
         error: 'Bad Request',
       });
     }
-    const payload = {
+    const payload: PayloadDto = {
       sub: user.id,
+      email: user.email,
       username: user.fullName,
       role: user.role,
     };
 
     const token = await this.jwtService.signAsync(payload);
     return {
-      email: user.email,
+      fullName: user.fullName,
+      role: user.role,
       token,
     };
   }

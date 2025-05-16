@@ -1,6 +1,8 @@
+import * as path from 'node:path';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './modules/user/entities/user.entity';
@@ -19,6 +21,26 @@ import { UserModule } from './modules/user/user.module';
       database: process.env.DB_NAME,
       entities: [User],
       synchronize: true,
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'es',
+      fallbacks: {
+        es: 'es',
+        qu: 'qu',
+        ay: 'ay',
+        gn: 'gn',
+      },
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        new HeaderResolver(['x-custom-lang']),
+        {
+          use: QueryResolver,
+          options: ['lang', 'locale'],
+        },
+      ],
     }),
     AuthModule,
     UserModule,
