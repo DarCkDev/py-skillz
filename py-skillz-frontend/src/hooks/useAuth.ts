@@ -1,9 +1,13 @@
-// Hook para obtener el rol del usuario
 export const useAuth = () => {
-  // Aquí implementarías la lógica real de autenticación
+  // Aquí la lógica real de autenticación
+  //en role ponen que quieren ver teacher, student, admin
   return {
-    isAuthenticated: true,
-    role: 'teacher', 
-    loading: false
+    isAuthenticated: false,
+    role: '', 
+    loading: false,
+    user: {
+      name: 'Usuario Ejemplo',
+      email: 'usuario@ejemplo.com'
+    }
   };
 };

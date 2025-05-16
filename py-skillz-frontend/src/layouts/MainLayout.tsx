@@ -9,15 +9,10 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
-  const { highContrast, fontSize, lineHeight } = useAccessibilityStore();
+  const { fontSize, lineHeight } = useAccessibilityStore();
   
   const getAccessibilityClasses = () => {
     const classes = [];
-    
-    // Alto contraste
-    if (highContrast) {
-      classes.push('high-contrast');
-    }
     
     // Tamaño de fuente
     switch (fontSize) {
@@ -56,7 +51,7 @@ export function MainLayout({ children }: MainLayoutProps) {
     if (children) {
       return children;
     }
-    return <div><Outlet /></div>;
+    return <Outlet />;
   };
 
   return (
