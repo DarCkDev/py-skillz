@@ -5,6 +5,7 @@ import './i18n';
 import { MainLayout } from './layouts/MainLayout';
 import { RoleBasedRoute } from './components/routes/RoleBasedRoute';
 import { useAuth } from './hooks/useAuth';
+import { ThemeProvider } from './components/shared/ThemeProvider';
 
 // all
 import { Home } from './features/common/Home';
@@ -42,37 +43,39 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="catalog" element={<Catalog />} />
-          
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="catalog" element={<Catalog />} />
+            
 
-          <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher', 'student']} />}>
-            <Route path="profile" element={<Profile />} />
+            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher', 'student']} />}>
+              <Route path="profile" element={<Profile />} />
+            </Route>
+            
+            {/* Rutas de admin */}
+            <Route element={<RoleBasedRoute requiredRoles={['admin']} />}>
+              <Route path="admin" element={<AdminPanel />} />
+              <Route path="admin/users" element={<UserManagement />} />
+              <Route path="admin/courses" element={<CourseManagement />} />
+            </Route>
+            
+            {/* Rutas de profesor */}
+            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher']} />}>
+              <Route path="courses/create" element={<CreateCourse />} />
+              <Route path="reports" element={<Reports />} />
+            </Route>
+            
+            {/* Ruta 404 */}
+            <Route path="*" element={<NotFound />} />
           </Route>
-          
-          {/* Rutas de admin */}
-          <Route element={<RoleBasedRoute requiredRoles={['admin']} />}>
-            <Route path="admin" element={<AdminPanel />} />
-            <Route path="admin/users" element={<UserManagement />} />
-            <Route path="admin/courses" element={<CourseManagement />} />
-          </Route>
-          
-          {/* Rutas de profesor */}
-          <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher']} />}>
-            <Route path="courses/create" element={<CreateCourse />} />
-            <Route path="reports" element={<Reports />} />
-          </Route>
-          
-          {/* Ruta 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
