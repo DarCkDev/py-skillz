@@ -1,5 +1,5 @@
 // Definición de roles de usuario
-export type UserRole = 'admin' | 'teacher' | 'student' | 'guest';
+export type UserRole = 'ADMIN' | 'TEACHER' | 'STUDENT' | '';
 
 // Interfaz de usuario
 export interface User {

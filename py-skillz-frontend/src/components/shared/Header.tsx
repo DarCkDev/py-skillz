@@ -33,18 +33,18 @@ export function Header() {
       links.push({ to: '/profile', label: t('nav.profile') });
       
       
-      if (role === 'student') {
+      if (role === 'STUDENT') {
         links.push({ to: '/progress', label: t('nav.progress') });
       }
       
       
-      if (role === 'teacher' || role === 'admin') {
+      if (role === 'TEACHER' || role === 'ADMIN') {
         links.push({ to: '/courses/create', label: t('nav.createCourse') });
         links.push({ to: '/reports', label: t('nav.reports') });
       }
       
       
-      if (role === 'admin') {
+      if (role === 'ADMIN') {
         links.push({ to: '/admin', label: t('nav.adminPanel') });
         links.push({ to: '/admin/users', label: t('nav.userManagement') });
       }

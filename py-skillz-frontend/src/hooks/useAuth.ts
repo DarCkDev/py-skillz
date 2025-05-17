@@ -4,8 +4,8 @@ export const useAuth = ():User => {
   //en role ponen que quieren ver teacher, student, admin
   return {
     id:'1',
-    isAuthenticated: true,
-    role: 'student', 
+    isAuthenticated: false,
+    role: '', 
     info: {
       name: 'Usuario Ejemplo',
       email: 'usuario@ejemplo.com'
