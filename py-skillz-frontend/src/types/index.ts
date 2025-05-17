@@ -4,11 +4,16 @@ export type UserRole = 'admin' | 'teacher' | 'student' | 'guest';
 // Interfaz de usuario
 export interface User {
   id: string;
-  name: string;
-  email: string;
+  info: InfoUser;
+  isAuthenticated: boolean,
   role: UserRole;
   avatar?: string;
   preferences?: UserPreferences;
+}
+
+export interface InfoUser{
+  name: string;
+  email: string;
 }
 
 // Preferencias de usuario

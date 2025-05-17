@@ -1,11 +1,12 @@
-export const useAuth = () => {
+import { User } from "../types/index";
+export const useAuth = ():User => {
   // Aquí la lógica real de autenticación
   //en role ponen que quieren ver teacher, student, admin
   return {
-    isAuthenticated: false,
-    role: '', 
-    loading: false,
-    user: {
+    id:'1',
+    isAuthenticated: true,
+    role: 'student', 
+    info: {
       name: 'Usuario Ejemplo',
       email: 'usuario@ejemplo.com'
     }
