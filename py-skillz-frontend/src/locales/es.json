@@ -15,7 +15,9 @@
     "previous": "Anterior",
     "search": "Buscar",
     "languages": "Idiomas",
-    "quickLinks": "Enlaces rápidos"
+    "quickLinks": "Enlaces rápidos",
+    "language": "Idioma",
+    "allRightsReserved": "Todos los derechos reservados"
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -35,7 +37,7 @@
     "home": "Inicio",
     "catalog": "Catálogo",
     "myCourses": "Mis cursos",
-    "profile": "Perfil",
+    "profile": "Mi perfil",
     "progress": "Progreso",
     "adminPanel": "Panel Admin",
     "userManagement": "Gestión de Usuarios",
@@ -43,7 +45,8 @@
     "createCourse": "Crear Curso",
     "reports": "Reportes",
     "settings": "Configuración",
-    "help": "Ayuda"
+    "help": "Ayuda",
+    "userOptions": "Opciones de usuario"
   },
   "accessibility": {
     "highContrast": "Alto contraste",
@@ -64,5 +67,18 @@
     "authError": "Error de autenticación",
     "notFound": "No encontrado",
     "validationError": "Error de validación"
-  } 
+  },
+  "admin": {
+    "panelTitle": "Panel de Administración",
+    "panelDescription": "Gestiona usuarios, cursos y visualiza estadísticas de la plataforma.",
+    "userManagement": "Gestión de Usuarios",
+    "userManagementDescription": "Administra cuentas de usuarios, roles y permisos.",
+    "courseManagement": "Gestión de Cursos",
+    "courseManagementDescription": "Crea, edita y organiza cursos y contenido educativo.",
+    "reports": "Reportes",
+    "reportsDescription": "Visualiza estadísticas y genera informes de actividad.",
+    "totalUsers": "Total de Usuarios",
+    "totalCourses": "Total de Cursos",
+    "activeStudents": "Estudiantes Activos"
+  }
 }

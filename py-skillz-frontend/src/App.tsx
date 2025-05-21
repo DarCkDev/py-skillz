@@ -47,19 +47,19 @@ function App() {
             <Route path="catalog" element={<Catalog />} />
             
 
-            <Route element={<RoleBasedRoute requiredRoles={['guest']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER', 'STUDENT']} />}>
               <Route path="profile" element={<Profile />} />
             </Route>
             
             {/* Rutas de admin */}
-            <Route element={<RoleBasedRoute requiredRoles={['admin']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN']} />}>
               <Route path="admin" element={<AdminPanel />} />
               <Route path="admin/users" element={<UserManagement />} />
               <Route path="admin/courses" element={<CourseManagement />} />
             </Route>
             
             {/* Rutas de profesor */}
-            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
               <Route path="courses/create" element={<CreateCourse />} />
               <Route path="reports" element={<Reports />} />
             </Route>
