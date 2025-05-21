@@ -61,5 +61,18 @@
     "authError": "Jeike jejavy",
     "notFound": "Ndojejuhúi",
     "validationError": "Moneĩ jejavy"
+  },
+  "admin": {
+    "panelTitle": "Ñangarekohára Rembiapo",
+    "panelDescription": "Eñangareko puruhárare, mbo'esyrýre ha ehecha platformagua papapy.",
+    "userManagement": "Puruhára Ñangareko",
+    "userManagementDescription": "Eñangareko puruhára kuéntare, papélre ha permísore.",
+    "courseManagement": "Mbo'esyry Ñangareko",
+    "courseManagementDescription": "Emoheñói, emoambue ha emohenda mbo'esyry ha mbo'e retepy.",
+    "reports": "Marandu",
+    "reportsDescription": "Ehecha papapy ha emoheñói tembiapo marandu.",
+    "totalUsers": "Puruhára Papapy",
+    "totalCourses": "Mbo'esyry Papapy",
+    "activeStudents": "Temimbo'e Oikóva"
   }
 }

@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from '../ui/link';
 import { useTranslation } from 'react-i18next';
-import { MenuIcon, X } from 'lucide-react';
+import { MenuIcon, X, User, LogOut } from 'lucide-react';
 import iconBolivia from '../../../public/bolivia.png';
 import iconPy from '../../../public/py.png';
-import { useAuth } from '../../hooks/useAuth';
+import { AuthContext } from '../../context/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const { t, i18n } = useTranslation();
-  const { isAuthenticated, role } = useAuth();
+  const auth = useContext(AuthContext);
+  const isAuthenticated = auth?.isAuthenticated || false;
+  const role = auth?.role || '';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const changeLanguage = (lng: string) => {
@@ -18,6 +20,12 @@ export function Header() {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    if (auth) {
+      auth.logout();
+    }
   };
 
   // Determinar los enlaces de navegación según el rol
@@ -30,8 +38,6 @@ export function Header() {
     
     if (isAuthenticated) {
       links.push({ to: '/my-courses', label: t('nav.myCourses') });
-      links.push({ to: '/profile', label: t('nav.profile') });
-      
       
       if (role === 'STUDENT') {
         links.push({ to: '/progress', label: t('nav.progress') });
@@ -80,7 +86,7 @@ export function Header() {
               </Link>
             ))}
             
-            {/* Selector de tema */}
+
             <ThemeToggle />
             
             <div className="relative ml-4 group text">
@@ -119,8 +125,34 @@ export function Header() {
                 </button>
               </div>
             </div>
+            
+
+            {isAuthenticated && (
+              <div className="relative ml-4 group">
+                <button className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center hover:bg-primary-foreground/30 transition-colors">
+                  <User className="h-5 w-5" />
+                </button>
+                <div className="absolute right-0 w-48 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
+                  <div className="py-2">
+                    <Link 
+                      to="/profile" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                    >
+                      {t('nav.profile')}
+                    </Link>
+                    <div className="border-t border-border my-1"></div>
+                    <button 
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex items-center text-red-500"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      {t('auth.logout')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </nav>
-          
           
           <button 
             className="md:hidden"
@@ -135,7 +167,7 @@ export function Header() {
           </button>
         </div>
         
-        {/* Menú móvil */}
+
         {mobileMenuOpen && (
           <nav className="mt-4 md:hidden">
             <div className="flex flex-col space-y-2">
@@ -150,11 +182,38 @@ export function Header() {
                 </Link>
               ))}
               
-              {/* Selector de tema móvil */}
+
+              {isAuthenticated && (
+                <>
+                  <div className="border-t border-primary-foreground/20 my-2 pt-2">
+                    <div className="font-semibold mb-2">{t('nav.userOptions')}</div>
+                    <Link 
+                      to="/profile" 
+                      className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {t('nav.profile')}
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        handleLogout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center text-red-500"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      {t('auth.logout')}
+                    </button>
+                  </div>
+                </>
+              )}
+              
+
               <div className="py-2">
                 <ThemeToggle />
               </div>
               
+
               <div className="mt-4 border-t border-primary-foreground/20 pt-4">
                 <div className="font-semibold mb-2">{t('common.language')}</div>
                 <div className="grid grid-cols-2 gap-2">
