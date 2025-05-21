@@ -65,4 +65,24 @@
 .output-panel pre {
   @apply whitespace-pre-wrap break-words;
   @apply min-h-[200px] max-h-full;
+}
+
+.file-manager {
+  @apply w-1/4 bg-gray-800 p-4;
+}
+
+.file-manager h2 {
+  @apply text-white text-lg mb-4;
+}
+
+.file-manager ul {
+  @apply list-none p-0;
+}
+
+.file-manager li {
+  @apply text-white cursor-pointer p-2 hover:bg-gray-700;
+}
+
+.file-manager button {
+  @apply mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600;
 } 
