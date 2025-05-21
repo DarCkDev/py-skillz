@@ -27,5 +27,9 @@ export interface UserPreferences {
   notifications: boolean;
 }
 
-
+// Interfaz inicio de sesión
+export interface ILogin {
+  email: string;
+  password: string;
+}
 
