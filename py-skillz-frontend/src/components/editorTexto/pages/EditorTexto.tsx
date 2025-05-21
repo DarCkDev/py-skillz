@@ -3,14 +3,45 @@ import { Editor as MonacoEditor } from '@monaco-editor/react';
 import OutputPanel from '../OutputPanel';
 import '../styles/editorTexto.css';
 
+interface PyFile {
+  name: string;
+  content: string;
+}
+
+const initialFiles: PyFile[] = [
+  { name: 'index.py', content: 'print("Hello, World!")' }
+];
+
 const EditorTexto: React.FC = () => {
-  const [code, setCode] = useState<string>('print("Hello, World!")');
+  const [files, setFiles] = useState<PyFile[]>(initialFiles);
+  const [selectedFile, setSelectedFile] = useState<string>('index.py');
   const [output, setOutput] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [renamingFile, setRenamingFile] = useState<string | null>(null);
+
+  const currentFile = files.find(f => f.name === selectedFile);
+
+  const handleFileSelect = (fileName: string) => {
+    setSelectedFile(fileName);
+  };
+
+  const handleFileAdd = () => {
+    let baseName = 'archivo';
+    let idx = 1;
+    let newName = `${baseName}${idx}.py`;
+    while (files.some(f => f.name === newName)) {
+      idx++;
+      newName = `${baseName}${idx}.py`;
+    }
+    setFiles([...files, { name: newName, content: '' }]);
+    setSelectedFile(newName);
+  };
 
   const handleEditorChange = (value: string | undefined) => {
     if (value !== undefined) {
-      setCode(value);
+      setFiles(files.map(f =>
+        f.name === selectedFile ? { ...f, content: value } : f
+      ));
     }
   };
 
@@ -22,7 +53,7 @@ const EditorTexto: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code }),
+        body: JSON.stringify({ code: currentFile?.content || '' }),
       });
 
       if (!response.ok) {
@@ -45,48 +76,114 @@ const EditorTexto: React.FC = () => {
 
   const handleSaveCode = () => {
     // Implementar la lógica de guardado
-    console.log('Saving code:', code);
+    console.log('Saving code:', currentFile?.content);
+  };
+
+  const handleRenameFile = (oldName: string, newName: string) => {
+    if (!newName.endsWith('.py')) {
+      alert('El archivo debe tener extensión .py');
+      return;
+    }
+    if (files.some(f => f.name === newName && f.name !== oldName)) {
+      alert('Ya existe un archivo con ese nombre');
+      return;
+    }
+    setFiles(files.map(f => f.name === oldName ? { ...f, name: newName } : f));
+    if (selectedFile === oldName) setSelectedFile(newName);
+    setRenamingFile(null);
   };
 
   return (
-    <div className="editor-container">
-      <div className="editor-toolbar">
-        <button 
-          className="editor-button run-button" 
-          onClick={handleRunCode}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Running...' : 'Run'}
-        </button>
-        <button 
-          className="editor-button save-button" 
-          onClick={handleSaveCode}
-          disabled={isLoading}
-        >
-          Save
-        </button>
-      </div>
-      <div className="editor-content">
-        <div className="editor-wrapper">
-          <MonacoEditor
-            height="calc(100vh - 60px)"
-            defaultLanguage="python"
-            theme="vs-dark"
-            value={code}
-            onChange={handleEditorChange}
-            options={{
-              minimap: { enabled: false },
-              fontSize: 14,
-              wordWrap: 'on',
-              lineNumbers: 'on',
-              roundedSelection: false,
-              scrollBeyondLastLine: false,
-              automaticLayout: true,
-              padding: { top: 16, bottom: 16 },
-            }}
-          />
+    <div className="flex h-screen bg-gray-900 text-white">
+      {/* Gestor de archivos tipo Google Drive */}
+      <div className="w-1/5 min-w-[180px] max-w-xs bg-gray-800 p-4 flex flex-col border-r border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold">Archivos</h2>
+          <button className="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700" onClick={handleFileAdd}>+</button>
         </div>
-        <OutputPanel output={output} />
+        <ul className="flex-1 overflow-y-auto">
+          {files.map(file => (
+            <li
+              key={file.name}
+              className={`p-2 rounded cursor-pointer mb-1 flex items-center justify-between ${selectedFile === file.name ? 'bg-blue-700 text-white' : 'hover:bg-gray-700'}`}
+              onClick={() => handleFileSelect(file.name)}
+            >
+              <span className="flex items-center">
+                <span className="mr-2">🐍</span>
+                {renamingFile === file.name ? (
+                  <input
+                    type="text"
+                    className="bg-gray-700 text-white rounded px-1 py-0.5 w-28 mr-2"
+                    defaultValue={file.name}
+                    autoFocus
+                    onClick={e => e.stopPropagation()}
+                    onBlur={e => handleRenameFile(file.name, e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        handleRenameFile(file.name, (e.target as HTMLInputElement).value);
+                      } else if (e.key === 'Escape') {
+                        setRenamingFile(null);
+                      }
+                    }}
+                  />
+                ) : (
+                  <span>{file.name}</span>
+                )}
+              </span>
+              <button
+                className="ml-2 text-xs bg-yellow-500 hover:bg-yellow-600 text-white rounded px-1 py-0.5"
+                onClick={e => {
+                  e.stopPropagation();
+                  setRenamingFile(file.name);
+                }}
+                title="Renombrar archivo"
+              >
+                ✏️
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {/* Editor y consola */}
+      <div className="flex-1 flex flex-col">
+        <div className="editor-toolbar">
+          <button 
+            className="editor-button run-button" 
+            onClick={handleRunCode}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Running...' : 'Run'}
+          </button>
+          <button 
+            className="editor-button save-button" 
+            onClick={handleSaveCode}
+            disabled={isLoading}
+          >
+            Save
+          </button>
+        </div>
+        <div className="editor-content">
+          <div className="editor-wrapper">
+            <MonacoEditor
+              height="calc(100vh - 60px)"
+              defaultLanguage="python"
+              theme="vs-dark"
+              value={currentFile?.content || ''}
+              onChange={handleEditorChange}
+              options={{
+                minimap: { enabled: false },
+                fontSize: 14,
+                wordWrap: 'on',
+                lineNumbers: 'on',
+                roundedSelection: false,
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+                padding: { top: 16, bottom: 16 },
+              }}
+            />
+          </div>
+          <OutputPanel output={output} />
+        </div>
       </div>
     </div>
   );
