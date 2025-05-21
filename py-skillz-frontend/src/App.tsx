@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import './i18n';
 import { MainLayout } from './layouts/MainLayout';
 import { RoleBasedRoute } from './components/routes/RoleBasedRoute';
-import { useAuth } from './hooks/useAuth';
 import { ThemeProvider } from './components/shared/ThemeProvider';
 
 // all
@@ -28,7 +27,6 @@ import { CreateCourse } from './features/teacher/CreateCourse';
 
 function App() {
   const { i18n } = useTranslation();
-  const { loading } = useAuth();
 
   useEffect(() => {
     const savedLang = localStorage.getItem('i18nextLng');
@@ -37,10 +35,6 @@ function App() {
     }
   }, [i18n]);
 
-  //recordatorio mejorar loading
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <ThemeProvider>
@@ -53,7 +47,7 @@ function App() {
             <Route path="catalog" element={<Catalog />} />
             
 
-            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher', 'student']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['guest']} />}>
               <Route path="profile" element={<Profile />} />
             </Route>
             

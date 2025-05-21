@@ -1,5 +1,4 @@
-import React from 'react';
-import { BackButton } from '../../components/shared/BackButton';
+import { BackButton } from '@/components/shared/BackButton';
 
 export const Catalog = () => (
   <div>
