@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BackButton } from "../../components/shared/BackButton";
 import { ILogin } from "../../types";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../hooks/useAuth"; 
+import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom"; 
 
 export const Login = () => {
   const [data, setData] = useState<ILogin>({ email: "", password: "" });
   const [errors, setErrors] = useState<string[]>([]);
-  const { login } = useAuth();
+  const auth = useContext(AuthContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -18,11 +18,16 @@ export const Login = () => {
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const loginErrors = await login(data);
+    if (!auth) {
+      setErrors(["Authentication context not available"]);
+      return;
+    }
+    
+    const loginErrors = await auth.login(data);
     if (loginErrors) {
       setErrors(loginErrors);
     } else {
-      navigate("/dashboard"); // Redirige al dashboard u otra ruta
+      navigate("/admin"); // Redirige al dashboard u otra ruta
     }
   };
 
@@ -33,10 +38,10 @@ export const Login = () => {
         <form onSubmit={onSubmitForm}>
           <div className="flex flex-col items-center justify-center gap-3">
             <h1 className="text-3xl font-bold">{t("auth.login")}</h1>
-            <div className="flex flex-col items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3 text-black">
               <input
                 type="email"
-                placeholder={t("auth.email")}
+                placeholder={t("auth.email")?? "email"}
                 className="w-full p-2 border-2 border-gray-400 rounded-md"
                 name="email"
                 value={data.email}
@@ -44,7 +49,7 @@ export const Login = () => {
               />
               <input
                 type="password"
-                placeholder={t("auth.password")}
+                placeholder={t("auth.password")?? "password"}
                 className="w-full p-2 border-2 border-gray-400 rounded-md"
                 name="password"
                 value={data.password}

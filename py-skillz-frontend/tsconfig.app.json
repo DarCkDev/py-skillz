@@ -10,7 +10,7 @@
     /* Paths and aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     
     /* Bundler mode */
@@ -33,5 +33,4 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
 }

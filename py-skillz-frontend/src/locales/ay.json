@@ -13,7 +13,11 @@
     "back": "Kutiña",
     "next": "Jutiri",
     "previous": "Nayra",
-    "search": "Thaqhaña"
+    "search": "Thaqhaña",
+    "language": "Aru",
+    "languages": "Arunaka",
+    "quickLinks": "Jank'aki chinuñanaka",
+    "allRightsReserved": "Taqpach derechos imata"
   },
   "auth": {
     "login": "Mantaña",
@@ -33,7 +37,7 @@
     "home": "Qalltawi",
     "catalog": "Uñanchawi",
     "myCourses": "Nayankiri yatiqañanaka",
-    "profile": "Jaqi uñt'añanaka",
+    "profile": "Nayan uñt'añanaka",
     "progress": "Sarantawi",
     "adminPanel": "Mallku panka",
     "userManagement": "Jaqinaka apnaqaña",
@@ -41,7 +45,8 @@
     "createCourse": "Yatiqaña luraña",
     "reports": "Uñt'ayañanaka",
     "settings": "Wakichaña",
-    "help": "Yanapa"
+    "help": "Yanapa",
+    "userOptions": "Jaqi ajlliñanaka"
   },
   "accessibility": {
     "highContrast": "Jach'a uñtawi",
@@ -52,7 +57,8 @@
     "lineHeight": "Qillqa jakhthapiwi",
     "lineHeightSmall": "Jisk'a",
     "lineHeightMedium": "Taypi",
-    "lineHeightLarge": "Jach'a"
+    "lineHeightLarge": "Jach'a",
+    "settings": "Wakichañanaka"
   },
   "errors": {
     "unknown": "Mä jan uñt'ata pantjata utji",
@@ -61,5 +67,18 @@
     "authError": "Mantañan pantjata",
     "notFound": "Janiw jikiskiti",
     "validationError": "Chiqanchañan pantjata"
+  },
+  "admin": {
+    "panelTitle": "Mallku Panka",
+    "panelDescription": "Jaqinaka, yatiqañanaka apnaqaña ukatxa platforman jakhuwinakapa uñjaña.",
+    "userManagement": "Jaqinaka Apnaqaña",
+    "userManagementDescription": "Jaqinakan qillqatanakapa, lurayirinakapa ukatxa permisunakapa apnaqaña.",
+    "courseManagement": "Yatiqañanaka Apnaqaña",
+    "courseManagementDescription": "Yatiqañanaka luraña, askichaña ukatxa wakichaña.",
+    "reports": "Uñt'ayañanaka",
+    "reportsDescription": "Jakhuwinaka uñjaña ukatxa lurawinakat uñt'ayañanaka lurañataki.",
+    "totalUsers": "Taqpach Jaqinaka",
+    "totalCourses": "Taqpach Yatiqañanaka",
+    "activeStudents": "Ch'amanchiri Yatiqirinaka"
   }
 }

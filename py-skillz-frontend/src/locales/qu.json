@@ -61,5 +61,18 @@
     "authError": "Yaykuy pantay",
     "notFound": "Mana tarisqachu",
     "validationError": "Allin kaypi pantay"
+  },
+  "admin": {
+    "panelTitle": "Kamachiq Panka",
+    "panelDescription": "Runakuna, yachachiykuna kamachiy, plataformamanta yupaykunata qhaway.",
+    "userManagement": "Runakuna Kamachiy",
+    "userManagementDescription": "Runakuna yupaykunata, rurayninkunata, saqillaykunata kamachiy.",
+    "courseManagement": "Yachachiykuna Kamachiy",
+    "courseManagementDescription": "Yachachiykunata kamariy, allichay, wakichiy.",
+    "reports": "Willakuykuna",
+    "reportsDescription": "Yupaykunata qhaway, ruwasqakunamanta willakuykunata paqarichiy.",
+    "totalUsers": "Llapan Runakuna",
+    "totalCourses": "Llapan Yachachiykuna",
+    "activeStudents": "Kallpayuq Yachaqkuna"
   }
 }

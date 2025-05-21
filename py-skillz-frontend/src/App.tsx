@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import './i18n';
 import { MainLayout } from './layouts/MainLayout';
 import { RoleBasedRoute } from './components/routes/RoleBasedRoute';
-import { useAuth } from './hooks/useAuth';
 import { ThemeProvider } from './components/shared/ThemeProvider';
 
 // all
@@ -28,7 +27,6 @@ import { CreateCourse } from './features/teacher/CreateCourse';
 
 function App() {
   const { i18n } = useTranslation();
-  const { loading } = useAuth();
 
   useEffect(() => {
     const savedLang = localStorage.getItem('i18nextLng');
@@ -37,10 +35,6 @@ function App() {
     }
   }, [i18n]);
 
-  //recordatorio mejorar loading
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <ThemeProvider>
@@ -53,19 +47,19 @@ function App() {
             <Route path="catalog" element={<Catalog />} />
             
 
-            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher', 'student']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER', 'STUDENT']} />}>
               <Route path="profile" element={<Profile />} />
             </Route>
             
             {/* Rutas de admin */}
-            <Route element={<RoleBasedRoute requiredRoles={['admin']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN']} />}>
               <Route path="admin" element={<AdminPanel />} />
               <Route path="admin/users" element={<UserManagement />} />
               <Route path="admin/courses" element={<CourseManagement />} />
             </Route>
             
             {/* Rutas de profesor */}
-            <Route element={<RoleBasedRoute requiredRoles={['admin', 'teacher']} />}>
+            <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
               <Route path="courses/create" element={<CreateCourse />} />
               <Route path="reports" element={<Reports />} />
             </Route>
