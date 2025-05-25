@@ -9,7 +9,12 @@ import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
-
+import { Curso } from './modules/curso/entities/curso.entity';
+import { Modulo } from './modules/curso/entities/modulo.entity';
+import { Subtitulo } from './modules/curso/entities/tema.entity';
+import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
+import { Examen } from './modules/curso/entities/examen.entity';
+import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -20,9 +25,25 @@ import { UploadModule } from './modules/upload/upload.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [
+        User,
+        Curso,
+        Modulo,
+        Subtitulo,
+        Ejercicio,
+        Examen,
+        EjercicioExa,
+      ],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([
+      Curso,
+      Modulo,
+      Subtitulo,
+      Ejercicio,
+      Examen,
+      EjercicioExa,
+    ]),
     I18nModule.forRoot({
       fallbackLanguage: 'es',
       fallbacks: {
