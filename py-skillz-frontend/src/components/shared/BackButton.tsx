@@ -36,6 +36,7 @@ export function BackButton() {
   return (
     <button
       onClick={handleBack}
+      
       className="flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-4"
       aria-label={String(t('common.back'))}
     >

@@ -122,6 +122,7 @@ export function Header() {
                 >
                   <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                   Guaraní
+
                 </button>
               </div>
             </div>
@@ -186,6 +187,7 @@ export function Header() {
               {isAuthenticated && (
                 <>
                   <div className="border-t border-primary-foreground/20 my-2 pt-2">
+                  
                     <div className="font-semibold mb-2">{t('nav.userOptions')}</div>
                     <Link 
                       to="/profile" 

@@ -58,6 +58,7 @@ export function Footer() {
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Español
+
                 </button>
               </li>
               <li>
@@ -66,6 +67,7 @@ export function Footer() {
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Quechua
+
                 </button>
               </li>
               <li>
@@ -82,6 +84,7 @@ export function Footer() {
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   Guaraní
+                  
                 </button>
               </li>
             </ul>

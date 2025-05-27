@@ -58,12 +58,14 @@ export const Login = () => {
             </div>
             <button
               type="submit"
+              
               className="p-2 border-2 border-gray-400 rounded-md bg-primary text-white"
             >
               {t("auth.login")}
             </button>
           </div>
           {errors.length > 0 && (
+
             <ul className="text-red-500 list-disc pl-5 mt-2">
               {errors.map((err, index) => (
                 <li key={index}>{err}</li>
