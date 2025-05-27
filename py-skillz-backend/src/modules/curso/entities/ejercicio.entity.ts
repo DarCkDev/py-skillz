@@ -5,7 +5,7 @@ import {
   ManyToOne,
   Index,
 } from 'typeorm';
-import { Subtitulo } from './tema.entity';
+import { Subtitulo } from './subtitulo.entity';
 import { EjercicioTipo } from './ejercicio-tipo.enum';
 
 @Entity({ name: 'ejercicios' })

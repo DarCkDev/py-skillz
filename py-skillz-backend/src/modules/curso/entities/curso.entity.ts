@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Modulo } from './modulo.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
+import { Tema } from './tema.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity({ name: 'cursos' })
 export class Curso {
@@ -25,6 +32,9 @@ export class Curso {
   imagenDestacada: string;
 
   /* ----- Relaciones ----- */
-  @OneToMany(() => Modulo, (t) => t.curso)
-  temas: Modulo[];
+  @OneToMany(() => Tema, (t) => t.curso, { cascade: true, eager: true })
+  temas: Tema[];
+
+  @ManyToOne(() => User, (user) => user.cursos, { onDelete: 'CASCADE' })
+  creador: User;
 }

@@ -10,8 +10,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { Curso } from './modules/curso/entities/curso.entity';
-import { Modulo } from './modules/curso/entities/modulo.entity';
-import { Subtitulo } from './modules/curso/entities/tema.entity';
+import { Tema } from './modules/curso/entities/tema.entity';
+import { Subtitulo } from './modules/curso/entities/subtitulo.entity';
 import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
 import { Examen } from './modules/curso/entities/examen.entity';
 import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
@@ -25,20 +25,12 @@ import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [
-        User,
-        Curso,
-        Modulo,
-        Subtitulo,
-        Ejercicio,
-        Examen,
-        EjercicioExa,
-      ],
+      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
       Curso,
-      Modulo,
+      Tema,
       Subtitulo,
       Ejercicio,
       Examen,

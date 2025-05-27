@@ -6,34 +6,29 @@ import {
   OneToMany,
   Index,
 } from 'typeorm';
-import { Modulo } from './modulo.entity';
-import { Ejercicio } from './ejercicio.entity';
+import { Curso } from './curso.entity';
+import { Subtitulo } from './subtitulo.entity';
+import { Examen } from './examen.entity';
 
-@Entity({ name: 'temas' })
-@Index('idx_subtitulos_tema', ['modulo'])
-export class Subtitulo {
+@Entity({ name: 'Tema' })
+@Index('idx_temas_curso', ['curso'])
+export class Tema {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Modulo, (t) => t.subtitulos, { onDelete: 'CASCADE' })
-  modulo: Modulo;
+  @ManyToOne(() => Curso, (c) => c.temas, { onDelete: 'CASCADE' })
+  curso: Curso;
 
   @Column({ length: 255 })
   titulo: string;
-
-  @Column({ type: 'text', nullable: true })
-  contenidoHtml: string;
-
-  @Column({ type: 'text', nullable: true })
-  videoUrl: string;
-
-  @Column({ type: 'text', nullable: true })
-  documentoUrl: string;
 
   @Column({ type: 'smallint', default: 0 })
   orden: number;
 
   /* ----- Relaciones ----- */
-  @OneToMany(() => Ejercicio, (e) => e.subtitulo)
-  ejercicios: Ejercicio[];
+  @OneToMany(() => Subtitulo, (s) => s.tema)
+  subtitulos: Subtitulo[];
+
+  @OneToMany(() => Examen, (e) => e.tema)
+  examenes: Examen[];
 }
