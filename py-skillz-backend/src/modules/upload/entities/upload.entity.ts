@@ -1,12 +1,14 @@
 import {
   Column,
   CreateDateColumn,
+  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { FileType } from '../upload.filetype';
 import { Source } from './source.entity';
 
+@Entity()
 export class Upload {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -22,9 +24,6 @@ export class Upload {
 
   @Column({ type: 'enum', enum: Source })
   source: Source;
-
-  @Column()
-  path: string;
 
   @CreateDateColumn()
   createdAt: Date;
