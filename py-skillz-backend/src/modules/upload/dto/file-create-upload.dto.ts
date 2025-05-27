@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString, ValidateIf } from 'class-validator';
+import { IsEnum, IsOptional, IsUrl, ValidateIf } from 'class-validator';
 import { FileType } from '../upload.filetype';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -17,7 +17,7 @@ export class FileCreateUploadDto {
 
   @ApiPropertyOptional({ description: 'Url externa' })
   @ValidateIf((o: FileCreateUploadDto) => !o.file)
-  @IsString()
+  @IsUrl()
   @IsOptional()
-  externalUrl: string;
+  externalUrl?: string;
 }
