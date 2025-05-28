@@ -39,5 +39,5 @@ export class User {
   updatedAt: Date;
 
   @OneToMany(() => Curso, (curso) => curso.creador)
-  cursos: Curso[];
+  cursos?: Curso[];
 }
