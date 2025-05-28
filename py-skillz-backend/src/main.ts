@@ -3,6 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 //import { ValidationPipe } from '@nestjs/common';
 import { I18nValidationPipe, I18nValidationExceptionFilter } from 'nestjs-i18n';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

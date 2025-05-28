@@ -10,9 +10,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { Upload } from './modules/upload/entities/upload.entity';
+import { PythonModule } from './python/python.module';
 
 @Module({
   imports: [
+    PythonModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
