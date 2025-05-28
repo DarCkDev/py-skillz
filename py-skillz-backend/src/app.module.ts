@@ -9,6 +9,7 @@ import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { CursoModule } from './modules/curso/curso.module';
 import { Curso } from './modules/curso/entities/curso.entity';
 import { Tema } from './modules/curso/entities/tema.entity';
 import { Subtitulo } from './modules/curso/entities/subtitulo.entity';
@@ -59,6 +60,7 @@ import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
     AuthModule,
     UserModule,
     UploadModule,
+    CursoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
