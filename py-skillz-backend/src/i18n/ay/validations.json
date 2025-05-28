@@ -1,0 +1,13 @@
+{
+  "required": "Uka yapuxa wakisiwa",
+  "requiredName": "Uka yapuxa wakisiwa wakuna",
+  "invalidName": "Ukuna wakisiwa wakuna wakichiqa",
+  "invalidEmail": "Ukuna wakisiwa wakuna wakichiqa",
+  "requiredEmail": "Ukuna wakisiwa wakuna wakichiqa",
+  "emailAlreadyExists": "Ukuna wakisiwa wakuna wakichiqa",
+  "requiredPassword": "Uka yapuxa wakisiwa wakuna",
+  "invalidPassword": "Ukuna wakisiwa wakuna wakichiqa",
+  "passwordsNotMatch": "Ukuna wakisiwa wakuna wakichiqa",
+  "invalidRole": "Ukuna wakisiwa wakuna wakichiqa",
+  "invalidCredentials": "Ukuna wakisiwa wakuna wakichiqa"
+}

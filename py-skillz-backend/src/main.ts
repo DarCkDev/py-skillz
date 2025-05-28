@@ -1,20 +1,33 @@
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+//import { ValidationPipe } from '@nestjs/common';
+import { I18nValidationPipe, I18nValidationExceptionFilter } from 'nestjs-i18n';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  // Enable CORS
-  app.enableCors();
-  
-  // Enable validation
-  app.useGlobalPipes(new ValidationPipe());
-  
-  // Set global prefix
-  app.setGlobalPrefix('api');
-  
-  await app.listen(3001);
-  console.log('Backend running on http://localhost:3001');
+
+  // app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN,
+  });
+  app.useGlobalPipes(new I18nValidationPipe());
+  app.useGlobalFilters(
+    new I18nValidationExceptionFilter({
+      detailedErrors: false,
+    }),
+  );
+  const config = new DocumentBuilder()
+    .setTitle('Py Skillz API')
+    .setDescription('Py Skillz API')
+    .setVersion('1.0')
+    .addTag('Py Skillz')
+    .build();
+
+  const documentFactory = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
+
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

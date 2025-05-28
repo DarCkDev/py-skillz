@@ -1,0 +1,13 @@
+{
+  "required": "Chay chakraqa mañasqam",
+  "requiredName": "Chay chakraqa qallunas",
+  "invalidName": "Qallunas chay qalqa",
+  "invalidEmail": "Email chay qalqa",
+  "requiredEmail": "Email chay chakraqa",
+  "emailAlreadyExists": "Email chay qalqa",
+  "requiredPassword": "Chay chakraqa password",
+  "invalidPassword": "Password chay qalqa",
+  "passwordsNotMatch": "Passwords chay qalqa",
+  "invalidRole": "Role chay qalqa",
+  "invalidCredentials": "Credentials chay qalqa"
+}

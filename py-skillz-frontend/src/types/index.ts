@@ -1,14 +1,19 @@
 // Definición de roles de usuario
-export type UserRole = 'admin' | 'teacher' | 'student' | 'guest';
+export type UserRole = 'ADMIN' | 'TEACHER' | 'STUDENT' | '';
 
 // Interfaz de usuario
 export interface User {
   id: string;
-  name: string;
-  email: string;
+  info: InfoUser;
+  isAuthenticated: boolean,
   role: UserRole;
   avatar?: string;
   preferences?: UserPreferences;
+}
+
+export interface InfoUser{
+  name: string;
+  email: string;
 }
 
 // Preferencias de usuario
@@ -22,5 +27,9 @@ export interface UserPreferences {
   notifications: boolean;
 }
 
-
+// Interfaz inicio de sesión
+export interface ILogin {
+  email: string;
+  password: string;
+}
 

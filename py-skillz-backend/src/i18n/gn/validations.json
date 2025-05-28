@@ -1,0 +1,13 @@
+{
+  "required": "Oñeikotevẽ pe kokue",
+  "requiredName": "Oñeikotevẽ pe kokue",
+  "invalidName": "Oñeikotevẽ pe kokue",
+  "invalidEmail": "E-mail pe kokue",
+  "requiredEmail": "E-mail pe kokue",
+  "emailAlreadyExists": "E-mail pe kokue",
+  "requiredPassword": "Oñeikotevẽ pe kokue",
+  "invalidPassword": "Oñeikotevẽ pe kokue",
+  "passwordsNotMatch": "Oñeikotevẽ pe kokue",
+  "invalidRole": "Oñeikotevẽ pe kokue",
+  "invalidCredentials": "Oñeikotevẽ pe kokue"
+}

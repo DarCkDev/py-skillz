@@ -2,19 +2,17 @@ import { ReactNode } from 'react';
 import { Header } from '../components/shared/Header';
 import { Footer } from '../components/shared/Footer';
 import { useAccessibilityStore } from '../hooks/useAccessibilityStore';
+import { Outlet } from 'react-router-dom';
+
 interface MainLayoutProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
-  const { highContrast, fontSize, lineHeight } = useAccessibilityStore();
+  const { fontSize, lineHeight } = useAccessibilityStore();
+  
   const getAccessibilityClasses = () => {
     const classes = [];
-    
-    // Alto contraste
-    if (highContrast) {
-      classes.push('high-contrast');
-    }
     
     // Tamaño de fuente
     switch (fontSize) {
@@ -49,11 +47,18 @@ export function MainLayout({ children }: MainLayoutProps) {
     return classes.join(' ');
   };
 
+  const renderContent = () => {
+    if (children) {
+      return children;
+    }
+    return <Outlet />;
+  };
+
   return (
     <div className={`min-h-screen flex flex-col ${getAccessibilityClasses()}`}>
       <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
-        {children}
+        {renderContent()}
       </main>
       <Footer />
     </div>
