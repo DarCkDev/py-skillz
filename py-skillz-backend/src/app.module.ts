@@ -9,6 +9,7 @@ import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { Upload } from './modules/upload/entities/upload.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { UploadModule } from './modules/upload/upload.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Upload],
       synchronize: true,
     }),
     I18nModule.forRoot({
