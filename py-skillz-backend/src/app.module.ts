@@ -16,6 +16,8 @@ import { Subtitulo } from './modules/curso/entities/subtitulo.entity';
 import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
 import { Examen } from './modules/curso/entities/examen.entity';
 import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
+import { Upload } from './modules/upload/entities/upload.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -26,7 +28,7 @@ import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa],
+      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa,Upload],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([

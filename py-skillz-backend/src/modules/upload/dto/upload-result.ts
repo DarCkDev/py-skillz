@@ -1,4 +1,9 @@
+import { Source } from '../entities/source.entity';
+
 export interface UploadResult {
+  id: string;
   url: string;
-  source: 'external' | 'upload';
+  source: Source;
+  type: string;
+  name: string;
 }
