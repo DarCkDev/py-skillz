@@ -62,6 +62,7 @@ function App() {
               <Route path="admin/courses" element={<CourseManagement />} />
             </Route>
             
+            
             {/* Rutas de profesor */}
             <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
               <Route path="reports" element={<Reports />} />
