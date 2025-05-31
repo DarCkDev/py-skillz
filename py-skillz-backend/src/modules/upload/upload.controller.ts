@@ -5,6 +5,10 @@ import {
   UseInterceptors,
   UploadedFile,
   UseGuards,
+  Param,
+  Delete,
+  Get,
+  HttpCode,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
@@ -14,7 +18,9 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
+  ApiHeader,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auht.guard';
@@ -29,10 +35,15 @@ export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
   @Post()
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
   @ApiOperation({ summary: 'Subir archivos' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'Archivo a subir',
+    description: 'Upload file',
     type: FileCreateUploadDto,
   })
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -43,5 +54,34 @@ export class UploadController {
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.uploadService.handleUpload(dto, file);
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiOperation({ summary: 'Get file' })
+  @ApiParam({ name: 'id', description: 'File id', required: true })
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.TEACHER)
+  async getOne(@Param('id') id: string) {
+    return await this.uploadService.getOne(id);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiOperation({ summary: 'Delete file' })
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.TEACHER)
+  async delete(@Param('id') id: string) {
+    await this.uploadService.delete(id);
   }
 }
