@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: py_skillz
+      POSTGRES_USER: py_skillz_user
+      POSTGRES_PASSWORD: py_skillz_pass
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./py-skillz-backend
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: py_skillz
+      DB_USER: py_skillz_user
+      DB_PASS: py_skillz_pass
+      JWT_SECRET: CA19F18E64436BB3E965BA14843D7
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - '3003:3003'
+    volumes:
+      - ./py-skillz-backend/uploads:/app/uploads
+      - ./py-skillz-backend/.env:/app/.env
+
+volumes:
+  postgres_data:
+
