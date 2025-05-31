@@ -33,7 +33,15 @@ services:
     volumes:
       - ./py-skillz-backend/uploads:/app/uploads
       - ./py-skillz-backend/.env:/app/.env
-
+  frontend:
+    build:
+      context: ./py-skillz-frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
 volumes:
   postgres_data:
 
