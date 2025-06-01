@@ -1,0 +1,39 @@
+name: Deploy Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login a Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Construir y subir imagen Backend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./py-skillz-backend
+          file: ./py-skillz-backend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/py-skillz-backend:latest
+
+      - name: Construir y subir imagen Frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./py-skillz-frontend
+          file: ./py-skillz-frontend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/py-skillz-frontend:latest
