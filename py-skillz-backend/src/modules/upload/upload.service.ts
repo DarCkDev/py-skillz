@@ -62,7 +62,7 @@ export class UploadService {
       });
     }
 
-    const filePath = file.path.replace('public/', '');
+    const filePath = file.path.replace('public/', '').replace(/\\/g, '/');
 
     const entity = this.uploadRepository.create({
       url: filePath,
