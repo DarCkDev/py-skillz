@@ -24,7 +24,7 @@ RUN npm install --production
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
-COPY .env ./
+COPY .env.example ./.env
 
 COPY nest-cli.json ./
 COPY tsconfig.build.json ./
