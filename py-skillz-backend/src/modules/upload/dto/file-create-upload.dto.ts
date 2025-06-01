@@ -10,7 +10,7 @@ export class FileCreateUploadDto {
   @ApiPropertyOptional({
     type: 'string',
     format: 'binary',
-    description: 'Url externa',
+    description: 'Url del archivo',
   })
   @ValidateIf((o: FileCreateUploadDto) => !o.externalUrl)
   file?: any;
@@ -19,5 +19,5 @@ export class FileCreateUploadDto {
   @ValidateIf((o: FileCreateUploadDto) => !o.file)
   @IsString()
   @IsOptional()
-  externalUrl: string;
+  externalUrl?: string;
 }
