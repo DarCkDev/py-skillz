@@ -17,6 +17,7 @@ import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
 import { Examen } from './modules/curso/entities/examen.entity';
 import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
 import { Upload } from './modules/upload/entities/upload.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -28,7 +29,16 @@ import { Upload } from './modules/upload/entities/upload.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa,Upload],
+      entities: [
+        User,
+        Curso,
+        Tema,
+        Subtitulo,
+        Ejercicio,
+        Examen,
+        EjercicioExa,
+        Upload,
+      ],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
@@ -58,6 +68,10 @@ import { Upload } from './modules/upload/entities/upload.entity';
           options: ['lang', 'locale'],
         },
       ],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads', // <-- lo que ves en la URL
     }),
     AuthModule,
     UserModule,
