@@ -9,6 +9,7 @@ import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { OpenAIModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { UploadModule } from './modules/upload/upload.module';
     AuthModule,
     UserModule,
     UploadModule,
+    OpenAIModule
   ],
   controllers: [AppController],
   providers: [AppService],

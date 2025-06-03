@@ -33,6 +33,7 @@
     "i18next": "^25.1.1",
     "i18next-fs-backend": "^2.6.0",
     "nestjs-i18n": "^10.5.1",
+    "openai": "^5.0.2",
     "pg": "^8.15.1",
     "py-skillz-backend": "file:",
     "reflect-metadata": "^0.2.2",

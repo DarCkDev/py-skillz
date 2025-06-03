@@ -1,42 +1,91 @@
-import React, { useState } from "react";
-import { consultarChatGPT } from "../../services/chatgpt";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const ChatAssistant: React.FC = () => {
-  const [mensaje, setMensaje] = useState("");
-  const [historial, setHistorial] = useState<string[]>([]);
+const Chat: React.FC = () => {
+  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
+  const [input, setInput] = useState('');
 
-  const manejarEnvio = async () => {
-    if (!mensaje.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    const userMessage = { sender: 'user', text: input };
+    setMessages([...messages, userMessage]);
+    setInput('');
 
-    setHistorial(prev => [...prev, `Tú: ${mensaje}`]);
-    const respuesta = await consultarChatGPT(mensaje);
-    setHistorial(prev => [...prev, `IA: ${respuesta}`]);
-    setMensaje("");
+    try {
+      const response = await axios.post('/chat', { message: input });
+      const botMessage = { sender: 'bot', text: response.data.response };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+    }
   };
 
   return (
-    <div className="chat-assistant p-4 border rounded shadow-md w-full max-w-md bg-white">
-      <h2 className="text-xl font-bold mb-2">Asistente IA</h2>
-      <div className="historial mb-2 h-64 overflow-y-auto border p-2">
-        {historial.map((msg, i) => (
-          <p key={i} className="mb-1">{msg}</p>
+    <div style={{
+      maxWidth: '600px',
+      margin: '40px auto',
+      padding: '20px',
+      borderRadius: '12px',
+      backgroundColor: '#f4f4f4',
+      boxShadow: '0 0 10px rgba(0,0,0,0.1)'
+    }}>
+      <div style={{ maxHeight: '300px', overflowY: 'auto', marginBottom: '20px' }}>
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            style={{
+              marginBottom: '10px',
+              textAlign: msg.sender === 'user' ? 'right' : 'left'
+            }}
+          >
+            <div
+              style={{
+                display: 'inline-block',
+                padding: '10px 15px',
+                borderRadius: '15px',
+                backgroundColor: msg.sender === 'user' ? '#007bff' : '#e0e0e0',
+                color: msg.sender === 'user' ? '#fff' : '#000',
+                maxWidth: '80%'
+              }}
+            >
+              {msg.text}
+            </div>
+          </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={mensaje}
-        onChange={(e) => setMensaje(e.target.value)}
-        className="w-full border p-2 mb-2"
-        placeholder="Haz una pregunta..."
-      />
-      <button
-        onClick={manejarEnvio}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Enviar
-      </button>
+
+      <div style={{ display: 'flex', gap: '10px' }}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+          style={{
+            flex: 1,
+            padding: '10px',
+            borderRadius: '8px',
+            border: '1px solid #ccc',
+            backgroundColor: '#fff',
+            color: '#000'
+          }}
+          placeholder="Escribe un mensaje..."
+        />
+        <button
+          onClick={sendMessage}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#28a745',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer'
+          }}
+        >
+          Enviar
+        </button>
+      </div>
     </div>
   );
 };
 
-export default ChatAssistant;
+export default Chat;
