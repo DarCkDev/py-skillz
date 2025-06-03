@@ -13,7 +13,9 @@ export const multerStorage = diskStorage({
           ? 'documents'
           : type === FileType.PRESENTATION
             ? 'presentations'
-            : 'others';
+            : type === FileType.IMAGE
+              ? 'images'
+              : 'others';
 
     const uploadPath = `./uploads/${folder}`;
     if (!fs.existsSync(uploadPath)) {

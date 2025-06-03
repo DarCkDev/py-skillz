@@ -7,10 +7,11 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = 3003;
 
-  // app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    origin: process.env.CORS_ORIGIN,
+    origin: 'http://localhost:3000',
+    credentials: true,
   });
   app.useGlobalPipes(new I18nValidationPipe());
   app.useGlobalFilters(
@@ -39,6 +40,12 @@ async function bootstrap() {
   const documentFactory = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  await app.listen(process.env.PORT ?? 3000);
+  try {
+    await app.listen(port);
+    console.log(`Application is running on: http://localhost:${port}`);
+    console.log(`Swagger documentation is available at: http://localhost:${port}/api`);
+  } catch (error) {
+    console.error('Error starting the application:', error);
+  }
 }
 bootstrap();
