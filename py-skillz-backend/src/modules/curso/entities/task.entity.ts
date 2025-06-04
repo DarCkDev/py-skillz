@@ -26,6 +26,15 @@ export class Task {
 
   @Column({ type: 'text', nullable: true })
   fileUrl: string;
+  
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  tag: string;
+
+  @Column({ type: 'text', nullable: true })
+  objectives: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deadline: Date;
 
   @CreateDateColumn()
   createdAt: Date;

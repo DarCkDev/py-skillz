@@ -16,4 +16,8 @@ export class CreateTaskDto {
   @IsNumber()
   @IsNotEmpty()
   courseId: number;
+  fileUrl?: string;
+  tag?: string;
+  objectives?: string;
+  deadline?: Date;
 } 

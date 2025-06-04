@@ -19,6 +19,9 @@ interface TaskData {
   title: string;
   description: string;
   instructions: string;
+  tag?: string;
+  objectives?: string;
+  deadline?: string;
   files?: File[];
 }
 
@@ -182,7 +185,41 @@ export function CreateTask() {
                 />
               </div>
 
-              <div>
+               <div>
+                  <label className="block text-sm font-medium mb-2">Etiqueta de Tarea</label>
+                  <Select onValueChange={(value) => setTaskData(prev => ({ ...prev, tag: value }))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una etiqueta" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="codificacion">Tareas de Codificación</SelectItem>
+                      <SelectItem value="investigacion">Investigación y/o Desarrollo</SelectItem>
+                      <SelectItem value="seleccion">Selección Múltiple</SelectItem>
+                      <SelectItem value="otro">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Objetivos Requeridos</label>
+                  <Textarea
+                    name="objectives"
+                    placeholder="Describe qué debe lograr el estudiante..."
+                    value={taskData.objectives}
+                    onChange={handleInputChange}
+                />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Límite de Tiempo</label>
+                  <Input
+                    name="deadline"
+                    type="datetime-local"
+                    value={taskData.deadline}
+                    onChange={handleInputChange}
+                />
+                </div>
+                <div>
                 <label className="block text-sm font-medium mb-2">Archivos Adjuntos</label>
                 <FileUpload
                   onFilesChange={handleFilesChange}
@@ -191,7 +228,7 @@ export function CreateTask() {
                 />
               </div>
             </div>
-
+             
             <Button onClick={handleSubmit}>Crear Tarea</Button>
           </div>
         </CardContent>
