@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './modules/user/entities/user.entity';
@@ -17,10 +18,12 @@ import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
 import { Examen } from './modules/curso/entities/examen.entity';
 import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
 import { Upload } from './modules/upload/entities/upload.entity';
-import { ServeStaticModule } from '@nestjs/serve-static';
+import { PythonModule } from './python/python.module';
+import { Task } from './modules/curso/entities/task.entity';
 
 @Module({
   imports: [
+    PythonModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -38,6 +41,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         Examen,
         EjercicioExa,
         Upload,
+        Task,
       ],
       synchronize: true,
     }),
@@ -48,6 +52,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       Ejercicio,
       Examen,
       EjercicioExa,
+      Task,
     ]),
     I18nModule.forRoot({
       fallbackLanguage: 'es',

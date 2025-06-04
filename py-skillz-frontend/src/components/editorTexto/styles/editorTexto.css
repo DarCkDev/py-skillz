@@ -1,0 +1,88 @@
+.editor-container {
+  @apply flex flex-col h-screen bg-gray-900 text-white;
+}
+
+.editor-toolbar {
+  @apply flex gap-2 p-2 bg-gray-800 border-b border-gray-700;
+}
+
+.editor-button {
+  @apply px-4 py-2 rounded font-medium transition-colors;
+}
+
+.run-button {
+  @apply bg-green-600 hover:bg-green-700 text-white;
+}
+
+.save-button {
+  @apply bg-blue-600 hover:bg-blue-700 text-white;
+}
+
+.editor-button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.editor-content {
+  @apply flex flex-1 overflow-hidden;
+}
+
+.editor-wrapper {
+  @apply w-1/2 h-full border-r border-gray-700;
+}
+
+.output-panel {
+  @apply w-1/2 h-full bg-gray-800 p-4 overflow-auto;
+}
+
+.output-panel h3 {
+  @apply text-lg font-semibold mb-2 text-gray-200;
+}
+
+.output-panel pre {
+  @apply bg-gray-900 p-4 rounded overflow-x-auto;
+  @apply font-mono text-sm;
+}
+
+.output-panel .error {
+  @apply text-red-400;
+}
+
+.output-panel .success {
+  @apply text-green-400;
+}
+
+/* Estilos para el editor de Monaco */
+.monaco-editor {
+  @apply h-full;
+}
+
+/* Ajustes para el contenedor del editor */
+.editor-wrapper .monaco-editor {
+  @apply h-full w-full;
+}
+
+/* Ajustes para el panel de salida */
+.output-panel pre {
+  @apply whitespace-pre-wrap break-words;
+  @apply min-h-[200px] max-h-full;
+}
+
+.file-manager {
+  @apply w-1/4 bg-gray-800 p-4;
+}
+
+.file-manager h2 {
+  @apply text-white text-lg mb-4;
+}
+
+.file-manager ul {
+  @apply list-none p-0;
+}
+
+.file-manager li {
+  @apply text-white cursor-pointer p-2 hover:bg-gray-700;
+}
+
+.file-manager button {
+  @apply mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600;
+} 

@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Role } from './role.entity';
 import { Curso } from '../../curso/entities/curso.entity';
+import { Task } from '../../curso/entities/task.entity';
 
 @Entity()
 export class User {
@@ -40,4 +41,7 @@ export class User {
 
   @OneToMany(() => Curso, (curso) => curso.creador)
   cursos?: Curso[];
+
+  @OneToMany(() => Task, (task) => task.creator)
+  tasks?: Task[];
 }
