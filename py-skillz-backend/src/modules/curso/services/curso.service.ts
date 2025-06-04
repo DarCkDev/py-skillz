@@ -41,12 +41,18 @@ export class CursoService {
     });
     if (!user) throw new Error('Usuario no encontrado');
     // Crear el curso
+    createCursoDto.temas.forEach((temaDto) => {
+      temaDto.subtitulos.forEach((subtituloDto) => {
+        console.log(subtituloDto);
+      });
+    });
     const curso = this.cursoRepository.create({
       titulo: createCursoDto.tituloCurso,
       idioma: createCursoDto.idiomaCurso,
       nivel: createCursoDto.nivel,
       licencia: createCursoDto.licenciaCurso,
       descripcion: createCursoDto.descripcion,
+      imagenDestacada: createCursoDto.imagenDestacada,
       creador: user,
     });
     await this.cursoRepository.save(curso);
@@ -63,6 +69,8 @@ export class CursoService {
         const subtitulo = this.subtituloRepository.create({
           titulo: subtituloDto.tituloSubtitulo,
           contenidoHtml: subtituloDto.textoEnriquecido,
+          videoUrl: subtituloDto.videoUrl,
+          documentoUrl: subtituloDto.documentoUrl,
           orden: subtituloDto.orden,
           tema: tema,
         });

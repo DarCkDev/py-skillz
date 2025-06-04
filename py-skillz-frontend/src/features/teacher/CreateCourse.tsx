@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { crearCurso } from './api/api';
+import { crearCurso, subirArchivos } from './api/api';
 
 import type {
   Ejercicio as EjercicioType,
@@ -337,12 +337,17 @@ export const CreateCourse = () => {
 
     console.log('CursoData antes de enviar:', JSON.stringify(cursoData, null, 2));
 
-    const uploadFileAndGetUrl = async (file: File | undefined): Promise<string | undefined> => {
+    const uploadFileAndGetUrl = async (file: File | undefined, type: 'video' | 'document' | 'presentation' | 'image' = 'video'): Promise<string | undefined> => {
+      console.log(file);
       if (!file) return undefined;
-      return new Promise(resolve => setTimeout(() => resolve(`https://fakeurl.com/${file.name}`), 100));
+      const formData = new FormData();
+      formData.append('type', type);
+      formData.append('file', file);
+      const response = await subirArchivos(formData, type);
+      return response.url;
     };
 
-    const imagenDestacadaUrl = await uploadFileAndGetUrl(cursoData.imagenDestacadaFile);
+    const imagenDestacadaUrl = await uploadFileAndGetUrl(cursoData.imagenDestacadaFile, 'image');
     type EjercicioPayloadItem = EjercicioType & { orden: number };
 
 
@@ -352,8 +357,9 @@ export const CreateCourse = () => {
       cursoData.temas.map(async (tema: TemaType) => {
         const subtitulosParaPayload = await Promise.all(
           tema.subtitulos.map(async (sub: SubtituloType) => {
-            const videoUrl = await uploadFileAndGetUrl(sub.videoFile) || sub.videoUrl;
-            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile) || sub.documentoUrl;
+            const videoUrl = await uploadFileAndGetUrl(sub.videoFile, 'video') || sub.videoUrl;
+            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile, 'document') || sub.documentoUrl;
+            console.log(videoUrl, documentoUrl);
         
             const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
               const { pregunta, ...ejercicioSpecificProps } = ej;

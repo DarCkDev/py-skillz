@@ -17,3 +17,22 @@ export const crearCurso = async (payload: CursoData) => {
   if (!response.ok) throw new Error('Error al crear el curso');
   return await response.json();
 };
+
+export const subirArchivos = async (data: FormData, type: 'video' | 'document' | 'presentation' | 'image', source: 'external' | 'upload' = 'upload') => {
+  const lang = localStorage.getItem('i18nextLng') || 'es';
+  const token = sessionStorage.getItem('token');
+  const headers: Record<string, string> = {
+    'Authorization': `Bearer ${token}`,
+    'x-custom-lang': lang,
+    ...(source === 'external' ? { 'Content-Type': 'Application/json' } : {}),
+  };
+  
+  const response = await fetch(`${API_URL}/upload`, {
+    method: 'POST',
+    headers,
+    body: source === 'external' ? JSON.stringify(Object.fromEntries(data)) : data,
+  });
+  console.log(response);
+  if (!response.ok) throw new Error('Error al crear el curso');
+  return await response.json();
+};
