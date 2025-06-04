@@ -105,6 +105,7 @@ export function AccessibilityPanel() {
             onClick={() => setLineHeight('large')}
           >
             {t('accessibility.lineHeightLarge')}
+            
           </button>
         </div>
       </div>
