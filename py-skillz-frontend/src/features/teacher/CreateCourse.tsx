@@ -330,111 +330,51 @@ export const CreateCourse = () => {
       alert("Por favor, completa toda la información general del curso antes de guardar.");
       return;
     }
-    if (currentStep === 1 && isPaso1Completo()) {
-      siguientePaso();
-      return;
-    }
 
-    console.log('CursoData antes de enviar:', JSON.stringify(cursoData, null, 2));
-
-    const uploadFileAndGetUrl = async (file: File | undefined): Promise<string | undefined> => {
-      if (!file) return undefined;
-      return new Promise(resolve => setTimeout(() => resolve(`https://fakeurl.com/${file.name}`), 100));
-    };
-
-    const imagenDestacadaUrl = await uploadFileAndGetUrl(cursoData.imagenDestacadaFile);
-    type EjercicioPayloadItem = EjercicioType & { orden: number };
-
-
-
-
-    const temasParaPayload = await Promise.all(
-      cursoData.temas.map(async (tema: TemaType) => {
-        const subtitulosParaPayload = await Promise.all(
-          tema.subtitulos.map(async (sub: SubtituloType) => {
-            const videoUrl = await uploadFileAndGetUrl(sub.videoFile) || sub.videoUrl;
-            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile) || sub.documentoUrl;
-        
-            const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
-              const { pregunta, ...ejercicioSpecificProps } = ej;
-
-        
-              switch (ej.tipo) {
-                case 'link':
-                  acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
-                  break;
-                case 'codigo':
-                  acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
-                  break;
-                case 'opcionMultiple':
-                  acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
-                  break;
-                case 'quiz':
-                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
-                  break;
-              }
-              return acc;
-            }, []);
-        
-            return {
-              id: sub.id,
-              tituloSubtitulo: sub.tituloSubtitulo,
-              textoEnriquecido: sub.textoEnriquecido,
-              orden: sub.orden,
-              videoUrl: videoUrl,
-              documentoUrl: documentoUrl,
-              ejercicios: ejerciciosProcesados.map((ePayload, index: number): EjercicioPayloadItem => ({ ...ePayload, orden: index + 1 })),
-            };
-          })
-        );
-
-        const ejerciciosExamenProcesados: EjercicioType[] = (tema.examen?.ejerciciosExa || []).reduce((acc: EjercicioType[], ej: EjercicioType) => {
-          const { pregunta, ...ejercicioSpecificProps } = ej;
-
-          switch (ej.tipo) {
-            case 'link':
-              acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
-              break;
-            case 'codigo':
-              acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
-              break;
-            case 'opcionMultiple':
-              acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
-              break;
-            case 'quiz':
-              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
-              break;
-          }
-          return acc;
-        }, []);
-
-        return {
-          id: tema.id,
-          tituloTema: tema.tituloTema,
-          orden: tema.orden,
-          subtitulos: subtitulosParaPayload,
-          examen: tema.examen ? { ejerciciosExa: ejerciciosExamenProcesados.map((ePayload, index: number): EjercicioPayloadItem => ({ ...ePayload, orden: index + 1 })) } : { ejerciciosExa: [] },
-        };
-      })
-    );
-
-    const payload = {
-      tituloCurso: cursoData.tituloCurso,
-      idiomaCurso: cursoData.idiomaCurso,
-      nivel: cursoData.nivel,
-      licenciaCurso: cursoData.licenciaCurso,
-      descripcion: cursoData.descripcion,
-      imagenDestacada: imagenDestacadaUrl,
-      temas: temasParaPayload
-    };
-
-    console.log('Payload FINAL para backend:', JSON.stringify(payload, null, 2));
-
-    // Cuando estés listo para enviar al backend:
     try {
-      await crearCurso(payload);
+      const formData = new FormData();
+
+      formData.append('tituloCurso', cursoData.tituloCurso);
+      formData.append('idiomaCurso', cursoData.idiomaCurso);
+      formData.append('nivel', cursoData.nivel);
+      formData.append('licenciaCurso', cursoData.licenciaCurso);
+      formData.append('descripcion', cursoData.descripcion);
+
+      if (cursoData.imagenDestacadaFile) {
+        formData.append('imagenDestacada', cursoData.imagenDestacadaFile);
+      }
+
+      const temasLimpios = cursoData.temas.map((tema) => ({
+        id: tema.id,
+        tituloTema: tema.tituloTema,
+        orden: tema.orden,
+        subtitulos: tema.subtitulos.map((sub) => ({
+          id: sub.id,
+          tituloSubtitulo: sub.tituloSubtitulo,
+          textoEnriquecido: sub.textoEnriquecido,
+          orden: sub.orden,
+          videoUrl: sub.videoUrl ?? '',
+          documentoUrl: sub.documentoUrl ?? '',
+          ejercicios: sub.ejercicios,
+        })),
+        examen: tema.examen ?? { ejerciciosExa: [] }
+      }));
+
+      formData.append('temas', JSON.stringify(temasLimpios));
+
+      cursoData.temas.forEach((tema, temaIndex) => {
+        tema.subtitulos.forEach((sub, subIndex) => {
+          if (sub.videoFile) {
+            formData.append(`temas[${temaIndex}].subtitulos[${subIndex}].videoFile`, sub.videoFile);
+          }
+          if (sub.documentoFile) {
+            formData.append(`temas[${temaIndex}].subtitulos[${subIndex}].documentoFile`, sub.documentoFile);
+          }
+        });
+      });
+
+      await crearCurso(formData); // ✅ ya preparado para recibir FormData
       alert('Curso creado correctamente');
-      // Redirige o limpia el formulario si quieres
     } catch (error) {
       alert('Error al crear el curso');
       console.error('Error al crear el curso:', error);
