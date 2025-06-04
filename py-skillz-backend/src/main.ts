@@ -23,6 +23,17 @@ async function bootstrap() {
     .setDescription('Py Skillz API')
     .setVersion('1.0')
     .addTag('Py Skillz')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'JWT token',
+        name: 'Authorization',
+        in: 'header',
+      },
+      'access_token',
+    )
     .build();
 
   const documentFactory = SwaggerModule.createDocument(app, config);

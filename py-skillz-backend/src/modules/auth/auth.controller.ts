@@ -4,6 +4,7 @@ import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiHeader,
   ApiResponse,
   ApiUnauthorizedResponse,
@@ -12,6 +13,7 @@ import { ErrorResponseDto } from '../user/dto/error-response-dto';
 import { UserResponseDto } from '../user/dto/user-response.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
 
+@ApiBearerAuth('access_token')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

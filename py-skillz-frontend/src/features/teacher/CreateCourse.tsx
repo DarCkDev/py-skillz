@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
+import { crearCurso } from './api/api';
 
 import type {
   Ejercicio as EjercicioType,
@@ -342,9 +343,9 @@ export const CreateCourse = () => {
     };
 
     const imagenDestacadaUrl = await uploadFileAndGetUrl(cursoData.imagenDestacadaFile);
+    type EjercicioPayloadItem = EjercicioType & { orden: number };
 
-    type EjercicioSinIdNiOrden = Omit<EjercicioLinkType, 'id' | 'orden'> | Omit<EjercicioCodigoType, 'id' | 'orden'> | Omit<EjercicioOpcionMultipleType, 'id' | 'orden'> | Omit<EjercicioQuizType, 'id' | 'orden'>;
-    type EjercicioPayloadItem = EjercicioSinIdNiOrden & { orden: number };
+
 
 
     const temasParaPayload = await Promise.all(
@@ -353,28 +354,30 @@ export const CreateCourse = () => {
           tema.subtitulos.map(async (sub: SubtituloType) => {
             const videoUrl = await uploadFileAndGetUrl(sub.videoFile) || sub.videoUrl;
             const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile) || sub.documentoUrl;
-
-            const ejerciciosProcesados: EjercicioSinIdNiOrden[] = sub.ejercicios.reduce((acc: EjercicioSinIdNiOrden[], ej: EjercicioType) => {
+        
+            const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
               const { pregunta, ...ejercicioSpecificProps } = ej;
 
+        
               switch (ej.tipo) {
                 case 'link':
-                  acc.push({ tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
+                  acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
                   break;
                 case 'codigo':
-                  acc.push({ tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
+                  acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
                   break;
                 case 'opcionMultiple':
-                  acc.push({ tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+                  acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
                   break;
                 case 'quiz':
-                  acc.push({ tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
                   break;
               }
               return acc;
             }, []);
-
+        
             return {
+              id: sub.id,
               tituloSubtitulo: sub.tituloSubtitulo,
               textoEnriquecido: sub.textoEnriquecido,
               orden: sub.orden,
@@ -385,27 +388,28 @@ export const CreateCourse = () => {
           })
         );
 
-        const ejerciciosExamenProcesados: EjercicioSinIdNiOrden[] = (tema.examen?.ejerciciosExa || []).reduce((acc: EjercicioSinIdNiOrden[], ej: EjercicioType) => {
+        const ejerciciosExamenProcesados: EjercicioType[] = (tema.examen?.ejerciciosExa || []).reduce((acc: EjercicioType[], ej: EjercicioType) => {
           const { pregunta, ...ejercicioSpecificProps } = ej;
 
           switch (ej.tipo) {
             case 'link':
-              acc.push({ tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
+              acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
               break;
             case 'codigo':
-              acc.push({ tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
+              acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
               break;
             case 'opcionMultiple':
-              acc.push({ tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+              acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
               break;
             case 'quiz':
-              acc.push({ tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
               break;
           }
           return acc;
         }, []);
 
         return {
+          id: tema.id,
           tituloTema: tema.tituloTema,
           orden: tema.orden,
           subtitulos: subtitulosParaPayload,
@@ -426,6 +430,15 @@ export const CreateCourse = () => {
 
     console.log('Payload FINAL para backend:', JSON.stringify(payload, null, 2));
 
+    // Cuando estés listo para enviar al backend:
+    try {
+      await crearCurso(payload);
+      alert('Curso creado correctamente');
+      // Redirige o limpia el formulario si quieres
+    } catch (error) {
+      alert('Error al crear el curso');
+      console.error('Error al crear el curso:', error);
+    }
   };
 
   return (

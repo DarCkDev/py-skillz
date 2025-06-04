@@ -1,7 +1,12 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiBadRequestResponse, ApiHeader, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiHeader,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { ErrorResponseDto } from './dto/error-response-dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auht.guard';
@@ -9,6 +14,7 @@ import { RoleGuard } from '../common/guards/role.guard';
 import { Roles } from '../common/decorators/role.decorator';
 import { Role } from './entities/role.entity';
 
+@ApiBearerAuth('access_token')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
