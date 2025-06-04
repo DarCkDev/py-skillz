@@ -8,6 +8,15 @@ import { AppService } from './app.service';
 import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { UploadModule } from './modules/upload/upload.module';
+import { CursoModule } from './modules/curso/curso.module';
+import { Curso } from './modules/curso/entities/curso.entity';
+import { Tema } from './modules/curso/entities/tema.entity';
+import { Subtitulo } from './modules/curso/entities/subtitulo.entity';
+import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
+import { Examen } from './modules/curso/entities/examen.entity';
+import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
+import { Upload } from './modules/upload/entities/upload.entity';
 
 @Module({
   imports: [
@@ -19,9 +28,17 @@ import { UserModule } from './modules/user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa,Upload],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([
+      Curso,
+      Tema,
+      Subtitulo,
+      Ejercicio,
+      Examen,
+      EjercicioExa,
+    ]),
     I18nModule.forRoot({
       fallbackLanguage: 'es',
       fallbacks: {
@@ -44,6 +61,8 @@ import { UserModule } from './modules/user/user.module';
     }),
     AuthModule,
     UserModule,
+    UploadModule,
+    CursoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,0 +1,8 @@
+{
+  "invalidFile": "Archivo inválido",
+  "invalidMimeType": "Tipo de archivo inválido",
+  "invalidId": "ID inválido",
+  "fileNotFound": "Archivo no encontrado",
+  "errorDeletingFile": "Error al eliminar el archivo",
+  "deleteSuccess": "Archivo eliminado correctamente"
+}
