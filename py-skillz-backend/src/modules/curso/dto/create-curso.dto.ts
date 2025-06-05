@@ -57,6 +57,12 @@ class CreateSubtituloDto {
   @IsNumber()
   orden: number;
 
+  @IsOptional()
+  videoUrl: string;
+
+  @IsOptional()
+  documentoUrl: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateEjercicioDto)
@@ -96,6 +102,10 @@ export class CreateCursoDto {
 
   @IsString()
   descripcion: string;
+
+  @IsString()
+  @IsOptional()
+  imagenDestacada: string;
 
   @IsArray()
   @ValidateNested({ each: true })
