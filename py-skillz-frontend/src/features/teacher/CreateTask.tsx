@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { BackButton } from '../../components/shared/BackButton';
 import FileUpload from '../../components/shared/fileUpload';
@@ -7,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+
 import { useNavigate } from 'react-router-dom';
 
 interface Course {
@@ -62,7 +64,7 @@ export function CreateTask() {
 
     fetchCourses();
   }, [toast]);
-
+    
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTaskData(prev => ({ ...prev, [name]: value }));
@@ -103,7 +105,7 @@ export function CreateTask() {
       toast({
         title: 'Tarea creada',
         description: 'La tarea se ha creado correctamente',
-      });
+      })
 
       navigate('/my-courses');
     } catch (error) {
@@ -115,7 +117,6 @@ export function CreateTask() {
       });
     }
   };
-
   if (loading) {
     return (
       <div className="container mx-auto py-10">
@@ -128,7 +129,6 @@ export function CreateTask() {
       </div>
     );
   }
-
   return (
     <div className="container mx-auto py-10">
       <BackButton />
@@ -184,7 +184,6 @@ export function CreateTask() {
                   onChange={handleInputChange}
                 />
               </div>
-
                <div>
                   <label className="block text-sm font-medium mb-2">Etiqueta de Tarea</label>
                   <Select onValueChange={(value) => setTaskData(prev => ({ ...prev, tag: value }))}>
@@ -228,7 +227,6 @@ export function CreateTask() {
                 />
               </div>
             </div>
-             
             <Button onClick={handleSubmit}>Crear Tarea</Button>
           </div>
         </CardContent>

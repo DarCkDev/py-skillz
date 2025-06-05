@@ -10,6 +10,7 @@ import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { OpenAIModule } from './openai/openai.module';
 import { CursoModule } from './modules/curso/curso.module';
 import { Curso } from './modules/curso/entities/curso.entity';
 import { Tema } from './modules/curso/entities/tema.entity';
@@ -81,6 +82,7 @@ import { Task } from './modules/curso/entities/task.entity';
     AuthModule,
     UserModule,
     UploadModule,
+    OpenAIModule,
     CursoModule,
   ],
   controllers: [AppController],

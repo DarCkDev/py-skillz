@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Editor as MonacoEditor } from '@monaco-editor/react';
 import OutputPanel from '../OutputPanel';
 import '../styles/editorTexto.css';
+import ChatAssistant from "../../assistant/chatAssistant";
 
 interface PyFile {
   name: string;
@@ -185,6 +186,9 @@ const EditorTexto: React.FC = () => {
           <OutputPanel output={output} />
         </div>
       </div>
+      <div className="chat-section">
+         <ChatAssistant />
+       </div>
     </div>
   );
 };
