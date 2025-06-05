@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -13,6 +24,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auht.guard';
 import { RoleGuard } from '../common/guards/role.guard';
 import { Roles } from '../common/decorators/role.decorator';
 import { Role } from './entities/role.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiBearerAuth('access_token')
 @Controller('user')
@@ -41,7 +53,73 @@ export class UserController {
     type: ErrorResponseDto,
     description: 'Register failed.',
   })
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
   async create(@Body() userDto: CreateUserDto) {
     return await this.userService.create(userDto);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @Get(':id')
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiResponse({
+    status: 200,
+    type: UserResponseDto,
+    description: 'Get user successful.',
+  })
+  @ApiBadRequestResponse({
+    type: ErrorResponseDto,
+    description: 'Get user failed.',
+  })
+  async findUserById(@Param('id') id: string) {
+    return await this.userService.findUserById(id);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':id/delete')
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiResponse({
+    status: 204,
+    description: 'Delete user successful.',
+  })
+  @ApiBadRequestResponse({
+    type: ErrorResponseDto,
+    description: 'Delete user failed.',
+  })
+  async delete(@Param('id') id: string) {
+    return await this.userService.delete(id);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @HttpCode(HttpStatus.OK)
+  @Put(':id/update')
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiResponse({
+    status: 200,
+    type: UserResponseDto,
+    description: 'Update user successful.',
+  })
+  @ApiBadRequestResponse({
+    type: ErrorResponseDto,
+    description: 'Update user failed.',
+  })
+  async update(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
+    return await this.userService.update(id, userDto);
   }
 }

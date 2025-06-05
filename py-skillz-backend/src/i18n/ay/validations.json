@@ -9,5 +9,6 @@
   "invalidPassword": "Ukuna wakisiwa wakuna wakichiqa",
   "passwordsNotMatch": "Ukuna wakisiwa wakuna wakichiqa",
   "invalidRole": "Ukuna wakisiwa wakuna wakichiqa",
-  "invalidCredentials": "Ukuna wakisiwa wakuna wakichiqa"
+  "invalidCredentials": "Ukuna wakisiwa wakuna wakichiqa",
+  "userNotFound": "Ukuna wakisiwa wakuna wakichiqa"
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -12,6 +12,10 @@ import {
 import { ErrorResponseDto } from '../user/dto/error-response-dto';
 import { UserResponseDto } from '../user/dto/user-response.dto';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { RoleGuard } from '../common/guards/role.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auht.guard';
+import { Roles } from '../common/decorators/role.decorator';
+import { Role } from '../user/entities/role.entity';
 
 @ApiBearerAuth('access_token')
 @Controller('auth')
@@ -52,6 +56,8 @@ export class AuthController {
     type: ErrorResponseDto,
     description: 'Register failed.',
   })
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
   register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
