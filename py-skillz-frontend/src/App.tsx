@@ -28,6 +28,7 @@ import EditorTexto from './components/editorTexto/pages/EditorTexto';
 import { Toaster } from './components/ui/toaster';
 import { useToast } from './components/ui/use-toast';
 import { CreateTask } from './features/teacher/CreateTask';
+import { MyCourses } from './features/common/MyCourses';
 
 function App() {
   const { i18n } = useTranslation();
@@ -38,7 +39,6 @@ function App() {
       i18n.changeLanguage(savedLang);
     }
   }, [i18n]);
-
 
   return (
     <ThemeProvider>
@@ -51,7 +51,7 @@ function App() {
             <Route path="catalog" element={<Catalog />} />
             <Route path="editor" element={<EditorTexto />} />
             <Route path="tasks/create" element={<CreateTask />} />
-
+            <Route path="my-courses" element={<MyCourses />} />
             <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER', 'STUDENT']} />}>
               <Route path="profile" element={<Profile />} />
             </Route>
@@ -62,6 +62,7 @@ function App() {
               <Route path="admin/users" element={<UserManagement />} />
               <Route path="admin/courses" element={<CourseManagement />} />
             </Route>
+            
             
             {/* Rutas de profesor */}
             <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>

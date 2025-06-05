@@ -11,6 +11,8 @@ import { EjercicioExa } from '../entities/ejercicio-exa.entity';
 import { EjercicioTipo } from '../entities/ejercicio-tipo.enum';
 import { User } from '../../user/entities/user.entity';
 import { PayloadDto } from 'src/modules/auth/dto/payload.dto';
+import { Task } from '../entities/task.entity';
+import { CreateTaskDto } from '../dto/create-task.dto';
 
 @Injectable()
 export class CursoService {
@@ -29,6 +31,8 @@ export class CursoService {
     private readonly ejercicioExaRepository: Repository<EjercicioExa>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>,
   ) {}
 
   async create(
@@ -115,6 +119,56 @@ export class CursoService {
         'temas.examenes',
         'temas.examenes.ejercicios',
       ],
+    });
+  }
+
+  async findByUser(userPayload: PayloadDto): Promise<Curso[]> {
+    return this.cursoRepository.find({
+      where: { creador: { id: userPayload.sub } },
+      relations: ['temas']
+    });
+  }
+
+  async createTask(createTaskDto: CreateTaskDto, userPayload: PayloadDto) {
+    // Buscar el curso con sus relaciones
+    const curso = await this.cursoRepository.findOne({
+      where: { id: parseInt(createTaskDto.courseId.toString()) },
+      relations: ['creador'],
+    });
+
+    if (!curso) {
+      throw new Error('Curso no encontrado');
+    }
+
+    // Verificar permisos
+    if (curso.creador.id !== userPayload.sub) {
+      throw new Error('No tienes permiso para crear tareas en este curso');
+    }
+
+    // Crear la tarea con las relaciones correctas
+    const task = this.taskRepository.create({
+      title: createTaskDto.title,
+      description: createTaskDto.description,
+      instructions: createTaskDto.instructions,
+      course: curso,
+      creator: { id: userPayload.sub }
+    });
+
+    // Guardar la tarea
+    const savedTask = await this.taskRepository.save(task);
+
+    // Retornar la tarea con sus relaciones
+    return this.taskRepository.findOne({
+      where: { id: savedTask.id },
+      relations: ['course', 'creator']
+    });
+  }
+
+  async getTasksByCourse(courseId: number) {
+    return await this.taskRepository.find({
+      where: { course: { id: courseId } },
+      relations: ['creator'],
+      order: { createdAt: 'DESC' },
     });
   }
 }
