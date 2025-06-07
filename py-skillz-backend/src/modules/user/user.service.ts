@@ -13,6 +13,7 @@ import { UserResponseDto } from './dto/user-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isUUID } from 'class-validator';
 import { Role } from './entities/role.entity';
+import { CreateStudentDto } from './dto/create-student.dto';
 
 @Injectable()
 export class UserService {
@@ -178,6 +179,31 @@ export class UserService {
         error: 'Not Found',
       });
     return this.parseUserResponse(user);
+  }
+
+  async createStudent(userDto: CreateStudentDto): Promise<UserResponseDto> {
+    const { password, email, ...rest } = userDto;
+    const userExists = await this.userRepository.findOne({ where: { email } });
+    if (userExists) {
+      throw new BadRequestException({
+        statusCode: 400,
+        message: [
+          this.i18n.t('validations.emailAlreadyExists', {
+            lang: I18nContext.current()?.lang,
+          }),
+        ],
+        error: 'Bad Request',
+      });
+    }
+    const hashedPassword = await hashPassword(password);
+    const user = this.userRepository.create({
+      ...rest,
+      email,
+      password: hashedPassword,
+      role: Role.STUDENT,
+    });
+    const newUser = await this.userRepository.save(user);
+    return this.parseUserResponse(newUser);
   }
 
   async countUsers(role?: Role): Promise<number> {

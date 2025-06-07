@@ -27,6 +27,7 @@ import { RoleGuard } from '../common/guards/role.guard';
 import { Roles } from '../common/decorators/role.decorator';
 import { Role } from './entities/role.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateStudentDto } from './dto/create-student.dto';
 
 @ApiBearerAuth('access_token')
 @Controller('user')
@@ -59,6 +60,25 @@ export class UserController {
   @Roles(Role.ADMIN)
   async create(@Body() userDto: CreateUserDto) {
     return await this.userService.create(userDto);
+  }
+
+  @Post('new-student')
+  @ApiHeader({
+    name: 'x-custom-lang',
+    description: 'Language response: es|ay|qu|gn',
+    required: false,
+  })
+  @ApiResponse({
+    status: 201,
+    type: UserResponseDto,
+    description: 'Register successful.',
+  })
+  @ApiBadRequestResponse({
+    type: ErrorResponseDto,
+    description: 'Register failed.',
+  })
+  async createStudent(@Body() userDto: CreateStudentDto) {
+    return await this.userService.createStudent(userDto);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
