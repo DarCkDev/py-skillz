@@ -33,3 +33,21 @@ export interface ILogin {
   password: string;
 }
 
+export interface UserInfo {
+  id: string;
+  fullName: string;
+  email: string;
+  role: UserRole;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type Error400Response = {
+  statusCode: number;
+  message: string[];
+  error: string;
+};
+
+export interface EditCreateUser extends Partial<UserInfo>{
+  password?: string;
+}

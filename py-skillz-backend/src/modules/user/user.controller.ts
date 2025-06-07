@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -16,6 +17,7 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiHeader,
+  ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
 import { ErrorResponseDto } from './dto/error-response-dto';
@@ -57,6 +59,19 @@ export class UserController {
   @Roles(Role.ADMIN)
   async create(@Body() userDto: CreateUserDto) {
     return await this.userService.create(userDto);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @HttpCode(200)
+  @ApiQuery({
+    name: 'role',
+    enum: Role,
+    required: false,
+  })
+  @Get('count')
+  async countUsers(@Query('role') role?: Role) {
+    return await this.userService.countUsers(role);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)

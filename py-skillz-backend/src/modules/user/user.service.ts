@@ -12,6 +12,7 @@ import { comparePassword, hashPassword } from 'src/utils/bcrypt.util';
 import { UserResponseDto } from './dto/user-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isUUID } from 'class-validator';
+import { Role } from './entities/role.entity';
 
 @Injectable()
 export class UserService {
@@ -22,9 +23,11 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<UserResponseDto[]> {
-    return (await this.userRepository.find()).map((user) =>
-      this.parseUserResponse(user),
-    );
+    return (
+      await this.userRepository.find({
+        order: { fullName: 'ASC' },
+      })
+    ).map((user) => this.parseUserResponse(user));
   }
 
   async create(userDto: CreateUserDto): Promise<UserResponseDto> {
@@ -75,7 +78,6 @@ export class UserService {
       });
     }
     const user = await this.userRepository.findOne({ where: { id } });
-    console.log(user);
     if (!user)
       throw new NotFoundException({
         statusCode: 404,
@@ -111,7 +113,6 @@ export class UserService {
   }
 
   async delete(id: string): Promise<void> {
-    console.log(this.isUUIDValid(id));
     if (!this.isUUIDValid(id)) {
       throw new BadRequestException({
         statusCode: 400,
@@ -179,12 +180,25 @@ export class UserService {
     return this.parseUserResponse(user);
   }
 
+  async countUsers(role?: Role): Promise<number> {
+    const users = !role
+      ? await this.userRepository.count()
+      : await this.userRepository.count({
+          where: {
+            role,
+          },
+        });
+    return users;
+  }
+
   private parseUserResponse(user: User): UserResponseDto {
     return {
       id: user.id,
       fullName: user.fullName,
       email: user.email,
       role: user.role,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
   }
 
