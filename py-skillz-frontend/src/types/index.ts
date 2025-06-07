@@ -51,3 +51,9 @@ export type Error400Response = {
 export interface EditCreateUser extends Partial<UserInfo>{
   password?: string;
 }
+
+export interface CreateStudent {
+  fullName: string;
+  email: string;
+  password: string;
+};

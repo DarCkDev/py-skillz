@@ -1,4 +1,4 @@
-import { EditCreateUser, Error400Response, UserInfo, UserRole } from "@/types";
+import { CreateStudent, EditCreateUser, Error400Response, UserInfo, UserRole } from "@/types";
 
 const API_URL = 'http://localhost:3003';
 
@@ -89,6 +89,32 @@ export const createUser = async (data: EditCreateUser): Promise<UserInfo | Error
     });
     const res = await response.json();
     if (response.ok) {
+      return res as UserInfo;
+    }
+    if (response.status === 400) {
+      return res as Error400Response;
+    }
+    throw new Error('Error inesperado.');
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return `Error inesperado: ${error.message}`;
+    }
+    return 'Error desconocido.'
+  }
+}
+
+export const createStudent = async (data: CreateStudent): Promise<UserInfo | Error400Response | string> => {
+  try {
+    const response = await fetch(`${API_URL}/user/new-student`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-custom-lang': localStorage.getItem('i18nextLng') || 'es',
+      },
+      body: JSON.stringify(data)
+    });
+    const res = await response.json();
+    if (response.status === 201) {
       return res as UserInfo;
     }
     if (response.status === 400) {
