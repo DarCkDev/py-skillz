@@ -79,6 +79,37 @@
     "reportsDescription": "Jakhuwinaka uñjaña ukatxa lurawinakat uñt'ayañanaka lurañataki.",
     "totalUsers": "Taqpach Jaqinaka",
     "totalCourses": "Taqpach Yatiqañanaka",
-    "activeStudents": "Ch'amanchiri Yatiqirinaka"
+    "activeStudents": "Ch'amanchiri Yatiqirinaka",
+    "name": "Jaq'a",
+    "fullName": "Jaq'a wakichaña",
+    "password": "Imt'ata",
+    "email": "E-mail",
+    "role": "Lurayiri",
+    "createdAt": "Taqpacha Kuticha",
+    "updatedAt": "Taqpacha Kuticha",
+    "actions": "Kutichaña",
+    "editUser": "Luraña",
+    "deleteUser": "Chhaqaña",
+    "createUser": "Luraña",
+    "admin": "Panka",
+    "teacher": "Yatichiri",
+    "student": "Yatiqiri",
+    "close": "Kutichaña",
+    "edit": "Askichaña",
+    "delete": "Chhaqaña",
+    "save": "Imaña",
+    "cancel": "Jan ukhamti",
+    "create": "Uñstayaña",
+    "update": "Jichhakiptayaña"
+  },
+  "user": {
+    "userUpdatedSuccessfully": "Usuario ukax suma machaqar tukuyatawa",
+    "userCreatedSuccessfully": "Usuario ukax suma luraña tukuyatawa",
+    "userDeletedSuccessfully": "Usuario ukax suma chhaqaña tukuyatawa",
+    "userNotFound": "Usuario ukax suma jikiskiti",
+    "errorUpdatingUser": "Pantjata ukax suma machaqar",
+    "errorCreatingUser": "Pantjata ukax suma luraña",
+    "errorDeletingUser": "Pantjata ukax suma chhaqaña",
+    "areYouSure": "¿Jumax aka apnaqirirux chhaqtayañ munasmati?"
   }
 }

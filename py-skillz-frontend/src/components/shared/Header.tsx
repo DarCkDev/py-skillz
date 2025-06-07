@@ -6,8 +6,10 @@ import iconBolivia from '../../../public/bolivia.png';
 import iconPy from '../../../public/py.png';
 import { AuthContext } from '../../context/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
+import { useNavigate } from 'react-router-dom';
 
 export function Header() {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const auth = useContext(AuthContext);
   const isAuthenticated = auth?.isAuthenticated || false;
@@ -25,6 +27,7 @@ export function Header() {
   const handleLogout = () => {
     if (auth) {
       auth.logout();
+      navigate('/login', { replace: true });
     }
   };
 
