@@ -1,11 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLoading } from '../../context/LoadingContext';
 
 export function BackButton() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { setLoading } = useLoading();
 
   
   const currentPath = location.pathname;
@@ -16,8 +18,10 @@ export function BackButton() {
   
   
   const handleBack = () => {
+    setLoading(true); // Set loading to true before navigation
     if (pathSegments.length === 0) {
   
+      setLoading(false); // Clear loading if no navigation occurs
       return;
     } else if (pathSegments.length === 1) {
   

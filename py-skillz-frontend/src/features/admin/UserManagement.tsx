@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { BackButton } from "../../components/shared/BackButton";
 import { UserInfo } from "@/types";
@@ -7,17 +7,18 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { createPortal } from "react-dom";
 import { ModalUpdateCreateUser } from "./ModalUpdateCreateUser";
-
+import { useLoading } from "../../context/LoadingContext";
 export const UserManagement = () => {
   const { t } = useTranslation();
   const [users, setUsers] = useState<UserInfo[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserInfo | undefined>(
     undefined
   );
+    const { setLoading } = useLoading();
 
   const fetchUsers = async () => {
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:3003/user", {
         method: "GET",
@@ -28,10 +29,13 @@ export const UserManagement = () => {
       const data = await response.json();
       console.log(data);
       setUsers(data);
-      setIsLoading(false);
+      
     } catch (error) {
       console.error("Error al obtener los usuarios:", error);
+    }finally {
+      setLoading(false);
     }
+
   };
 
   const onDeleteUser = async (id: string) => {
@@ -89,10 +93,7 @@ export const UserManagement = () => {
             user={currentUser}
           />,
           document.body
-        )}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+        )}(
         <div className="overflow-x-auto">
           <table className="w-full table-auto md:table-fixed">
             <thead className="text-left border-b border-foreground h-10">
@@ -149,7 +150,7 @@ export const UserManagement = () => {
             </tbody>
           </table>
         </div>
-      )}
+      )
     </div>
   );
 };

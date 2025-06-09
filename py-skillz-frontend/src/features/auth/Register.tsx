@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { BackButton } from "../../components/shared/BackButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreateStudent } from "@/types";
 import { useTranslation } from "react-i18next";
 import { createStudent } from "../admin/api/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
+import { useLoading } from "../../context/LoadingContext";
 
 const INITIAL: CreateStudent = {
   fullName: "",
@@ -22,6 +24,7 @@ export const Register = () => {
   const [userInfo, setUserInfo] = useState<CreateStudent>(INITIAL);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string[] | undefined>(undefined);
+  const { setLoading } = useLoading();
 
   const onValueChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -31,6 +34,7 @@ export const Register = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true before API call
     setIsLoading(true);
     setError(undefined);
     try {
@@ -48,6 +52,7 @@ export const Register = () => {
       setError([t("errors.unknown")]);
     } finally {
       setIsLoading(false);
+      setLoading(false); // Clear loading after API call completes
     }
   };
 
@@ -58,75 +63,78 @@ export const Register = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
       <BackButton />
-      <div className="flex items-center justify-center">
-        <form
-          className="flex flex-col gap-4 shadow bg-background rounded items-center p-5 w-11/12 md:w-2/3 lg:w-1/2 max-h-screen overflow-y-auto border border-primary/30"
-          onSubmit={onSubmit}
-        >
-          <p className="p-0 font-bold text-xl">{t("admin.create")}</p>
-          <div className="w-full">
-            <label className="font-bold" htmlFor="fullName">
-              {t("admin.fullName")} <span className="text-red-500">*</span>
-            </label>
-
-            <Input
-              id="fullName"
-              name="fullName"
-              placeholder={t("admin.fullName") || "Nombre completo"}
-              value={userInfo.fullName}
-              onChange={onValueChange}
-              required
-            />
-          </div>
-          <div className="w-full">
-            <label className="font-bold" htmlFor="email">
-              {t("admin.email")} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder={t("admin.email") || "Correo electrónico"}
-              value={userInfo.email}
-              onChange={onValueChange}
-              required
-            />
-          </div>
-          <div className="w-full">
-            <label className="font-bold" htmlFor="password">
-              {t("admin.password")} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder={t("admin.password") || "Contraseña"}
-              value={userInfo.password}
-              onChange={onValueChange}
-              required
-            />
-          </div>
-
-          {error && (
-            <div>
-              <ul>
+      <Card className="w-full max-w-md mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center text-3xl font-bold">
+            {t("admin.create")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={onSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="fullName" className="font-bold sr-only">
+                  {t("admin.fullName")} <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  id="fullName"
+                  name="fullName"
+                  placeholder={t("admin.fullName") || "Nombre completo"}
+                  value={userInfo.fullName}
+                  onChange={onValueChange}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="font-bold sr-only">
+                  {t("admin.email")} <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t("admin.email") || "Correo electrónico"}
+                  value={userInfo.email}
+                  onChange={onValueChange}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="font-bold sr-only">
+                  {t("admin.password")} <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder={t("admin.password") || "Contraseña"}
+                  value={userInfo.password}
+                  onChange={onValueChange}
+                  required
+                />
+              </div>
+            </div>
+            {error && (
+              <ul className="text-red-500 text-sm list-disc pl-5 mt-2">
                 {error.map((e, i) => (
-                  <li className="text-red-500" key={i}>
-                    {e}
-                  </li>
+                  <li key={i}>{e}</li>
                 ))}
               </ul>
-            </div>
-          )}
-          <div className="flex w-full justify-end gap-4">
-            <Button type="submit" disabled={isLoading}>
+            )}
+            <Button type="submit" disabled={isLoading} className="w-full">
               {t("admin.save")}
             </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            {t("auth.alreadyHaveAccount")}{" "}
+            <Link to="/login" className="underline" onClick={() => setLoading(true)}>
+              {t("auth.login")}
+            </Link>
           </div>
-        </form>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
