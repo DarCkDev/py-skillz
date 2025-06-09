@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button";
 import { createPortal } from "react-dom";
 import { ModalUpdateCreateUser } from "./ModalUpdateCreateUser";
 import { useLoading } from "../../context/LoadingContext";
+import { useToast } from "../../components/ui/use-toast";
 export const UserManagement = () => {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserInfo | undefined>(
@@ -48,16 +50,16 @@ export const UserManagement = () => {
         const res = await deleteUser(id);
         console.log(res);
         if (res === true) {
-          alert(t("user.userDeletedSuccessfully"));
+          toast.success(t("user.userDeletedSuccessfully"));
           setUsers(users.filter((user) => user.id !== id));
         } else if (typeof res === "string") {
-          alert(res);
+          toast.error(res);
         } else {
-          alert(t("errors.unknown"));
+          toast.error(t("errors.unknown"));
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
-          alert(error.message);
+          toast.error(error.message);
         }
       }
     }

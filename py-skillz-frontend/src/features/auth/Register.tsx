@@ -10,6 +10,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { useLoading } from "../../context/LoadingContext";
+import { useToast } from "../../components/ui/use-toast";
 
 const INITIAL: CreateStudent = {
   fullName: "",
@@ -21,6 +22,7 @@ export const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const isAuthenticated = useContext(AuthContext)?.isAuthenticated;
+  const { toast } = useToast();
   const [userInfo, setUserInfo] = useState<CreateStudent>(INITIAL);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string[] | undefined>(undefined);
@@ -44,7 +46,7 @@ export const Register = () => {
       } else if ("error" in res) {
         setError(res.message);
       } else {
-        alert(t("user.userCreatedSuccessfully"));
+        toast.success(t("user.userCreatedSuccessfully"));
         navigate("/login", { replace: true });
       }
     } catch (error) {

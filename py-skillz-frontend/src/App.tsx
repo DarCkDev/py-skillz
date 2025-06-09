@@ -7,6 +7,7 @@ import { RoleBasedRoute } from './components/routes/RoleBasedRoute';
 import { ThemeProvider } from './components/shared/ThemeProvider';
 import { LoadingProvider } from './context/LoadingContext';
 import { LoadingIndicator } from './components/shared/LoadingIndicator';
+import { Toaster } from 'sonner';
 
 // all
 const Home = lazy(() => import('./features/common/Home').then(module => ({ default: module.Home })));
@@ -87,6 +88,7 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
+        <Toaster />
       </LoadingProvider>
     </ThemeProvider>
   );

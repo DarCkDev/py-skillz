@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLoading } from "../../context/LoadingContext";
+import { useToast } from "../../components/ui/use-toast";
 
 export const Login = () => {
   const [data, setData] = useState<ILogin>({ email: "", password: "" });
@@ -15,6 +16,7 @@ export const Login = () => {
   const auth = useContext(AuthContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { setLoading } = useLoading();
 
   const onDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,7 @@ export const Login = () => {
       if (loginErrors) {
         setErrors(loginErrors);
       } else {
+        toast.success(t("auth.loginSuccessful"));
         navigate("/admin"); // Redirige al dashboard u otra ruta
       }
     } finally {
