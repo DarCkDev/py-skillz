@@ -17,7 +17,13 @@
     "language": "Aru",
     "languages": "Arunaka",
     "quickLinks": "Jank'aki chinuñanaka",
-    "allRightsReserved": "Taqpach derechos imata"
+    "allRightsReserved": "Taqpach derechos imata",
+    "closeMenu": "Menu jist'araña",
+    "openMenu": "Menu jist'araña",
+    "spanish": "Kastilla aru",
+    "quechua": "Qhichwa aru",
+    "aymara": "Aymara aru",
+    "guarani": "Guarani aru"
   },
   "auth": {
     "login": "Mantaña",

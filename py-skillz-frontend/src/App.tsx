@@ -14,6 +14,8 @@ const Catalog = lazy(() => import('./features/common/Catalog').then(module => ({
 const NotFound = lazy(() => import('./features/common/NotFound').then(module => ({ default: module.NotFound })));
 const Profile = lazy(() => import('./features/users/Profile').then(module => ({ default: module.Profile })));
 const Reports = lazy(() => import('./features/common/Reports').then(module => ({ default: module.Reports })));
+const Favorites = lazy(() => import('./features/common/Favorites').then(module => ({ default: module.Favorites })));
+const Progress = lazy(() => import('./features/common/Progress').then(module => ({ default: module.Progress })));
 
 // Páginas de autenticación
 const Login = lazy(() => import('./features/auth/Login').then(module => ({ default: module.Login })));
@@ -53,25 +55,31 @@ function App() {
                 <Route path="register" element={<Register />} />
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="editor" element={<EditorTexto />} />
-                <Route path="tasks/create" element={<CreateTask />} />
-                <Route path="my-courses" element={<MyCourses />} />
-                <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER', 'STUDENT']} />}>
-                  <Route path="profile" element={<Profile />} />
-                </Route>
-                
-                {/* Rutas de admin */}
-                <Route element={<RoleBasedRoute requiredRoles={['ADMIN']} />}>
-                  <Route path="admin" element={<AdminPanel />} />
-                  <Route path="admin/users" element={<UserManagement />} />
-                  <Route path="admin/courses" element={<CourseManagement />} />
-                </Route>
-                
-                
-                {/* Rutas de profesor */}
-                <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
-                  <Route path="reports" element={<Reports />} />
-                  <Route path="courses/create" element={<CreateCourse />} />
-                </Route>
+              <Route path="tasks/create" element={<CreateTask />} />
+              <Route path="my-courses" element={<MyCourses />} />
+              <Route path="favorites" element={<Favorites />} /> {/* New: Favorites route */}
+              <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER', 'STUDENT']} />}>
+                <Route path="profile" element={<Profile />} />
+              </Route>
+              
+              {/* Rutas de estudiante */}
+              <Route element={<RoleBasedRoute requiredRoles={['STUDENT']} />}>
+                <Route path="progress" element={<Progress />} /> {/* New: Progress route for students */}
+              </Route>
+
+              {/* Rutas de admin */}
+              <Route element={<RoleBasedRoute requiredRoles={['ADMIN']} />}>
+                <Route path="admin" element={<AdminPanel />} />
+                <Route path="admin/users" element={<UserManagement />} />
+                <Route path="admin/courses" element={<CourseManagement />} />
+              </Route>
+              
+              
+              {/* Rutas de profesor */}
+              <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
+                <Route path="reports" element={<Reports />} />
+                <Route path="courses/create" element={<CreateCourse />} />
+              </Route>
                 
                 {/* Ruta 404 */}
                 <Route path="*" element={<NotFound />} />

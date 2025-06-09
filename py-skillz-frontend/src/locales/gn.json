@@ -13,7 +13,13 @@
     "back": "Ejevy",
     "next": "Tenonderã",
     "previous": "Mboyvegua",
-    "search": "Eheka"
+    "search": "Eheka",
+    "closeMenu": "Emboty menú",
+    "openMenu": "Eipe'a menú",
+    "spanish": "Karaiñe'ẽ",
+    "quechua": "Kichwa ñe'ẽ",
+    "aymara": "Aymara ñe'ẽ",
+    "guarani": "Guarani ñe'ẽ"
   },
   "auth": {
     "login": "Eike",
