@@ -4,6 +4,7 @@ import { UserInfo, EditCreateUser } from "@/types";
 import { Input } from "@/components/ui/input";
 import { createUser, updateUser } from "./api/api";
 import { useTranslation } from "react-i18next";
+import { useToast } from "../../components/ui/use-toast";
 
 const INITIAL: EditCreateUser = {
   id: "",
@@ -22,6 +23,7 @@ export const ModalUpdateCreateUser = ({
   user?: UserInfo;
 }) => {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [userInfo, setUserInfo] = useState<EditCreateUser>(INITIAL);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string[] | undefined>(undefined);
@@ -45,7 +47,7 @@ export const ModalUpdateCreateUser = ({
           setError(res.message);
         } else {
           closeModal();
-          alert(t("user.userUpdatedSuccessfully"));
+          toast.success(t("user.userUpdatedSuccessfully"));
           await getUsers();
         }
       } else {
@@ -56,7 +58,7 @@ export const ModalUpdateCreateUser = ({
           setError(res.message);
         } else {
           closeModal();
-          alert(t("user.userCreatedSuccessfully"));
+          toast.success(t("user.userCreatedSuccessfully"));
           await getUsers();
         }
       }

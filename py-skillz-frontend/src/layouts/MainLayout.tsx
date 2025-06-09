@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 import { Header } from '../components/shared/Header';
 import { Footer } from '../components/shared/Footer';
 import { useAccessibilityStore } from '../hooks/useAccessibilityStore';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useLoading } from '../context/LoadingContext';
+import { useEffect } from 'react';
 
 interface MainLayoutProps {
   children?: ReactNode;
@@ -10,6 +12,16 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const { fontSize, lineHeight } = useAccessibilityStore();
+  const { setLoading } = useLoading();
+  const location = useLocation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false); // Clear loading state after a delay
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer); // Cleanup the timer
+  }, [location.pathname, setLoading]);
   
   const getAccessibilityClasses = () => {
     const classes = [];

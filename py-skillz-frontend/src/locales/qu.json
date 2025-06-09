@@ -13,7 +13,13 @@
     "back": "Kutiy",
     "next": "Qatiq",
     "previous": "Ñawpaq",
-    "search": "Maskay"
+    "search": "Maskay",
+    "closeMenu": "Menuta wisq'ay",
+    "openMenu": "Menuta kicharimuy",
+    "spanish": "Kastilla simi",
+    "quechua": "Qhichwa simi",
+    "aymara": "Aymara simi",
+    "guarani": "Guarani simi"
   },
   "auth": {
     "login": "Yaykuy",
@@ -33,6 +39,7 @@
     "home": "Qallariy",
     "catalog": "Qillqasqa p'anqa",
     "myCourses": "Ñuqap yachachiyninkuna",
+    "favorites": "Kuyasqakuna",
     "profile": "Ñuqamanta",
     "progress": "Ñawpaqman",
     "adminPanel": "Kamachiq panka",
@@ -40,8 +47,14 @@
     "courses": "Yachachiykuna",
     "createCourse": "Yachachiyta kamariy",
     "reports": "Willakuykuna",
+    "teacherReports": "Yachachiqpa willakuyninkuna",
+    "enrollmentReport": "Qillqakuy willakuy",
+    "activityReport": "Ruway willakuy",
+    "efficacyReport": "Allin kay willakuy",
+    "administration": "Kamachiy",
     "settings": "Churanakuna",
-    "help": "Yanapay"
+    "help": "Yanapay",
+    "userOptions": "Runa akllanakuna"
   },
   "accessibility": {
     "highContrast": "Ancha t'aqwi",
