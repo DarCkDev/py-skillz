@@ -9,5 +9,6 @@
   "invalidPassword": "Password chay qalqa",
   "passwordsNotMatch": "Passwords chay qalqa",
   "invalidRole": "Role chay qalqa",
-  "invalidCredentials": "Credentials chay qalqa"
+  "invalidCredentials": "Credentials chay qalqa",
+  "userNotFound": "User chay qalqa"
 }

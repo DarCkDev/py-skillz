@@ -3,6 +3,7 @@ import { Editor as MonacoEditor } from '@monaco-editor/react';
 import OutputPanel from '../OutputPanel';
 import '../styles/editorTexto.css';
 import ChatAssistant from "../../assistant/chatAssistant";
+import { useToast } from '../../../components/ui/use-toast';
 
 interface PyFile {
   name: string;
@@ -14,6 +15,7 @@ const initialFiles: PyFile[] = [
 ];
 
 const EditorTexto: React.FC = () => {
+  const { toast } = useToast();
   const [files, setFiles] = useState<PyFile[]>(initialFiles);
   const [selectedFile, setSelectedFile] = useState<string>('index.py');
   const [output, setOutput] = useState<string>('');
@@ -82,11 +84,11 @@ const EditorTexto: React.FC = () => {
 
   const handleRenameFile = (oldName: string, newName: string) => {
     if (!newName.endsWith('.py')) {
-      alert('El archivo debe tener extensión .py');
+      toast.error('El archivo debe tener extensión .py');
       return;
     }
     if (files.some(f => f.name === newName && f.name !== oldName)) {
-      alert('Ya existe un archivo con ese nombre');
+      toast.error('Ya existe un archivo con ese nombre');
       return;
     }
     setFiles(files.map(f => f.name === oldName ? { ...f, name: newName } : f));
@@ -193,4 +195,4 @@ const EditorTexto: React.FC = () => {
   );
 };
 
-export default EditorTexto; 
+export default EditorTexto;

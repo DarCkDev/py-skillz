@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { crearCurso } from './api/api';
+import { useToast } from '../../components/ui/use-toast';
 
 import type {
   Ejercicio as EjercicioType,
@@ -36,6 +37,7 @@ interface ModalState {
 }
 
 export const CreateCourse = () => {
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [cursoData, setCursoData] = useState<CursoDataType>({
     tituloCurso: '',
@@ -60,7 +62,7 @@ export const CreateCourse = () => {
 
   const siguientePaso = () => {
     if (currentStep === 1 && !isPaso1Completo()) {
-      console.warn("Por favor, completa todos los campos requeridos de Información General.");
+      toast.error("Por favor, completa todos los campos requeridos de Información General.");
       return;
     }
     setCurrentStep(prev => prev + 1);
@@ -327,7 +329,7 @@ export const CreateCourse = () => {
 
   const handleSubmit = async () => {
     if (currentStep === 1 && !isPaso1Completo()) {
-      alert("Por favor, completa toda la información general del curso antes de guardar.");
+      toast({ title: "Validation Error", description: "Por favor, completa toda la información general del curso antes de guardar." });
       return;
     }
     if (currentStep === 1 && isPaso1Completo()) {
@@ -433,10 +435,10 @@ export const CreateCourse = () => {
     // Cuando estés listo para enviar al backend:
     try {
       await crearCurso(payload);
-      alert('Curso creado correctamente');
+      toast({ title: "Success", description: 'Curso creado correctamente' });
       // Redirige o limpia el formulario si quieres
     } catch (error) {
-      alert('Error al crear el curso');
+      toast({ title: "Error", description: 'Error al crear el curso' });
       console.error('Error al crear el curso:', error);
     }
   };

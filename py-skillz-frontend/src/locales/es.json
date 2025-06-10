@@ -17,7 +17,13 @@
     "languages": "Idiomas",
     "quickLinks": "Enlaces rápidos",
     "language": "Idioma",
-    "allRightsReserved": "Todos los derechos reservados"
+    "allRightsReserved": "Todos los derechos reservados",
+    "closeMenu": "Cerrar menú",
+    "openMenu": "Abrir menú",
+    "spanish": "Español",
+    "quechua": "Quechua",
+    "aymara": "Aymara",
+    "guarani": "Guaraní"
   },
   "auth": {
     "login": "Iniciar sesión",
@@ -29,6 +35,7 @@
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "resetPassword": "Restablecer contraseña",
     "loginSuccess": "Sesión iniciada correctamente",
+    "loginSuccessful": "Sesión iniciada correctamente",
     "loginFailed": "Error al iniciar sesión",
     "registerSuccess": "Registro exitoso",
     "registerFailed": "Error al registrarse"
@@ -37,13 +44,20 @@
     "home": "Inicio",
     "catalog": "Catálogo",
     "myCourses": "Mis cursos",
+    "favorites": "Favoritos",
     "profile": "Mi perfil",
-    "progress": "Progreso",
+    "progress": "Reportes de Progreso",
     "adminPanel": "Panel Admin",
     "userManagement": "Gestión de Usuarios",
     "courses": "Cursos",
     "createCourse": "Crear Curso",
     "reports": "Reportes",
+    "teacherReports": "Estadisticas de cursos",
+    "enrollmentReport": "Reporte de inscripciones",
+    "activityReport": "Reporte de actividad",
+    "efficacyReport": "Reportes otros",
+    "courseManagement": "Gestión de Cursos",
+    "administration": "Administración",
     "settings": "Configuración",
     "help": "Ayuda",
     "userOptions": "Opciones de usuario"
@@ -66,7 +80,9 @@
     "serverError": "Error en el servidor",
     "authError": "Error de autenticación",
     "notFound": "No encontrado",
-    "validationError": "Error de validación"
+    "validationError": "Error de validación",
+    "failedToFetchUsers": "Error al obtener los usuarios",
+    "networkError": "Error de red. Por favor, verifica tu conexión."
   },
   "admin": {
     "panelTitle": "Panel de Administración",
@@ -79,6 +95,37 @@
     "reportsDescription": "Visualiza estadísticas y genera informes de actividad.",
     "totalUsers": "Total de Usuarios",
     "totalCourses": "Total de Cursos",
-    "activeStudents": "Estudiantes Activos"
+    "activeStudents": "Estudiantes Activos",
+    "name": "Nombre",
+    "fullName": "Nombre completo",
+    "password": "Contraseña",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "createdAt": "Creado en",
+    "updatedAt": "Actualizado en",
+    "actions": "Acciones",
+    "editUser": "Editar",
+    "deleteUser": "Eliminar",
+    "createUser": "Crear",
+    "admin": "Administrador",
+    "teacher": "Profesor",
+    "student": "Estudiante",
+    "close": "Cerrar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "create": "Crear",
+    "update": "Actualizar"
+  },
+  "user": {
+    "userUpdatedSuccessfully": "Usuario actualizado correctamente",
+    "userCreatedSuccessfully": "Usuario creado correctamente",
+    "userDeletedSuccessfully": "Usuario eliminado correctamente",
+    "userNotFound": "Usuario no encontrado",
+    "errorUpdatingUser": "Error al actualizar el usuario",
+    "errorCreatingUser": "Error al crear el usuario",
+    "errorDeletingUser": "Error al eliminar el usuario",
+    "areYouSure": "¿Estás seguro de que quieres eliminar este usuario?"
   }
 }

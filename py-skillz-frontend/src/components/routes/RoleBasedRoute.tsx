@@ -13,7 +13,12 @@ export const RoleBasedRoute = ({ requiredRoles }: RoleBasedRouteProps) => {
     return <Navigate to="/login" replace />;
   }
 
-  const { role, isAuthenticated } = auth;
+  const { role, isAuthenticated, loading } = auth;
+
+  if (loading) {
+    // Optionally, render a loading spinner or component here
+    return null; 
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

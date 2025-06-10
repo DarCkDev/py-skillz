@@ -9,5 +9,6 @@
   "invalidPassword": "La contraseña debe tener al menos 6 caracteres",
   "passwordsNotMatch": "Las contraseñas no coinciden",
   "invalidRole": "El rol es inválido",
-  "invalidCredentials": "Credenciales inválidas"
+  "invalidCredentials": "Credenciales inválidas",
+  "userNotFound": "Usuario no encontrado"
 }
