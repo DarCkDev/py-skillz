@@ -27,6 +27,7 @@ const AdminPanel = lazy(() => import('./features/admin/AdminPanel').then(module 
 const UserManagement = lazy(() => import('./features/admin/UserManagement').then(module => ({ default: module.UserManagement })));
 const CourseManagement = lazy(() => import('./features/admin/CourseManagement').then(module => ({ default: module.CourseManagement })));
 const EditCourse = lazy(() => import('./features/courses/edit/EditCourse').then(module => ({ default: module.EditCourse })));
+const CourseDetail = lazy(() => import('./features/courses/CourseDetail').then(module => ({ default: module.CourseDetail })));
 
 // Páginas de profesor
 const CreateCourse = lazy(() => import('./features/courses/create/CreateCourse').then(module => ({ default: module.CreateCourse })));
@@ -86,6 +87,7 @@ function App() {
                 <Route path="courses" element={<TeacherCourseManagement />} />
                 <Route path="courses/create" element={<CreateCourse />} />
                 <Route path="courses/edit/:id" element={<EditCourse />} />
+                <Route path="courses/:id" element={<CourseDetail />} />
               </Route>
                 
                 {/* Ruta 404 */}
