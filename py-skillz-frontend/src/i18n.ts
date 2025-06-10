@@ -27,7 +27,9 @@ i18n
       }
     },
     fallbackLng: 'es',
-    debug: import.meta.env.DEV,
+    debug: false, 
+    saveMissing: false,
+    missingKeyHandler: false,
 
     interpolation: {
       escapeValue: false

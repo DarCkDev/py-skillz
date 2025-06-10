@@ -21,6 +21,14 @@
     "aymara": "Aymara ñe'ẽ",
     "guarani": "Guarani ñe'ẽ"
   },
+  "myCourses": {
+    "title": "Che mbo'esyry",
+    "createCourse": "Emoheñói mbo'esyry",
+    "noCourses": "Ndaipóri mbo'esyry",
+    "createFirstCourse": "Emoheñói peteĩ mbo'esyry pyahu",
+    "topics": "Temakuéra",
+    "viewCourse": "Ehecha mbo'esyry"
+  },
   "auth": {
     "login": "Eike",
     "logout": "Esẽ",

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { BackButton } from '../../components/shared/BackButton';
-import FileUpload from '../../components/shared/fileUpload';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { BackButton } from '../../../components/shared/BackButton';
+import FileUpload from '../../../components/shared/fileUpload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { crearCurso } from './api/api';
-import { useToast } from '../../components/ui/use-toast';
+import { getCourseById, updateCourse } from '../api/api'; // Updated import path
+import { useToast } from '../../../components/ui/use-toast';
 
 import type {
   Ejercicio as EjercicioType,
@@ -19,10 +20,11 @@ import type {
   EjercicioCodigo as EjercicioCodigoType,
   EjercicioOpcionMultiple as EjercicioOpcionMultipleType,
   EjercicioQuiz as EjercicioQuizType,
-} from './types';
+} from '../../teacher/types';
 
-import TemaComponent from './TemaComponent';
-import EjercicioModal from './EjercicioModal';
+import TemaComponent from '../../teacher/TemaComponent';
+import EjercicioModal from '../../teacher/EjercicioModal';
+import { Course } from '../types'; // Import Course type from courses/types
 
 type IdiomaCurso = CursoDataType['idiomaCurso'];
 type NivelCurso = CursoDataType['nivel'];
@@ -36,7 +38,8 @@ interface ModalState {
   subtituloIdContexto?: string;
 }
 
-export const CreateCourse = () => {
+export const EditCourse = () => {
+  const { courseId } = useParams<{ courseId: string }>(); // Get courseId from URL
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [cursoData, setCursoData] = useState<CursoDataType>({
@@ -47,8 +50,52 @@ export const CreateCourse = () => {
     descripcion: '',
     temas: [],
   });
+  const [loadingCourse, setLoadingCourse] = useState(true);
 
   const [modalState, setModalState] = useState<ModalState>({ isOpen: false });
+
+  useEffect(() => {
+    const fetchCourse = async () => {
+      if (!courseId) {
+        toast.error("ID de curso no proporcionado.");
+        setLoadingCourse(false);
+        return;
+      }
+      try {
+        const fetchedCourse: Course = await getCourseById(parseInt(courseId));
+        setCursoData({
+          tituloCurso: fetchedCourse.titulo,
+          idiomaCurso: fetchedCourse.idioma,
+          nivel: fetchedCourse.nivel,
+          licenciaCurso: fetchedCourse.licencia,
+          descripcion: fetchedCourse.descripcion,
+          imagenDestacada: fetchedCourse.imagenDestacada || undefined,
+          temas: fetchedCourse.temas.map(tema => ({
+            ...tema,
+            id: tema.id.toString(),
+            tituloTema: tema.titulo,
+            subtitulos: tema.subtitulos.map(sub => ({
+              ...sub,
+              id: sub.id.toString(),
+              tituloSubtitulo: sub.tituloSubtitulo,
+              ejercicios: sub.ejercicios.map(ej => ({ ...ej, id: ej.id.toString() })),
+            })),
+            examen: tema.examen ? {
+              ...tema.examen,
+              ejerciciosExa: tema.examen.ejerciciosExa.map(ej => ({ ...ej, id: ej.id.toString() })),
+            } : { ejerciciosExa: [] },
+          })),
+        });
+      } catch (error) {
+        toast.error("Error al cargar el curso.");
+        console.error("Error fetching course for edit:", error);
+      } finally {
+        setLoadingCourse(false);
+      }
+    };
+
+    fetchCourse();
+  }, [courseId, toast]);
 
   const isPaso1Completo = () => {
     return (
@@ -59,6 +106,10 @@ export const CreateCourse = () => {
       cursoData.descripcion.trim() !== ''
     );
   };
+
+  if (loadingCourse) {
+    return <div className="text-center py-8">Cargando curso...</div>;
+  }
 
   const siguientePaso = () => {
     if (currentStep === 1 && !isPaso1Completo()) {
@@ -329,11 +380,24 @@ export const CreateCourse = () => {
 
   const handleSubmit = async () => {
     if (currentStep === 1 && !isPaso1Completo()) {
-      toast({ title: "Validation Error", description: "Por favor, completa toda la información general del curso antes de guardar." });
+      toast.error("Por favor, completa toda la información general del curso antes de guardar.");
       return;
     }
     if (currentStep === 1 && isPaso1Completo()) {
       siguientePaso();
+      return;
+    }
+
+    // Validation for "min tener 1 curso 1subtitulo con 1 ejercicio y 2 preguntas de examen"
+    const hasValidContent = cursoData.temas.some(tema =>
+      tema.subtitulos.some(subtitulo =>
+        subtitulo.ejercicios.length >= 1 &&
+        (tema.examen?.ejerciciosExa?.filter(ej => ej.tipo === 'quiz').length || 0) >= 2
+      )
+    );
+
+    if (!hasValidContent) {
+      toast.error("El curso debe tener al menos 1 tema, 1 subtítulo con 1 ejercicio, y 2 preguntas de examen en el examen del tema.");
       return;
     }
 
@@ -434,14 +498,22 @@ export const CreateCourse = () => {
 
     // Cuando estés listo para enviar al backend:
     try {
-      await crearCurso(payload);
-      toast({ title: "Success", description: 'Curso creado correctamente' });
+      if (courseId) {
+        await updateCourse(parseInt(courseId), payload); // Call updateCourse
+        toast.success('Curso actualizado correctamente');
+      } else {
+        toast.error('ID de curso no encontrado para la actualización.');
+      }
       // Redirige o limpia el formulario si quieres
     } catch (error) {
-      toast({ title: "Error", description: 'Error al crear el curso' });
-      console.error('Error al crear el curso:', error);
+      toast.error('Error al actualizar el curso');
+      console.error('Error al actualizar el curso:', error);
     }
   };
+
+  if (loadingCourse) {
+    return <div className="text-center py-8">Cargando curso...</div>;
+  }
 
   return (
     <div className="container mx-auto p-4 bg-background min-h-screen">
@@ -449,7 +521,7 @@ export const CreateCourse = () => {
         <div className="flex justify-start mb-6">
           <BackButton />
         </div>
-        <h1 className="text-3xl font-bold mb-8 ">Crear Nuevo Curso</h1>
+        <h1 className="text-3xl font-bold mb-8 ">Editar Curso</h1>
 
 
         <div className="mb-8 flex justify-center space-x-4">

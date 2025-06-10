@@ -1,4 +1,13 @@
-import { Body, Controller, Post, Req, UseGuards, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  UseGuards,
+  Get,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../../common/guards/jwt-auht.guard';
 import { CreateCursoDto } from '../dto/create-curso.dto';
@@ -30,6 +39,13 @@ export class CursoController {
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @Get()
+  async findAll() {
+    return this.cursoService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.TEACHER, Role.ADMIN)
   @Post('tasks')
   async createTask(@Body() createTaskDto: CreateTaskDto, @Req() req: Request) {
@@ -41,5 +57,12 @@ export class CursoController {
   async getTasksByCourse(@Req() req: Request) {
     const courseId = parseInt(req.params.courseId);
     return await this.cursoService.getTasksByCourse(courseId);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.cursoService.remove(+id);
   }
 }

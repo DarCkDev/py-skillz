@@ -25,6 +25,14 @@
     "aymara": "Aymara aru",
     "guarani": "Guarani aru"
   },
+  "myCourses": {
+    "title": "Nayan yatiqañanaka",
+    "createCourse": "Yatiqaña luraña",
+    "noCourses": "Janiw yatiqañanaka utjkiti",
+    "createFirstCourse": "Nayra yatiqaña luraña",
+    "topics": "Yatiqañanaka",
+    "viewCourse": "Yatiqaña uñjaña"
+  },
   "auth": {
     "login": "Mantaña",
     "logout": "Mistuña",
