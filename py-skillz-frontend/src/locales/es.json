@@ -25,6 +25,14 @@
     "aymara": "Aymara",
     "guarani": "Guaraní"
   },
+  "myCourses": {
+    "title": "Mis cursos",
+    "createCourse": "Crear Curso",
+    "noCourses": "No hay cursos disponibles",
+    "createFirstCourse": "Crea tu primer curso",
+    "topics": "temas",
+    "viewCourse": "Ver Curso"
+  },
   "auth": {
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
@@ -43,14 +51,12 @@
   "nav": {
     "home": "Inicio",
     "catalog": "Catálogo",
-    "myCourses": "Mis cursos",
     "favorites": "Favoritos",
     "profile": "Mi perfil",
     "progress": "Reportes de Progreso",
     "adminPanel": "Panel Admin",
     "userManagement": "Gestión de Usuarios",
     "courses": "Cursos",
-    "createCourse": "Crear Curso",
     "reports": "Reportes",
     "teacherReports": "Estadisticas de cursos",
     "enrollmentReport": "Reporte de inscripciones",
