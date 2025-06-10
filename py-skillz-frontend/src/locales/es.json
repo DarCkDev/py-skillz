@@ -60,9 +60,12 @@
     "administration": "Administración",
     "settings": "Configuración",
     "help": "Ayuda",
-    "userOptions": "Opciones de usuario"
+    "userOptions": "Opciones de usuario",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "accessibility": {
+    "toggleTheme": "Cambiar tema",
     "highContrast": "Alto contraste",
     "fontSize": "Tamaño de letra",
     "fontSizeSmall": "Pequeño",

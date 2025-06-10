@@ -15,8 +15,9 @@ class CreateEjercicioExaDto {
   @IsString()
   pregunta: string;
 
-  @IsString()
-  respuestas: string;
+  @IsArray()
+  @IsString({ each: true })
+  respuestas: string[];
 
   @IsNumber()
   orden: number;
@@ -40,8 +41,9 @@ class CreateEjercicioDto {
   @IsString()
   pregunta: string;
 
-  @IsString()
-  respuestas: string;
+  @IsArray()
+  @IsString({ each: true })
+  respuestas: string[];
 
   @IsNumber()
   orden: number;
@@ -96,6 +98,10 @@ export class CreateCursoDto {
 
   @IsString()
   descripcion: string;
+
+  @IsString()
+  @IsOptional()
+  imagenDestacada?: string;
 
   @IsArray()
   @ValidateNested({ each: true })

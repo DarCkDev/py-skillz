@@ -51,6 +51,7 @@ export class CursoService {
       nivel: createCursoDto.nivel,
       licencia: createCursoDto.licenciaCurso,
       descripcion: createCursoDto.descripcion,
+      imagenDestacada: createCursoDto.imagenDestacada, // Add this line
       creador: user,
     });
     await this.cursoRepository.save(curso);
@@ -125,7 +126,13 @@ export class CursoService {
   async findByUser(userPayload: PayloadDto): Promise<Curso[]> {
     return this.cursoRepository.find({
       where: { creador: { id: userPayload.sub } },
-      relations: ['temas']
+      relations: ['temas'],
+    });
+  }
+
+  async findAll(): Promise<Curso[]> {
+    return this.cursoRepository.find({
+      relations: ['temas', 'creador'],
     });
   }
 
@@ -160,7 +167,7 @@ export class CursoService {
     // Retornar la tarea con sus relaciones
     return this.taskRepository.findOne({
       where: { id: savedTask.id },
-      relations: ['course', 'creator']
+      relations: ['course', 'creator'],
     });
   }
 
@@ -170,5 +177,12 @@ export class CursoService {
       relations: ['creator'],
       order: { createdAt: 'DESC' },
     });
+  }
+
+  async remove(id: number): Promise<void> {
+    const result = await this.cursoRepository.delete(id);
+    if (result.affected === 0) {
+      throw new Error(`Curso con ID ${id} no encontrado`);
+    }
   }
 }
