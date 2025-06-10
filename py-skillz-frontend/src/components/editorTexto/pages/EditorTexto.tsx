@@ -27,7 +27,7 @@ const EditorTexto: React.FC = () => {
   };
 
   const handleFileAdd = () => {
-    let baseName = 'archivo';
+    const baseName = 'archivo';
     let idx = 1;
     let newName = `${baseName}${idx}.py`;
     while (files.some(f => f.name === newName)) {

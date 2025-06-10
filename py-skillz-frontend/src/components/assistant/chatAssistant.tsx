@@ -12,7 +12,7 @@ const Chat: React.FC = () => {
     setInput('');
 
     try {
-      const response = await axios.post('/chat', { message: input });
+      const response = await axios.post('/chaHuggingface', { message: input });
       const botMessage = { sender: 'bot', text: response.data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
