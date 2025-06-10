@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { BackButton } from "../../components/shared/BackButton";
 import { ILogin } from "../../types";
 import { useTranslation } from "react-i18next";
 import { AuthContext } from "../../context/AuthContext";
@@ -46,8 +45,9 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-      <BackButton />
+    <div className="flex flex-col items-center justify-center 
+      min-h-[calc(100vh-100px)] bg-gray-100 dark:bg-gray-900">
+      
       <Card className="w-full max-w-md mx-auto">
         <CardHeader>
           <CardTitle className="text-center text-3xl font-bold">

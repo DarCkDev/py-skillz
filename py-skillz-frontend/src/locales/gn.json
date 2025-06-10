@@ -41,7 +41,9 @@
     "loginSuccess": "Reike porãma",
     "loginFailed": "Ndaikatúi reike",
     "registerSuccess": "Eñemboguapy porãma",
-    "registerFailed": "Ndaikatúi eñemboguapy"
+    "registerFailed": "Ndaikatúi eñemboguapy",
+    "alreadyHaveAccount": "Iniciar sesión",
+    "noAccount": "Registrarse"
   },
   "nav": {
     "home": "Ñepyrũ",

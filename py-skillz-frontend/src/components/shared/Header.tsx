@@ -192,7 +192,7 @@ export function Header() {
             <ThemeToggle />
             
             <div className="relative ml-4 group text">
-              <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors border border-b-black flex items-center">
+              <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center">
                 <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
                 {i18n.language.toUpperCase()} <ChevronDown className="ml-1 h-4 w-4" />
               </button>
