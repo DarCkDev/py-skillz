@@ -35,6 +35,9 @@ const TeacherCourseManagement = lazy(() => import('./features/teacher/CourseMana
 const EditorTexto = lazy(() => import('./components/editorTexto/pages/EditorTexto'));
 const CreateTask = lazy(() => import('./features/teacher/CreateTask').then(module => ({ default: module.CreateTask })));
 const MyCourses = lazy(() => import('./features/common/MyCourses').then(module => ({ default: module.MyCourses })));
+//paginas de estudiante
+const Cursos = lazy(() => import('./features/users/Cursos').then(module => ({ default: module.Cursos })));
+
 
 function App() {
   const { i18n } = useTranslation();
@@ -56,6 +59,7 @@ function App() {
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
+                <Route path="cursos" element={<Cursos />} />s
                 <Route path="register" element={<Register />} />
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="editor" element={<EditorTexto />} />
@@ -96,7 +100,7 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
-        <Toaster />
+        <Toaster/>
       </LoadingProvider>
     </ThemeProvider>
   );

@@ -50,7 +50,7 @@ export class CursoController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.ADMIN)
-  @Get()
+  @Get('publica')
   async findAll() {
     return this.cursoService.findAll();
   }

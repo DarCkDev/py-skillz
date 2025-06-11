@@ -187,11 +187,15 @@ const EditorTexto: React.FC = () => {
           </div>
           <OutputPanel output={output} />
         </div>
-      </div>
-      <div className="chat-section">
-         <ChatAssistant />
-       </div>
+         {/* Chat Assistant */}
+    <div className="h-[250px] overflow-y-auto bg-gray-800 border-t border-gray-700">
+      <ChatAssistant />
     </div>
+      </div>
+    
+    
+    </div>
+    
   );
 };
 
