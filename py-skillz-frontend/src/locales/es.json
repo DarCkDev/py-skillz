@@ -46,7 +46,9 @@
     "loginSuccessful": "Sesión iniciada correctamente",
     "loginFailed": "Error al iniciar sesión",
     "registerSuccess": "Registro exitoso",
-    "registerFailed": "Error al registrarse"
+    "registerFailed": "Error al registrarse",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "noAccount": "¿No tienes una cuenta?"
   },
   "nav": {
     "home": "Inicio",
@@ -86,7 +88,6 @@
   },
   "errors": {
     "unknown": "Ha ocurrido un error desconocido",
-    "networkError": "Error de conexión a internet",
     "serverError": "Error en el servidor",
     "authError": "Error de autenticación",
     "notFound": "No encontrado",
