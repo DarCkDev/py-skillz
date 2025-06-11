@@ -38,9 +38,19 @@ export class CursoController {
     return this.cursoService.findByUser(req.user);
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    try {
+      return await this.cursoService.findOne(+id);
+    } catch (error) {
+      console.error('Error en el controlador al obtener curso:', error);
+      throw error;
+    }
+  }
+
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(Role.ADMIN)
-  @Get()
+  @Roles(Role.ADMIN, Role.TEACHER, Role.STUDENT)
+  @Get('publica')
   async findAll() {
     return this.cursoService.findAll();
   }

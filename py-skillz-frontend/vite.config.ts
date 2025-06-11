@@ -17,7 +17,7 @@ export default defineConfig({
     port: 3000,
     open: false,
      proxy: {
-    '/chat': 'http://localhost:3000',
+    '/gemini/chat': 'http://localhost:3003',
   },
   },
   build: {

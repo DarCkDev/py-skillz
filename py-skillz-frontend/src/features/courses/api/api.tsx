@@ -29,17 +29,25 @@ export const getCourseById = async (courseId: number): Promise<Course> => {
   if (!token) {
     throw new Error('No hay token de autenticación disponible');
   }
-  const response = await fetch(`${API_URL}/curso/${courseId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-  if (!response.ok) {
-    throw new Error('Error al obtener el curso');
+  try {
+    const response = await fetch(`${API_URL}/curso/${courseId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(errorData?.message || 'Error al obtener el curso');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error en getCourseById:', error);
+    throw error;
   }
-  return await response.json();
 };
 
 export const crearCurso = async (payload: CursoData) => {

@@ -87,7 +87,7 @@ import { GeminiModule } from './gemini/gemini.module';
     OpenAIModule,
     HuggingFaceModule,
     CursoModule,
-    GeminiModule
+    GeminiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

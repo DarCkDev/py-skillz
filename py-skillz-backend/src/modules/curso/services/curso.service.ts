@@ -158,16 +158,21 @@ export class CursoService {
       description: createTaskDto.description,
       instructions: createTaskDto.instructions,
       course: curso,
-      creator: { id: userPayload.sub }
+      creator: { id: userPayload.sub },
+      tag: createTaskDto.tag,
+      objectives: createTaskDto.objectives,
+      deadline: createTaskDto.deadline,
+      fileUrl: createTaskDto.fileUrl
     });
 
     // Guardar la tarea
     const savedTask = await this.taskRepository.save(task);
 
-    // Retornar la tarea con sus relaciones
+    // Retornar la tarea con sus relaciones y el tag
     return this.taskRepository.findOne({
       where: { id: savedTask.id },
       relations: ['course', 'creator'],
+      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt']
     });
   }
 
@@ -175,6 +180,7 @@ export class CursoService {
     return await this.taskRepository.find({
       where: { course: { id: courseId } },
       relations: ['creator'],
+      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -183,6 +189,31 @@ export class CursoService {
     const result = await this.cursoRepository.delete(id);
     if (result.affected === 0) {
       throw new Error(`Curso con ID ${id} no encontrado`);
+    }
+  }
+
+  async findOne(id: number) {
+    try {
+      const curso = await this.cursoRepository.findOne({
+        where: { id },
+        relations: [
+          'temas',
+          'temas.subtitulos',
+          'temas.subtitulos.ejercicios',
+          'temas.examenes',
+          'temas.examenes.ejercicios',
+          'creador'
+        ],
+      });
+
+      if (!curso) {
+        throw new Error('Curso no encontrado');
+      }
+
+      return curso;
+    } catch (error) {
+      console.error('Error al buscar el curso:', error);
+      throw new Error('Error al obtener el curso');
     }
   }
 }
