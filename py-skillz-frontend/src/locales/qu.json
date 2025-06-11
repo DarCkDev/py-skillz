@@ -13,7 +13,21 @@
     "back": "Kutiy",
     "next": "Qatiq",
     "previous": "Ñawpaq",
-    "search": "Maskay"
+    "search": "Maskay",
+    "closeMenu": "Menuta wisq'ay",
+    "openMenu": "Menuta kicharimuy",
+    "spanish": "Kastilla simi",
+    "quechua": "Qhichwa simi",
+    "aymara": "Aymara simi",
+    "guarani": "Guarani simi"
+  },
+  "myCourses": {
+    "title": "Ñuqap yachachiyninkuna",
+    "createCourse": "Yachachiyta kamariy",
+    "noCourses": "Mana yachachiykuna kanchu",
+    "createFirstCourse": "Ñawpaq yachachiyta kamariy",
+    "topics": "Yachaykuna",
+    "viewCourse": "Yachachiyta qhaway"
   },
   "auth": {
     "login": "Yaykuy",
@@ -33,6 +47,7 @@
     "home": "Qallariy",
     "catalog": "Qillqasqa p'anqa",
     "myCourses": "Ñuqap yachachiyninkuna",
+    "favorites": "Kuyasqakuna",
     "profile": "Ñuqamanta",
     "progress": "Ñawpaqman",
     "adminPanel": "Kamachiq panka",
@@ -40,8 +55,14 @@
     "courses": "Yachachiykuna",
     "createCourse": "Yachachiyta kamariy",
     "reports": "Willakuykuna",
+    "teacherReports": "Yachachiqpa willakuyninkuna",
+    "enrollmentReport": "Qillqakuy willakuy",
+    "activityReport": "Ruway willakuy",
+    "efficacyReport": "Allin kay willakuy",
+    "administration": "Kamachiy",
     "settings": "Churanakuna",
-    "help": "Yanapay"
+    "help": "Yanapay",
+    "userOptions": "Runa akllanakuna"
   },
   "accessibility": {
     "highContrast": "Ancha t'aqwi",
@@ -73,6 +94,37 @@
     "reportsDescription": "Yupaykunata qhaway, ruwasqakunamanta willakuykunata paqarichiy.",
     "totalUsers": "Llapan Runakuna",
     "totalCourses": "Llapan Yachachiykuna",
-    "activeStudents": "Kallpayuq Yachaqkuna"
+    "activeStudents": "Kallpayuq Yachaqkuna",
+    "name": "Runakuna",
+    "fullName": "Runakuna Rupaykuna",
+    "password": "Runakuna Rirqa",
+    "email": "Chaski imaymana",
+    "role": "Ruraynin",
+    "createdAt": "Llapan",
+    "updatedAt": "Llapan",
+    "actions": "Kamariy",
+    "editUser": "Allichay",
+    "deleteUser": "Qulluy",
+    "createUser": "Kamariy",
+    "admin": "Kamachiq",
+    "teacher": "Yachachiq",
+    "student": "Yachakuq",
+    "close": "Kachkarqa",
+    "edit": "Allichay",
+    "delete": "Qulluy",
+    "save": "Waqaychay",
+    "cancel": "T'atay",
+    "create": "Paqarichiy",
+    "update": "Kunanyachiy"
+  },
+  "user": {
+    "userUpdatedSuccessfully": "Runakuna allinchay churay",
+    "userCreatedSuccessfully": "Runakuna kamariq churay",
+    "userDeletedSuccessfully": "Runakuna qulluy churay",
+    "userNotFound": "Runakuna tarisqachu",
+    "errorUpdatingUser": "Runakuna allinchay pantasqa",
+    "errorCreatingUser": "Runakuna kamariq pantasqa",
+    "errorDeletingUser": "Runakuna qulluy pantasqa",
+    "areYouSure": "¿Segurochu kanki kay user nisqa qulluyta?"
   }
 }

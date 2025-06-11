@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Tema } from './tema.entity';
 import { User } from '../../user/entities/user.entity';
+import { Task } from './task.entity';
 
 @Entity({ name: 'cursos' })
 export class Curso {
@@ -37,4 +38,10 @@ export class Curso {
 
   @ManyToOne(() => User, (user) => user.cursos, { onDelete: 'CASCADE' })
   creador: User;
+
+  @OneToMany(() => Task, (task) => task.course, { 
+    cascade: true,
+    eager: false 
+  })
+  tasks: Task[];
 }

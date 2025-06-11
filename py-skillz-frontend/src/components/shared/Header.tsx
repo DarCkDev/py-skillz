@@ -1,18 +1,23 @@
 import { useState, useContext } from 'react';
 import { Link } from '../ui/link';
 import { useTranslation } from 'react-i18next';
-import { MenuIcon, X, User, LogOut } from 'lucide-react';
+import { MenuIcon, X, User, LogOut, ChevronDown } from 'lucide-react';
 import iconBolivia from '../../../public/bolivia.png';
 import iconPy from '../../../public/py.png';
 import { AuthContext } from '../../context/AuthContext';
 import { ThemeToggle } from './ThemeToggle';
+import { useNavigate } from 'react-router-dom';
+import { useLoading } from '../../context/LoadingContext';
+import { UserRole } from '../../types';
 
 export function Header() {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const auth = useContext(AuthContext);
   const isAuthenticated = auth?.isAuthenticated || false;
-  const role = auth?.role || '';
+  const role: UserRole = auth?.role || '';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { setLoading } = useLoading();
   
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -25,37 +30,15 @@ export function Header() {
   const handleLogout = () => {
     if (auth) {
       auth.logout();
+      navigate('/login', { replace: true });
     }
   };
 
   // Determinar los enlaces de navegación según el rol
   const getNavLinks = () => {
     const links = [];
-    
-    
-    links.push({ to: '/catalog', label: t('nav.catalog') });
-    
-    
-    if (isAuthenticated) {
-      links.push({ to: '/my-courses', label: t('nav.myCourses') });
-      
-      if (role === 'STUDENT') {
-        links.push({ to: '/progress', label: t('nav.progress') });
-      }
-      
-      
-      if (role === 'TEACHER' || role === 'ADMIN') {
-        links.push({ to: '/courses/create', label: t('nav.createCourse') });
-        links.push({ to: '/reports', label: t('nav.reports') });
-      }
-      
-      
-      if (role === 'ADMIN') {
-        links.push({ to: '/admin', label: t('nav.adminPanel') });
-        links.push({ to: '/admin/users', label: t('nav.userManagement') });
-      }
-    } else {
-      
+
+    if (!isAuthenticated) {
       links.push({ to: '/login', label: t('auth.login') });
       links.push({ to: '/register', label: t('auth.register') });
     }
@@ -76,11 +59,130 @@ export function Header() {
           </Link>
           
           <nav className="hidden md:flex space-x-4">
+            {/* Courses Dropdown */}
+            <div className="relative group">
+              <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center">
+                {t('nav.courses')} <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+              <div className="absolute left-0 w-48 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
+                <Link 
+                  to="/catalog" 
+                  className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                  onClick={() => setLoading(true)}
+                >
+                  {t('nav.catalog')}
+                </Link>
+                {isAuthenticated && (
+                  <>
+                    <Link 
+                      to="/my-courses" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.myCourses')}
+                    </Link>
+                    <Link 
+                      to="/favorites" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.favorites')}
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Reports Dropdown */}
+            {/* Reports Dropdown */}
+            {isAuthenticated && (['STUDENT', 'TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+              <div className="relative group">
+                <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center">
+                  {t('nav.reports')} <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                <div className="absolute left-0 w-48 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
+                  {(['STUDENT', 'TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                    <Link 
+                      to="/progress" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.progress')}
+                    </Link>
+                  )}
+                  {(['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                    <Link 
+                      to="/teacher/reports" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.teacherReports')}
+                    </Link>
+                  )}
+                  {role === 'ADMIN' && (
+                    <>
+                      <Link 
+                        to="/admin/enrollment-report" 
+                        className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                        onClick={() => setLoading(true)}
+                      >
+                        {t('nav.enrollmentReport')}
+                      </Link>
+                      <Link 
+                        to="/admin/activity-report" 
+                        className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                        onClick={() => setLoading(true)}
+                      >
+                        {t('nav.activityReport')}
+                      </Link>
+                      <Link 
+                        to="/admin/efficacy-report" 
+                        className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                        onClick={() => setLoading(true)}
+                      >
+                        {t('nav.efficacyReport')}
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Administration Dropdown */}
+            {isAuthenticated && (['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+              <div className="relative group">
+                <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center">
+                  {t('nav.administration')} <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                <div className="absolute left-0 w-48 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
+                  {role === 'ADMIN' && (
+                    <Link 
+                      to="/admin/users" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.userManagement')}
+                    </Link>
+                  )}
+                  {(['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                    <Link 
+                      to="/admin/courses" 
+                      className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)}
+                    >
+                      {t('nav.courseManagement')}
+                    </Link>
+                  )}
+                </div>
+              </div>
+            )}
+
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors"
+                onClick={() => setLoading(true)} // Add loading to all nav links
               >
                 {link.label}
               </Link>
@@ -90,9 +192,9 @@ export function Header() {
             <ThemeToggle />
             
             <div className="relative ml-4 group text">
-              <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors border border-b-black flex">
+              <button className="px-3 pt-2 pb-2 rounded-md hover:bg-primary-foreground/10 transition-colors border border-b-black flex items-center">
                 <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' />
-                {i18n.language.toUpperCase()}
+                {i18n.language.toUpperCase()} <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               <div className="absolute right-0 w-40 bg-background border border-border rounded-md shadow-lg hidden group-hover:block z-10 text-primary">
                 <button 
@@ -137,12 +239,16 @@ export function Header() {
                     <Link 
                       to="/profile" 
                       className="w-full text-left px-4 py-2 hover:bg-muted transition-colors block"
+                      onClick={() => setLoading(true)} // Add loading to profile link
                     >
                       {t('nav.profile')}
                     </Link>
                     <div className="border-t border-border my-1"></div>
                     <button 
-                      onClick={handleLogout}
+                      onClick={() => {
+                        handleLogout();
+                        setLoading(true); // Add loading to logout
+                      }}
                       className="w-full text-left px-4 py-2 hover:bg-muted transition-colors flex items-center text-red-500"
                     >
                       <LogOut className="h-4 w-4 mr-2" />
@@ -157,7 +263,7 @@ export function Header() {
           <button 
             className="md:hidden"
             onClick={toggleMobileMenu}
-            aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label={mobileMenuOpen ? String(t('common.closeMenu')) : String(t('common.openMenu'))}
           >
             {mobileMenuOpen ? (
               <X className="h-6 w-6" />
@@ -171,12 +277,162 @@ export function Header() {
         {mobileMenuOpen && (
           <nav className="mt-4 md:hidden">
             <div className="flex flex-col space-y-2">
+              {/* Mobile Courses Dropdown */}
+              <div className="relative group">
+                <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors w-full text-left flex items-center justify-between">
+                  {t('nav.courses')} <ChevronDown className="h-4 w-4" />
+                </button>
+                <div className="pl-4 flex flex-col space-y-1">
+                  <Link 
+                    to="/catalog" 
+                    className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setLoading(true);
+                    }}
+                  >
+                    {t('nav.catalog')}
+                  </Link>
+                  {isAuthenticated && (
+                    <>
+                      <Link 
+                        to="/my-courses" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.myCourses')}
+                      </Link>
+                      <Link 
+                        to="/favorites" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.favorites')}
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Mobile Reports Dropdown */}
+              {isAuthenticated && (['STUDENT', 'TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                <div className="relative group">
+                <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors w-full text-left flex items-center justify-between">
+                  {t('nav.reports')} <ChevronDown className="h-4 w-4" />
+                </button>
+                  <div className="pl-4 flex flex-col space-y-1">
+                    {(['STUDENT', 'TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                      <Link 
+                        to="/progress" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.progress')}
+                      </Link>
+                    )}
+                    {(['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                      <Link 
+                        to="/teacher/reports" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.teacherReports')}
+                      </Link>
+                    )}
+                    {role === 'ADMIN' && (
+                      <>
+                        <Link 
+                          to="/admin/enrollment-report" 
+                          className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            setLoading(true);
+                          }}
+                        >
+                          {t('nav.enrollmentReport')}
+                        </Link>
+                        <Link 
+                          to="/admin/activity-report" 
+                          className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            setLoading(true);
+                          }}
+                        >
+                          {t('nav.activityReport')}
+                        </Link>
+                        <Link 
+                          to="/admin/efficacy-report" 
+                          className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                          onClick={() => {
+                            setMobileMenuOpen(false);
+                            setLoading(true);
+                          }}
+                        >
+                          {t('nav.efficacyReport')}
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Administration Dropdown */}
+              {isAuthenticated && (['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                <div className="relative group">
+                  <button className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors w-full text-left flex items-center justify-between">
+                    {t('nav.administration')} <ChevronDown className="h-4 w-4" />
+                  </button>
+                  <div className="pl-4 flex flex-col space-y-1">
+                    {role === 'ADMIN' && (
+                      <Link 
+                        to="/admin/users" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.userManagement')}
+                      </Link>
+                    )}
+                    {(['TEACHER', 'ADMIN'] as UserRole[]).includes(role) && (
+                      <Link 
+                        to="/admin/courses" 
+                        className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLoading(true);
+                        }}
+                      >
+                        {t('nav.courseManagement')}
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setLoading(true); // Add loading to mobile nav links
+                  }}
                 >
                   {link.label}
                 </Link>
@@ -190,7 +446,10 @@ export function Header() {
                     <Link 
                       to="/profile" 
                       className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors block"
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setLoading(true); // Add loading to mobile profile link
+                      }}
                     >
                       {t('nav.profile')}
                     </Link>
@@ -198,6 +457,7 @@ export function Header() {
                       onClick={() => {
                         handleLogout();
                         setMobileMenuOpen(false);
+                        setLoading(true); // Add loading to mobile logout
                       }}
                       className="w-full text-left px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center text-red-500"
                     >
@@ -215,7 +475,9 @@ export function Header() {
               
 
               <div className="mt-4 border-t border-primary-foreground/20 pt-4">
-                <div className="font-semibold mb-2">{t('common.language')}</div>
+                <div className="font-semibold mb-2 flex items-center justify-between">
+                  {t('common.language')} <ChevronDown className="h-4 w-4" />
+                </div>
                 <div className="grid grid-cols-2 gap-2">
                   <button 
                     onClick={() => {
@@ -225,7 +487,7 @@ export function Header() {
                     className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
                    <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
-                    Español
+                    {t('common.spanish')}
                   </button>
                   <button 
                     onClick={() => {
@@ -235,7 +497,7 @@ export function Header() {
                     className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
                     <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
-                    Quechua
+                    {t('common.quechua')}
                   </button>
                   <button 
                     onClick={() => {
@@ -245,7 +507,7 @@ export function Header() {
                     className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
                     <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
-                    Aymara
+                    {t('common.aymara')}
                   </button>
                   <button 
                     onClick={() => {
@@ -255,7 +517,7 @@ export function Header() {
                     className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors text-left flex"
                   >
                     <img src={iconBolivia} alt="Bolivia" className='w-5 h-5 mr-2' /> 
-                    Guaraní
+                    {t('common.guarani')}
                   </button>
                 </div>
               </div>

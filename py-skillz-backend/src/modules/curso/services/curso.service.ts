@@ -11,6 +11,8 @@ import { EjercicioExa } from '../entities/ejercicio-exa.entity';
 import { EjercicioTipo } from '../entities/ejercicio-tipo.enum';
 import { User } from '../../user/entities/user.entity';
 import { PayloadDto } from 'src/modules/auth/dto/payload.dto';
+import { Task } from '../entities/task.entity';
+import { CreateTaskDto } from '../dto/create-task.dto';
 
 @Injectable()
 export class CursoService {
@@ -29,6 +31,8 @@ export class CursoService {
     private readonly ejercicioExaRepository: Repository<EjercicioExa>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>,
   ) {}
 
   async create(
@@ -47,6 +51,7 @@ export class CursoService {
       nivel: createCursoDto.nivel,
       licencia: createCursoDto.licenciaCurso,
       descripcion: createCursoDto.descripcion,
+      imagenDestacada: createCursoDto.imagenDestacada, // Add this line
       creador: user,
     });
     await this.cursoRepository.save(curso);
@@ -116,5 +121,99 @@ export class CursoService {
         'temas.examenes.ejercicios',
       ],
     });
+  }
+
+  async findByUser(userPayload: PayloadDto): Promise<Curso[]> {
+    return this.cursoRepository.find({
+      where: { creador: { id: userPayload.sub } },
+      relations: ['temas'],
+    });
+  }
+
+  async findAll(): Promise<Curso[]> {
+    return this.cursoRepository.find({
+      relations: ['temas', 'creador'],
+    });
+  }
+
+  async createTask(createTaskDto: CreateTaskDto, userPayload: PayloadDto) {
+    // Buscar el curso con sus relaciones
+    const curso = await this.cursoRepository.findOne({
+      where: { id: parseInt(createTaskDto.courseId.toString()) },
+      relations: ['creador'],
+    });
+
+    if (!curso) {
+      throw new Error('Curso no encontrado');
+    }
+
+    // Verificar permisos
+    if (curso.creador.id !== userPayload.sub) {
+      throw new Error('No tienes permiso para crear tareas en este curso');
+    }
+
+    // Crear la tarea con las relaciones correctas
+    const task = this.taskRepository.create({
+      title: createTaskDto.title,
+      description: createTaskDto.description,
+      instructions: createTaskDto.instructions,
+      course: curso,
+      creator: { id: userPayload.sub },
+      tag: createTaskDto.tag,
+      objectives: createTaskDto.objectives,
+      deadline: createTaskDto.deadline,
+      fileUrl: createTaskDto.fileUrl
+    });
+
+    // Guardar la tarea
+    const savedTask = await this.taskRepository.save(task);
+
+    // Retornar la tarea con sus relaciones y el tag
+    return this.taskRepository.findOne({
+      where: { id: savedTask.id },
+      relations: ['course', 'creator'],
+      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt']
+    });
+  }
+
+  async getTasksByCourse(courseId: number) {
+    return await this.taskRepository.find({
+      where: { course: { id: courseId } },
+      relations: ['creator'],
+      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt'],
+      order: { createdAt: 'DESC' },
+    });
+  }
+
+  async remove(id: number): Promise<void> {
+    const result = await this.cursoRepository.delete(id);
+    if (result.affected === 0) {
+      throw new Error(`Curso con ID ${id} no encontrado`);
+    }
+  }
+
+  async findOne(id: number) {
+    try {
+      const curso = await this.cursoRepository.findOne({
+        where: { id },
+        relations: [
+          'temas',
+          'temas.subtitulos',
+          'temas.subtitulos.ejercicios',
+          'temas.examenes',
+          'temas.examenes.ejercicios',
+          'creador'
+        ],
+      });
+
+      if (!curso) {
+        throw new Error('Curso no encontrado');
+      }
+
+      return curso;
+    } catch (error) {
+      console.error('Error al buscar el curso:', error);
+      throw new Error('Error al obtener el curso');
+    }
   }
 }

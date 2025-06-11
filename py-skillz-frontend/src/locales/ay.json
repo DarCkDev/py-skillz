@@ -17,7 +17,21 @@
     "language": "Aru",
     "languages": "Arunaka",
     "quickLinks": "Jank'aki chinuñanaka",
-    "allRightsReserved": "Taqpach derechos imata"
+    "allRightsReserved": "Taqpach derechos imata",
+    "closeMenu": "Menu jist'araña",
+    "openMenu": "Menu jist'araña",
+    "spanish": "Kastilla aru",
+    "quechua": "Qhichwa aru",
+    "aymara": "Aymara aru",
+    "guarani": "Guarani aru"
+  },
+  "myCourses": {
+    "title": "Nayan yatiqañanaka",
+    "createCourse": "Yatiqaña luraña",
+    "noCourses": "Janiw yatiqañanaka utjkiti",
+    "createFirstCourse": "Nayra yatiqaña luraña",
+    "topics": "Yatiqañanaka",
+    "viewCourse": "Yatiqaña uñjaña"
   },
   "auth": {
     "login": "Mantaña",
@@ -79,6 +93,37 @@
     "reportsDescription": "Jakhuwinaka uñjaña ukatxa lurawinakat uñt'ayañanaka lurañataki.",
     "totalUsers": "Taqpach Jaqinaka",
     "totalCourses": "Taqpach Yatiqañanaka",
-    "activeStudents": "Ch'amanchiri Yatiqirinaka"
+    "activeStudents": "Ch'amanchiri Yatiqirinaka",
+    "name": "Jaq'a",
+    "fullName": "Jaq'a wakichaña",
+    "password": "Imt'ata",
+    "email": "E-mail",
+    "role": "Lurayiri",
+    "createdAt": "Taqpacha Kuticha",
+    "updatedAt": "Taqpacha Kuticha",
+    "actions": "Kutichaña",
+    "editUser": "Luraña",
+    "deleteUser": "Chhaqaña",
+    "createUser": "Luraña",
+    "admin": "Panka",
+    "teacher": "Yatichiri",
+    "student": "Yatiqiri",
+    "close": "Kutichaña",
+    "edit": "Askichaña",
+    "delete": "Chhaqaña",
+    "save": "Imaña",
+    "cancel": "Jan ukhamti",
+    "create": "Uñstayaña",
+    "update": "Jichhakiptayaña"
+  },
+  "user": {
+    "userUpdatedSuccessfully": "Usuario ukax suma machaqar tukuyatawa",
+    "userCreatedSuccessfully": "Usuario ukax suma luraña tukuyatawa",
+    "userDeletedSuccessfully": "Usuario ukax suma chhaqaña tukuyatawa",
+    "userNotFound": "Usuario ukax suma jikiskiti",
+    "errorUpdatingUser": "Pantjata ukax suma machaqar",
+    "errorCreatingUser": "Pantjata ukax suma luraña",
+    "errorDeletingUser": "Pantjata ukax suma chhaqaña",
+    "areYouSure": "¿Jumax aka apnaqirirux chhaqtayañ munasmati?"
   }
 }

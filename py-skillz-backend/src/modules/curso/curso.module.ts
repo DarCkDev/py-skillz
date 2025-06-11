@@ -9,6 +9,7 @@ import { EjercicioExa } from './entities/ejercicio-exa.entity';
 import { CursoController } from './controllers/curso.controller';
 import { CursoService } from './services/curso.service';
 import { User } from '../user/entities/user.entity';
+import { Task } from './entities/task.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { User } from '../user/entities/user.entity';
       Examen,
       EjercicioExa,
       User,
+      Task,
     ]),
   ],
   controllers: [CursoController],

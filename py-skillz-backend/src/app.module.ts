@@ -3,12 +3,15 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './modules/user/entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { OpenAIModule } from './openai/openai.module';
+import { HuggingFaceModule } from './huggingface/huggingface.module';
 import { CursoModule } from './modules/curso/curso.module';
 import { Curso } from './modules/curso/entities/curso.entity';
 import { Tema } from './modules/curso/entities/tema.entity';
@@ -17,9 +20,13 @@ import { Ejercicio } from './modules/curso/entities/ejercicio.entity';
 import { Examen } from './modules/curso/entities/examen.entity';
 import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
 import { Upload } from './modules/upload/entities/upload.entity';
+import { PythonModule } from './python/python.module';
+import { Task } from './modules/curso/entities/task.entity';
+import { GeminiModule } from './gemini/gemini.module';
 
 @Module({
   imports: [
+    PythonModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -28,7 +35,17 @@ import { Upload } from './modules/upload/entities/upload.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User, Curso, Tema, Subtitulo, Ejercicio, Examen, EjercicioExa,Upload],
+      entities: [
+        User,
+        Curso,
+        Tema,
+        Subtitulo,
+        Ejercicio,
+        Examen,
+        EjercicioExa,
+        Upload,
+        Task,
+      ],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
@@ -38,6 +55,7 @@ import { Upload } from './modules/upload/entities/upload.entity';
       Ejercicio,
       Examen,
       EjercicioExa,
+      Task,
     ]),
     I18nModule.forRoot({
       fallbackLanguage: 'es',
@@ -59,10 +77,17 @@ import { Upload } from './modules/upload/entities/upload.entity';
         },
       ],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads', // <-- lo que ves en la URL
+    }),
     AuthModule,
     UserModule,
     UploadModule,
+    OpenAIModule,
+    HuggingFaceModule,
     CursoModule,
+    GeminiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

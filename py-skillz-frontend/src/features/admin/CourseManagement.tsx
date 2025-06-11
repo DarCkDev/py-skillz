@@ -1,9 +1,10 @@
 import React from 'react';
 import { BackButton } from '../../components/shared/BackButton';
+import { CourseList } from '../courses/CourseList';
 
 export const CourseManagement = () => (
-  <div>
+  <div className="container mx-auto p-4">
     <BackButton />
-    <h1>Course Management Page</h1>
+    <CourseList isAdmin={true} />
   </div>
 );

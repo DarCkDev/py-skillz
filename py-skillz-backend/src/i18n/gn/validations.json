@@ -9,5 +9,6 @@
   "invalidPassword": "Oñeikotevẽ pe kokue",
   "passwordsNotMatch": "Oñeikotevẽ pe kokue",
   "invalidRole": "Oñeikotevẽ pe kokue",
-  "invalidCredentials": "Oñeikotevẽ pe kokue"
+  "invalidCredentials": "Oñeikotevẽ pe kokue",
+  "userNotFound": "Oñeikotevẽ pe kokue"
 }
