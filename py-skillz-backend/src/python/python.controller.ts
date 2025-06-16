@@ -44,7 +44,12 @@ export class PythonController {
     if (result.stderr) {
       throw new InternalServerErrorException(result.stderr);
     }
+    console.log('Resultado de la ejecución:', result.stdout);
 
-    return result;
+    return {
+      output: result.stdout,
+      error: result.stderr,
+      success: result.stderr === '',
+    };
   }
 }

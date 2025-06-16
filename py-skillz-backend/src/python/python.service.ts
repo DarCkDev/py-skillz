@@ -114,6 +114,12 @@ export class PythonService {
 
       fs.writeFileSync(filePath, code);
 
+      fs.writeFileSync(filePath, code, 'utf-8');
+
+      const writtenCode = fs.readFileSync(filePath, 'utf-8');
+      console.log('Contenido guardado en el archivo:\n', writtenCode);
+      console.log('Longitud del código recibido:', code.length);
+
       const dockerMountPath =
         process.platform === 'win32' ? tmpDir.replace(/\\/g, '/') : tmpDir;
 
@@ -128,6 +134,7 @@ export class PythonService {
         'none',
         'python:3.11-slim',
         'python',
+        '-u',
         `/code/${fileName}`,
       ];
 
