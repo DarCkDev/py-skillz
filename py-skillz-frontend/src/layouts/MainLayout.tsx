@@ -69,7 +69,7 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className={`min-h-screen flex flex-col ${getAccessibilityClasses()}`}>
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 min-h-[calc(100vh-100px)]">
         {renderContent()}
       </main>
       <Footer />

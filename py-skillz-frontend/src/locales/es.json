@@ -25,6 +25,14 @@
     "aymara": "Aymara",
     "guarani": "Guaraní"
   },
+  "myCourses": {
+    "title": "Mis cursos",
+    "createCourse": "Crear Curso",
+    "noCourses": "No hay cursos disponibles",
+    "createFirstCourse": "Crea tu primer curso",
+    "topics": "temas",
+    "viewCourse": "Ver Curso"
+  },
   "auth": {
     "login": "Iniciar sesión",
     "logout": "Cerrar sesión",
@@ -38,19 +46,20 @@
     "loginSuccessful": "Sesión iniciada correctamente",
     "loginFailed": "Error al iniciar sesión",
     "registerSuccess": "Registro exitoso",
-    "registerFailed": "Error al registrarse"
+    "registerFailed": "Error al registrarse",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "noAccount": "¿No tienes una cuenta?"
   },
   "nav": {
     "home": "Inicio",
     "catalog": "Catálogo",
-    "myCourses": "Mis cursos",
     "favorites": "Favoritos",
     "profile": "Mi perfil",
     "progress": "Reportes de Progreso",
     "adminPanel": "Panel Admin",
     "userManagement": "Gestión de Usuarios",
     "courses": "Cursos",
-    "createCourse": "Crear Curso",
+    "myCourses": "Mis Cursos",
     "reports": "Reportes",
     "teacherReports": "Estadisticas de cursos",
     "enrollmentReport": "Reporte de inscripciones",
@@ -60,9 +69,12 @@
     "administration": "Administración",
     "settings": "Configuración",
     "help": "Ayuda",
-    "userOptions": "Opciones de usuario"
+    "userOptions": "Opciones de usuario",
+    "about": "Acerca de",
+    "contact": "Contacto"
   },
   "accessibility": {
+    "toggleTheme": "Cambiar tema",
     "highContrast": "Alto contraste",
     "fontSize": "Tamaño de letra",
     "fontSizeSmall": "Pequeño",
@@ -76,7 +88,6 @@
   },
   "errors": {
     "unknown": "Ha ocurrido un error desconocido",
-    "networkError": "Error de conexión a internet",
     "serverError": "Error en el servidor",
     "authError": "Error de autenticación",
     "notFound": "No encontrado",

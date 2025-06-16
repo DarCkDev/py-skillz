@@ -21,6 +21,14 @@
     "aymara": "Aymara simi",
     "guarani": "Guarani simi"
   },
+  "myCourses": {
+    "title": "Ñuqap yachachiyninkuna",
+    "createCourse": "Yachachiyta kamariy",
+    "noCourses": "Mana yachachiykuna kanchu",
+    "createFirstCourse": "Ñawpaq yachachiyta kamariy",
+    "topics": "Yachaykuna",
+    "viewCourse": "Yachachiyta qhaway"
+  },
   "auth": {
     "login": "Yaykuy",
     "logout": "Lluqsiy",

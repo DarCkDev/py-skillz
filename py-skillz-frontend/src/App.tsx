@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './i18n';
@@ -26,12 +26,18 @@ const Register = lazy(() => import('./features/auth/Register').then(module => ({
 const AdminPanel = lazy(() => import('./features/admin/AdminPanel').then(module => ({ default: module.AdminPanel })));
 const UserManagement = lazy(() => import('./features/admin/UserManagement').then(module => ({ default: module.UserManagement })));
 const CourseManagement = lazy(() => import('./features/admin/CourseManagement').then(module => ({ default: module.CourseManagement })));
+const EditCourse = lazy(() => import('./features/courses/edit/EditCourse').then(module => ({ default: module.EditCourse })));
+const CourseDetail = lazy(() => import('./features/courses/CourseDetail').then(module => ({ default: module.CourseDetail })));
 
 // Páginas de profesor
-const CreateCourse = lazy(() => import('./features/teacher/CreateCourse').then(module => ({ default: module.CreateCourse })));
+const CreateCourse = lazy(() => import('./features/courses/create/CreateCourse').then(module => ({ default: module.CreateCourse })));
+const TeacherCourseManagement = lazy(() => import('./features/teacher/CourseManagement').then(module => ({ default: module.TeacherCourseManagement })));
 const EditorTexto = lazy(() => import('./components/editorTexto/pages/EditorTexto'));
 const CreateTask = lazy(() => import('./features/teacher/CreateTask').then(module => ({ default: module.CreateTask })));
 const MyCourses = lazy(() => import('./features/common/MyCourses').then(module => ({ default: module.MyCourses })));
+//paginas de estudiante
+const Cursos = lazy(() => import('./features/users/Cursos').then(module => ({ default: module.Cursos })));
+
 
 function App() {
   const { i18n } = useTranslation();
@@ -53,6 +59,7 @@ function App() {
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Home />} />
                 <Route path="login" element={<Login />} />
+                <Route path="cursos" element={<Cursos />} />s
                 <Route path="register" element={<Register />} />
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="editor" element={<EditorTexto />} />
@@ -73,13 +80,18 @@ function App() {
                 <Route path="admin" element={<AdminPanel />} />
                 <Route path="admin/users" element={<UserManagement />} />
                 <Route path="admin/courses" element={<CourseManagement />} />
+                <Route path="admin/courses/create" element={<CreateCourse />} />
+                <Route path="admin/courses/edit/:id" element={<EditCourse />} />
               </Route>
               
               
               {/* Rutas de profesor */}
               <Route element={<RoleBasedRoute requiredRoles={['ADMIN', 'TEACHER']} />}>
                 <Route path="reports" element={<Reports />} />
+                <Route path="courses" element={<TeacherCourseManagement />} />
                 <Route path="courses/create" element={<CreateCourse />} />
+                <Route path="courses/edit/:id" element={<EditCourse />} />
+                <Route path="courses/:id" element={<CourseDetail />} />
               </Route>
                 
                 {/* Ruta 404 */}
@@ -88,7 +100,7 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
-        <Toaster />
+        <Toaster/>
       </LoadingProvider>
     </ThemeProvider>
   );

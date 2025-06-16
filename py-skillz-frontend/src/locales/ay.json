@@ -25,6 +25,14 @@
     "aymara": "Aymara aru",
     "guarani": "Guarani aru"
   },
+  "myCourses": {
+    "title": "Nayan yatiqañanaka",
+    "createCourse": "Yatiqaña luraña",
+    "noCourses": "Janiw yatiqañanaka utjkiti",
+    "createFirstCourse": "Nayra yatiqaña luraña",
+    "topics": "Yatiqañanaka",
+    "viewCourse": "Yatiqaña uñjaña"
+  },
   "auth": {
     "login": "Mantaña",
     "logout": "Mistuña",
@@ -37,7 +45,9 @@
     "loginSuccess": "Suma mantaña",
     "loginFailed": "Jan walt'awi mantañanxa",
     "registerSuccess": "Suma qillqantasiña",
-    "registerFailed": "Jan walt'awi qillqantasiñanxa"
+    "registerFailed": "Jan walt'awi qillqantasiñanxa",
+    "alreadyHaveAccount": "Iniciar sesión",
+    "noAccount": "Registrarse"
   },
   "nav": {
     "home": "Qalltawi",
