@@ -353,9 +353,6 @@ export const CreateCourse = () => {
 
     type EjercicioPayloadItem = EjercicioType & { orden: number };
 
-
-
-
     const temasParaPayload = await Promise.all(
       cursoData.temas.map(async (tema: TemaType) => {
         const subtitulosParaPayload = await Promise.all(
@@ -366,7 +363,6 @@ export const CreateCourse = () => {
             const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
               const { pregunta, ...ejercicioSpecificProps } = ej;
 
-        
               switch (ej.tipo) {
                 case 'link':
                   acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
@@ -374,11 +370,11 @@ export const CreateCourse = () => {
                 case 'codigo':
                   acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
                   break;
-                case 'opcionMultiple':
-                  acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+                case 'opcion_multiple':
+                  acc.push({id:ej.id, tipo: 'opcion_multiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
                   break;
                 case 'quiz':
-                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestasString: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestasString });
                   break;
               }
               return acc;
@@ -406,11 +402,11 @@ export const CreateCourse = () => {
             case 'codigo':
               acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
               break;
-            case 'opcionMultiple':
-              acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+            case 'opcion_multiple':
+              acc.push({id:ej.id, tipo: 'opcion_multiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
               break;
             case 'quiz':
-              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestasString: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestasString });
               break;
           }
           return acc;

@@ -75,11 +75,27 @@ export class CursoService {
 
         for (const ejercicioDto of subtituloDto.ejercicios) {
           const ejercicio = this.ejercicioRepository.create({
-            tipo: ejercicioDto.tipo as EjercicioTipo,
-            pregunta: ejercicioDto.pregunta,
+            tipo: ejercicioDto.tipo === 'opcionMultiple' ? EjercicioTipo.OPCION_MULTIPLE : 
+                  ejercicioDto.tipo === 'codigo' ? EjercicioTipo.CODIGO :
+                  ejercicioDto.tipo === 'link' ? EjercicioTipo.LINK :
+                  ejercicioDto.tipo === 'quiz' ? EjercicioTipo.QUIZ :
+                  EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
             subtitulo: subtitulo,
             contenido: {
-              respuestas: ejercicioDto.respuestas,
+              pregunta: ejercicioDto.pregunta,
+              ...(ejercicioDto.tipo === 'quiz' 
+                ? { respuestas: ejercicioDto.respuestasString }
+                : ejercicioDto.tipo === 'opcionMultiple'
+                ? { respuestas: ejercicioDto.respuestas }
+                : ejercicioDto.tipo === 'codigo'
+                ? { 
+                    codigoBase: ejercicioDto.codigoBase,
+                    resultadoEsperado: ejercicioDto.resultadoEsperado,
+                    feedbackSugerido: ejercicioDto.feedbackSugerido
+                  }
+                : ejercicioDto.tipo === 'link'
+                ? { url: ejercicioDto.url }
+                : {}),
               orden: ejercicioDto.orden,
             },
           });
@@ -97,11 +113,27 @@ export class CursoService {
 
         for (const ejercicioExaDto of temaDto.examen.ejerciciosExa) {
           const ejercicioExa = this.ejercicioExaRepository.create({
-            tipo: ejercicioExaDto.tipo as EjercicioTipo,
-            pregunta: ejercicioExaDto.pregunta,
+            tipo: ejercicioExaDto.tipo === 'opcionMultiple' ? EjercicioTipo.OPCION_MULTIPLE : 
+                  ejercicioExaDto.tipo === 'codigo' ? EjercicioTipo.CODIGO :
+                  ejercicioExaDto.tipo === 'link' ? EjercicioTipo.LINK :
+                  ejercicioExaDto.tipo === 'quiz' ? EjercicioTipo.QUIZ :
+                  EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
             examen: examen,
             contenido: {
-              respuestas: ejercicioExaDto.respuestas,
+              pregunta: ejercicioExaDto.pregunta,
+              ...(ejercicioExaDto.tipo === 'quiz' 
+                ? { respuestas: ejercicioExaDto.respuestasString }
+                : ejercicioExaDto.tipo === 'opcionMultiple'
+                ? { respuestas: ejercicioExaDto.respuestas }
+                : ejercicioExaDto.tipo === 'codigo'
+                ? { 
+                    codigoBase: ejercicioExaDto.codigoBase,
+                    resultadoEsperado: ejercicioExaDto.resultadoEsperado,
+                    feedbackSugerido: ejercicioExaDto.feedbackSugerido
+                  }
+                : ejercicioExaDto.tipo === 'link'
+                ? { url: ejercicioExaDto.url }
+                : {}),
               orden: ejercicioExaDto.orden,
             },
           });

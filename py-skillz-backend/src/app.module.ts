@@ -47,6 +47,13 @@ import { GeminiModule } from './gemini/gemini.module';
         Task,
       ],
       synchronize: true,
+      logging: true,
+      autoLoadEntities: true,
+      useUTC: true,
+      extra: {
+        max: 20,
+        connectionTimeoutMillis: 5000,
+      },
     }),
     TypeOrmModule.forFeature([
       Curso,
