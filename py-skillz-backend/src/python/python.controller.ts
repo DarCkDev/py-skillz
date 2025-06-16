@@ -1,4 +1,11 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { PythonService } from './python.service';
 import { RunCodeDto } from './dto/run-code.dto';
 
@@ -11,21 +18,33 @@ export class PythonController {
     try {
       console.log('Received code:', runCodeDto.code);
       const result = await this.pythonService.executeCode(runCodeDto.code);
-      console.log('Execution result:', result); 
-      return { 
+      console.log('Execution result:', result);
+      return {
         success: true,
-        output: result 
+        output: result,
       };
     } catch (error) {
-      console.error('Error executing code:', error); 
+      console.error('Error executing code:', error);
       throw new HttpException(
         {
           success: false,
           error: error.message || 'An error occurred while executing the code',
-          details: error.stack 
+          details: error.stack,
         },
-        HttpStatus.BAD_REQUEST
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
-} 
+
+  @Post('run-in-docker')
+  async runCode(@Body() code: RunCodeDto) {
+    console.log(code);
+    const result = await this.pythonService.runInDocker(code.code);
+
+    if (result.stderr) {
+      throw new InternalServerErrorException(result.stderr);
+    }
+
+    return result;
+  }
+}
