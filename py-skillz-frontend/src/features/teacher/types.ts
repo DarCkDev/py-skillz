@@ -23,13 +23,13 @@ export interface EjercicioCodigo extends EjercicioBase {
 }
 
 export interface EjercicioOpcionMultiple extends EjercicioBase {
-  tipo: 'opcionMultiple';
+  tipo: 'opcion_multiple';
   respuestas: RespuestaOpcionMultiple[];
 }
 
 export interface EjercicioQuiz extends EjercicioBase {
   tipo: 'quiz';
-  respuestas: string; 
+  respuestasString: string; 
 }
 
 export type Ejercicio = EjercicioLink | EjercicioCodigo | EjercicioOpcionMultiple | EjercicioQuiz;
