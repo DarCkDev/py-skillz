@@ -38,13 +38,11 @@ export class PythonController {
 
   @Post('run-in-docker')
   async runCode(@Body() code: RunCodeDto) {
-    console.log(code);
     const result = await this.pythonService.runInDocker(code.code);
 
     if (result.stderr) {
       throw new InternalServerErrorException(result.stderr);
     }
-    console.log('Resultado de la ejecución:', result.stdout);
 
     return {
       output: result.stdout,
