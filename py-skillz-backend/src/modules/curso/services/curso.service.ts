@@ -68,6 +68,8 @@ export class CursoService {
         const subtitulo = this.subtituloRepository.create({
           titulo: subtituloDto.tituloSubtitulo,
           contenidoHtml: subtituloDto.textoEnriquecido,
+          videoUrl: subtituloDto.videoUrl,
+          documentoUrl: subtituloDto.documentoUrl,
           orden: subtituloDto.orden,
           tema: tema,
         });
@@ -75,27 +77,32 @@ export class CursoService {
 
         for (const ejercicioDto of subtituloDto.ejercicios) {
           const ejercicio = this.ejercicioRepository.create({
-            tipo: ejercicioDto.tipo === 'opcionMultiple' ? EjercicioTipo.OPCION_MULTIPLE : 
-                  ejercicioDto.tipo === 'codigo' ? EjercicioTipo.CODIGO :
-                  ejercicioDto.tipo === 'link' ? EjercicioTipo.LINK :
-                  ejercicioDto.tipo === 'quiz' ? EjercicioTipo.QUIZ :
-                  EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
+            tipo:
+              ejercicioDto.tipo === 'opcionMultiple'
+                ? EjercicioTipo.OPCION_MULTIPLE
+                : ejercicioDto.tipo === 'codigo'
+                  ? EjercicioTipo.CODIGO
+                  : ejercicioDto.tipo === 'link'
+                    ? EjercicioTipo.LINK
+                    : ejercicioDto.tipo === 'quiz'
+                      ? EjercicioTipo.QUIZ
+                      : EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
             subtitulo: subtitulo,
             contenido: {
               pregunta: ejercicioDto.pregunta,
-              ...(ejercicioDto.tipo === 'quiz' 
+              ...(ejercicioDto.tipo === 'quiz'
                 ? { respuestas: ejercicioDto.respuestasString }
                 : ejercicioDto.tipo === 'opcionMultiple'
-                ? { respuestas: ejercicioDto.respuestas }
-                : ejercicioDto.tipo === 'codigo'
-                ? { 
-                    codigoBase: ejercicioDto.codigoBase,
-                    resultadoEsperado: ejercicioDto.resultadoEsperado,
-                    feedbackSugerido: ejercicioDto.feedbackSugerido
-                  }
-                : ejercicioDto.tipo === 'link'
-                ? { url: ejercicioDto.url }
-                : {}),
+                  ? { respuestas: ejercicioDto.respuestas }
+                  : ejercicioDto.tipo === 'codigo'
+                    ? {
+                        codigoBase: ejercicioDto.codigoBase,
+                        resultadoEsperado: ejercicioDto.resultadoEsperado,
+                        feedbackSugerido: ejercicioDto.feedbackSugerido,
+                      }
+                    : ejercicioDto.tipo === 'link'
+                      ? { url: ejercicioDto.url }
+                      : {}),
               orden: ejercicioDto.orden,
             },
           });
@@ -113,27 +120,32 @@ export class CursoService {
 
         for (const ejercicioExaDto of temaDto.examen.ejerciciosExa) {
           const ejercicioExa = this.ejercicioExaRepository.create({
-            tipo: ejercicioExaDto.tipo === 'opcionMultiple' ? EjercicioTipo.OPCION_MULTIPLE : 
-                  ejercicioExaDto.tipo === 'codigo' ? EjercicioTipo.CODIGO :
-                  ejercicioExaDto.tipo === 'link' ? EjercicioTipo.LINK :
-                  ejercicioExaDto.tipo === 'quiz' ? EjercicioTipo.QUIZ :
-                  EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
+            tipo:
+              ejercicioExaDto.tipo === 'opcionMultiple'
+                ? EjercicioTipo.OPCION_MULTIPLE
+                : ejercicioExaDto.tipo === 'codigo'
+                  ? EjercicioTipo.CODIGO
+                  : ejercicioExaDto.tipo === 'link'
+                    ? EjercicioTipo.LINK
+                    : ejercicioExaDto.tipo === 'quiz'
+                      ? EjercicioTipo.QUIZ
+                      : EjercicioTipo.OPCION_MULTIPLE, // valor por defecto
             examen: examen,
             contenido: {
               pregunta: ejercicioExaDto.pregunta,
-              ...(ejercicioExaDto.tipo === 'quiz' 
+              ...(ejercicioExaDto.tipo === 'quiz'
                 ? { respuestas: ejercicioExaDto.respuestasString }
                 : ejercicioExaDto.tipo === 'opcionMultiple'
-                ? { respuestas: ejercicioExaDto.respuestas }
-                : ejercicioExaDto.tipo === 'codigo'
-                ? { 
-                    codigoBase: ejercicioExaDto.codigoBase,
-                    resultadoEsperado: ejercicioExaDto.resultadoEsperado,
-                    feedbackSugerido: ejercicioExaDto.feedbackSugerido
-                  }
-                : ejercicioExaDto.tipo === 'link'
-                ? { url: ejercicioExaDto.url }
-                : {}),
+                  ? { respuestas: ejercicioExaDto.respuestas }
+                  : ejercicioExaDto.tipo === 'codigo'
+                    ? {
+                        codigoBase: ejercicioExaDto.codigoBase,
+                        resultadoEsperado: ejercicioExaDto.resultadoEsperado,
+                        feedbackSugerido: ejercicioExaDto.feedbackSugerido,
+                      }
+                    : ejercicioExaDto.tipo === 'link'
+                      ? { url: ejercicioExaDto.url }
+                      : {}),
               orden: ejercicioExaDto.orden,
             },
           });
@@ -194,7 +206,7 @@ export class CursoService {
       tag: createTaskDto.tag,
       objectives: createTaskDto.objectives,
       deadline: createTaskDto.deadline,
-      fileUrl: createTaskDto.fileUrl
+      fileUrl: createTaskDto.fileUrl,
     });
 
     // Guardar la tarea
@@ -204,7 +216,18 @@ export class CursoService {
     return this.taskRepository.findOne({
       where: { id: savedTask.id },
       relations: ['course', 'creator'],
-      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt']
+      select: [
+        'id',
+        'title',
+        'description',
+        'instructions',
+        'tag',
+        'objectives',
+        'deadline',
+        'fileUrl',
+        'createdAt',
+        'updatedAt',
+      ],
     });
   }
 
@@ -212,7 +235,18 @@ export class CursoService {
     return await this.taskRepository.find({
       where: { course: { id: courseId } },
       relations: ['creator'],
-      select: ['id', 'title', 'description', 'instructions', 'tag', 'objectives', 'deadline', 'fileUrl', 'createdAt', 'updatedAt'],
+      select: [
+        'id',
+        'title',
+        'description',
+        'instructions',
+        'tag',
+        'objectives',
+        'deadline',
+        'fileUrl',
+        'createdAt',
+        'updatedAt',
+      ],
       order: { createdAt: 'DESC' },
     });
   }
@@ -234,7 +268,7 @@ export class CursoService {
           'temas.subtitulos.ejercicios',
           'temas.examenes',
           'temas.examenes.ejercicios',
-          'creador'
+          'creador',
         ],
       });
 

@@ -89,29 +89,29 @@ class CreateEjercicioExaDto {
   @IsString()
   pregunta: string;
 
-  @ValidateIf(o => o.tipo === 'opcion_multiple')
+  @ValidateIf((o) => o.tipo === 'opcion_multiple')
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => RespuestaOpcionMultipleDto)
   respuestas?: RespuestaOpcionMultipleDto[];
 
-  @ValidateIf(o => o.tipo === 'quiz')
+  @ValidateIf((o) => o.tipo === 'quiz')
   @IsString()
   respuestasString?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   codigoBase?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   resultadoEsperado?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   feedbackSugerido?: string;
 
-  @ValidateIf(o => o.tipo === 'link')
+  @ValidateIf((o) => o.tipo === 'link')
   @IsString()
   url?: string;
 
@@ -137,29 +137,29 @@ class CreateEjercicioDto {
   @IsString()
   pregunta: string;
 
-  @ValidateIf(o => o.tipo === 'opcion_multiple')
+  @ValidateIf((o) => o.tipo === 'opcion_multiple')
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => RespuestaOpcionMultipleDto)
   respuestas?: RespuestaOpcionMultipleDto[];
 
-  @ValidateIf(o => o.tipo === 'quiz')
+  @ValidateIf((o) => o.tipo === 'quiz')
   @IsString()
   respuestasString?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   codigoBase?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   resultadoEsperado?: string;
 
-  @ValidateIf(o => o.tipo === 'codigo')
+  @ValidateIf((o) => o.tipo === 'codigo')
   @IsString()
   feedbackSugerido?: string;
 
-  @ValidateIf(o => o.tipo === 'link')
+  @ValidateIf((o) => o.tipo === 'link')
   @IsString()
   url?: string;
 
@@ -176,6 +176,12 @@ class CreateSubtituloDto {
 
   @IsNumber()
   orden: number;
+
+  @IsOptional()
+  videoUrl: string;
+
+  @IsOptional()
+  documentoUrl: string;
 
   @IsArray()
   @ValidateNested({ each: true })
