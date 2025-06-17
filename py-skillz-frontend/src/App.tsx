@@ -33,6 +33,7 @@ const CourseDetail = lazy(() => import('./features/courses/CourseDetail').then(m
 const CreateCourse = lazy(() => import('./features/courses/create/CreateCourse').then(module => ({ default: module.CreateCourse })));
 const TeacherCourseManagement = lazy(() => import('./features/teacher/CourseManagement').then(module => ({ default: module.TeacherCourseManagement })));
 const EditorTexto = lazy(() => import('./components/editorTexto/pages/EditorTexto'));
+const EditorTextoApi = lazy(() => import('./components/editorTexto/pages/EditorTextoApi'));
 const CreateTask = lazy(() => import('./features/teacher/CreateTask').then(module => ({ default: module.CreateTask })));
 const MyCourses = lazy(() => import('./features/common/MyCourses').then(module => ({ default: module.MyCourses })));
 //paginas de estudiante
@@ -63,6 +64,7 @@ function App() {
                 <Route path="register" element={<Register />} />
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="editor" element={<EditorTexto />} />
+                <Route path="editorApi" element={<EditorTextoApi />} />
               <Route path="tasks/create" element={<CreateTask />} />
               <Route path="my-courses" element={<MyCourses />} />
               <Route path="favorites" element={<Favorites />} /> {/* New: Favorites route */}
