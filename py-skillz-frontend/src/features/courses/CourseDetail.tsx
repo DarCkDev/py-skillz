@@ -96,7 +96,49 @@ export function CourseDetail() {
           <CardTitle>{course.titulo}</CardTitle>
         </CardHeader>
         <CardContent>
+          {course.imagenDestacada && 
+          <img src={course.imagenDestacada} alt={course.titulo} className="h-96 w-full object-cover" />
+          }
           <p className="text-gray-600 mb-4">{course.descripcion}</p>
+          <div>
+            <Card className="mb-8">
+              <CardHeader>
+                <h2 className="text-2xl font-bold">Temas del Curso</h2>
+              </CardHeader>
+              <CardContent>
+              {course.temas.map((tema) => {
+                return (
+                  <Card key={tema.id} className="mb-4">
+                    <CardHeader>
+                      <h2 className="text-xl font-bold">{tema.titulo}</h2>
+                    </CardHeader>
+                    <CardContent>
+                      <div key={tema.id} className="gap-4 mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold"></h3>
+                          <p className="text-gray-600">{tema.subtitulos.length} Subtitulos</p>
+                          {tema.subtitulos.map((subtitulo) => {
+                            return (
+                              <Card key={subtitulo.id} className="gap-4 mb-4">
+                                <CardHeader>
+                                  <h2 className="text-xl font-bold">{subtitulo?.titulo}</h2>
+                                </CardHeader>
+                                <CardContent className='flex flex-col gap-4'>
+                                  {subtitulo.documentoUrl && <iframe src={`http://localhost:3003/${subtitulo.documentoUrl}`} height={200} width={400} title="Documento" className="w-full h-96 border-0"></iframe>}
+                                  {subtitulo.videoUrl && <video src={`http://localhost:3003/${subtitulo.videoUrl}`} controls className="w-full h-96 border-0"></video>}
+                                </CardContent>
+                              </Card>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}  
+            </CardContent>
+            </Card>
+          </div>
           <div className="flex gap-4">
             <Button onClick={() => navigate('/my-courses')}>
               {t('common.back')}

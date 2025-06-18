@@ -45,7 +45,9 @@
     "loginSuccess": "Suma mantaña",
     "loginFailed": "Jan walt'awi mantañanxa",
     "registerSuccess": "Suma qillqantasiña",
-    "registerFailed": "Jan walt'awi qillqantasiñanxa"
+    "registerFailed": "Jan walt'awi qillqantasiñanxa",
+    "alreadyHaveAccount": "Iniciar sesión",
+    "noAccount": "Registrarse"
   },
   "nav": {
     "home": "Qalltawi",
@@ -60,7 +62,8 @@
     "reports": "Uñt'ayañanaka",
     "settings": "Wakichaña",
     "help": "Yanapa",
-    "userOptions": "Jaqi ajlliñanaka"
+    "userOptions": "Jaqi ajlliñanaka",
+    "codeEditor": "Code Editor"
   },
   "accessibility": {
     "highContrast": "Jach'a uñtawi",

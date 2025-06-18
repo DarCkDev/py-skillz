@@ -48,34 +48,45 @@ const EditorTexto: React.FC = () => {
     }
   };
 
-  const handleRunCode = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('http://localhost:3003/python/run', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code: currentFile?.content || '' }),
-      });
+ const handleRunCode = async () => {
+  setIsLoading(true);
+  try {
+    const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        language: 'python',
+        version: '3.10.0',
+        files: [
+          {
+            name: selectedFile,
+            content: currentFile?.content || '',
+          },
+        ],
+      }),
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    const data = await response.json();
 
-      const data = await response.json();
-      if (data.success) {
-        setOutput(data.output);
-      } else {
-        setOutput(`Error: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('Error details:', error);
-      setOutput(`Error: ${error instanceof Error ? error.message : 'Failed to run code. Please try again.'}`);
-    } finally {
-      setIsLoading(false);
+    const stdout = data.run?.stdout || '';
+    const stderr = data.run?.stderr || '';
+
+    if (stderr) {
+      setOutput(`⚠️ Error:\n${stderr}`);
+    } else {
+      setOutput(stdout);
     }
-  };
+  } catch (error) {
+    console.error('Error con Piston API:', error);
+    setOutput('❌ Error ejecutando código en línea.');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
 
   const handleSaveCode = () => {
     // Implementar la lógica de guardado

@@ -95,7 +95,7 @@ export const UserManagement = () => {
             user={currentUser}
           />,
           document.body
-        )}(
+        )}
         <div className="overflow-x-auto">
           <table className="w-full table-auto md:table-fixed">
             <thead className="text-left border-b border-foreground h-10">
@@ -152,7 +152,6 @@ export const UserManagement = () => {
             </tbody>
           </table>
         </div>
-      )
     </div>
   );
 };

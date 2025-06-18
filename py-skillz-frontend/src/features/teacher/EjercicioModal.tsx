@@ -46,11 +46,11 @@ const EjercicioModal: React.FC<EjercicioModalProps> = ({
           setResultadoEsperado(ejercicioInicial.resultadoEsperado || '');
           setFeedbackSugerido(ejercicioInicial.feedbackSugerido || '');
           break;
-        case 'opcionMultiple':
+        case 'opcion_multiple':
           setOpcionesRespuesta(ejercicioInicial.respuestas || [{ texto: '', correcta: false }]);
           break;
         case 'quiz':
-          setRespuestaQuiz(ejercicioInicial.respuestas || '');
+          setRespuestaQuiz(ejercicioInicial.respuestasString || '');
           break;
       }
     } else {
@@ -79,11 +79,11 @@ const EjercicioModal: React.FC<EjercicioModalProps> = ({
       case 'codigo':
         ejercicioData = { ...ejercicioData, codigoBase, resultadoEsperado, feedbackSugerido, tipo: 'codigo' };
         break;
-      case 'opcionMultiple':
-        ejercicioData = { ...ejercicioData, respuestas: opcionesRespuesta, tipo: 'opcionMultiple' };
+      case 'opcion_multiple':
+        ejercicioData = { ...ejercicioData, respuestas: opcionesRespuesta, tipo: 'opcion_multiple' };
         break;
       case 'quiz':
-        ejercicioData = { ...ejercicioData, respuestas: respuestaQuiz, tipo: 'quiz' };
+        ejercicioData = { ...ejercicioData, respuestasString: respuestaQuiz, tipo: 'quiz' };
         break;
     }
     onSave(ejercicioData as Ejercicio);
@@ -129,7 +129,7 @@ const EjercicioModal: React.FC<EjercicioModalProps> = ({
               <SelectContent className="bg-popover text-popover-foreground">
                 <SelectItem value="link">Enlace Externo</SelectItem>
                 <SelectItem value="codigo">Código</SelectItem>
-                <SelectItem value="opcionMultiple">Opción Múltiple</SelectItem>
+                <SelectItem value="opcion_multiple">Opción Múltiple</SelectItem>
                 <SelectItem value="quiz">Quiz (Respuesta Corta)</SelectItem>
               </SelectContent>
             </Select>
@@ -165,7 +165,7 @@ const EjercicioModal: React.FC<EjercicioModalProps> = ({
             </>
           )}
 
-          {tipoEjercicio === 'opcionMultiple' && (
+          {tipoEjercicio === 'opcion_multiple' && (
             <div>
               <label className="block text-sm font-medium text-muted-foreground mb-1">Opciones de Respuesta</label>
               {opcionesRespuesta.map((opcion, index) => (

@@ -8,7 +8,7 @@ interface CodeEditorProps {
 
 export function CodeEditor({ value, onChange }: CodeEditorProps) {
   const [files, setFiles] = useState<{ name: string; content: string }[]>([]);
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [, setSelectedFile] = useState<string | null>(null);
 
   const handleFileSelect = (fileName: string) => {
     setSelectedFile(fileName);

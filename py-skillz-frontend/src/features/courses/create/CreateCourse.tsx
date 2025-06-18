@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { crearCurso } from '../api/api';
+import { crearCurso, subirArchivos } from '../api/api';
 import { useToast } from '../../../components/ui/use-toast';
 
 import type {
@@ -345,28 +345,28 @@ export const CreateCourse = () => {
 
     console.log('CursoData antes de enviar:', JSON.stringify(cursoData, null, 2));
 
-    const uploadFileAndGetUrl = async (file: File | undefined): Promise<string | undefined> => {
+    const uploadFileAndGetUrl = async (file: File | undefined, type: 'video' | 'document' | 'presentation' | 'image' = 'video'): Promise<string | undefined> => {
+      console.log(file);
       if (!file) return undefined;
-      // This is a placeholder for actual file upload logic
-      return new Promise(resolve => setTimeout(() => resolve(`https://fakeurl.com/${file.name}`), 100));
+      const formData = new FormData();
+      formData.append('type', type);
+      formData.append('file', file);
+      const response = await subirArchivos(formData, type);
+      return response.url;
     };
 
     type EjercicioPayloadItem = EjercicioType & { orden: number };
-
-
-
 
     const temasParaPayload = await Promise.all(
       cursoData.temas.map(async (tema: TemaType) => {
         const subtitulosParaPayload = await Promise.all(
           tema.subtitulos.map(async (sub: SubtituloType) => {
             const videoUrl = await uploadFileAndGetUrl(sub.videoFile) || sub.videoUrl;
-            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile) || sub.documentoUrl;
+            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile, 'document') || sub.documentoUrl;
         
             const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
               const { pregunta, ...ejercicioSpecificProps } = ej;
 
-        
               switch (ej.tipo) {
                 case 'link':
                   acc.push({id:ej.id, tipo: 'link', pregunta, url: (ejercicioSpecificProps as Omit<EjercicioLinkType, 'pregunta' | 'tipo'>).url });
@@ -374,11 +374,11 @@ export const CreateCourse = () => {
                 case 'codigo':
                   acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
                   break;
-                case 'opcionMultiple':
-                  acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+                case 'opcion_multiple':
+                  acc.push({id:ej.id, tipo: 'opcion_multiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
                   break;
                 case 'quiz':
-                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+                  acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestasString: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestasString });
                   break;
               }
               return acc;
@@ -406,11 +406,11 @@ export const CreateCourse = () => {
             case 'codigo':
               acc.push({id:ej.id, tipo: 'codigo', pregunta, codigoBase: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).codigoBase, resultadoEsperado: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).resultadoEsperado, feedbackSugerido: (ejercicioSpecificProps as Omit<EjercicioCodigoType, 'pregunta' | 'tipo'>).feedbackSugerido });
               break;
-            case 'opcionMultiple':
-              acc.push({id:ej.id, tipo: 'opcionMultiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
+            case 'opcion_multiple':
+              acc.push({id:ej.id, tipo: 'opcion_multiple', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioOpcionMultipleType, 'pregunta' | 'tipo'>).respuestas });
               break;
             case 'quiz':
-              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestas: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestas });
+              acc.push({id:ej.id, tipo: 'quiz', pregunta, respuestasString: (ejercicioSpecificProps as Omit<EjercicioQuizType, 'pregunta' | 'tipo'>).respuestasString });
               break;
           }
           return acc;
