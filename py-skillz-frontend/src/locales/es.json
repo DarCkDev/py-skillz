@@ -71,7 +71,8 @@
     "help": "Ayuda",
     "userOptions": "Opciones de usuario",
     "about": "Acerca de",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "codeEditor": "Editor de código"
   },
   "accessibility": {
     "toggleTheme": "Cambiar tema",

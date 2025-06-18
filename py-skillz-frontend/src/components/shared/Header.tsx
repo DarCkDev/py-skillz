@@ -188,6 +188,13 @@ export function Header() {
               </Link>
             ))}
             
+            <Link 
+              to="/editor" 
+              className="px-3 py-2 rounded-md hover:bg-primary-foreground/10 transition-colors flex items-center"
+              onClick={() => setLoading(true)}
+            >
+              {t('nav.codeEditor')}
+            </Link>
 
             <ThemeToggle />
             
