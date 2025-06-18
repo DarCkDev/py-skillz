@@ -84,6 +84,7 @@ function App() {
                 <Route path="admin/courses" element={<CourseManagement />} />
                 <Route path="admin/courses/create" element={<CreateCourse />} />
                 <Route path="admin/courses/edit/:id" element={<EditCourse />} />
+                <Route path="admin/courses/:id" element={<CourseDetail />} />
               </Route>
               
               

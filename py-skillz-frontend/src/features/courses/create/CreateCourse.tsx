@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion } from '@/components/ui/accordion';
 import { PlusCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { crearCurso } from '../api/api';
+import { crearCurso, subirArchivos } from '../api/api';
 import { useToast } from '../../../components/ui/use-toast';
 
 import type {
@@ -345,10 +345,14 @@ export const CreateCourse = () => {
 
     console.log('CursoData antes de enviar:', JSON.stringify(cursoData, null, 2));
 
-    const uploadFileAndGetUrl = async (file: File | undefined): Promise<string | undefined> => {
+    const uploadFileAndGetUrl = async (file: File | undefined, type: 'video' | 'document' | 'presentation' | 'image' = 'video'): Promise<string | undefined> => {
+      console.log(file);
       if (!file) return undefined;
-      // This is a placeholder for actual file upload logic
-      return new Promise(resolve => setTimeout(() => resolve(`https://fakeurl.com/${file.name}`), 100));
+      const formData = new FormData();
+      formData.append('type', type);
+      formData.append('file', file);
+      const response = await subirArchivos(formData, type);
+      return response.url;
     };
 
     type EjercicioPayloadItem = EjercicioType & { orden: number };
@@ -358,7 +362,7 @@ export const CreateCourse = () => {
         const subtitulosParaPayload = await Promise.all(
           tema.subtitulos.map(async (sub: SubtituloType) => {
             const videoUrl = await uploadFileAndGetUrl(sub.videoFile) || sub.videoUrl;
-            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile) || sub.documentoUrl;
+            const documentoUrl = await uploadFileAndGetUrl(sub.documentoFile, 'document') || sub.documentoUrl;
         
             const ejerciciosProcesados: EjercicioType[] = sub.ejercicios.reduce((acc: EjercicioType[], ej: EjercicioType) => {
               const { pregunta, ...ejercicioSpecificProps } = ej;

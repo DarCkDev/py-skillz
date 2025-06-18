@@ -37,6 +37,7 @@ export type Ejercicio = EjercicioLink | EjercicioCodigo | EjercicioOpcionMultipl
 export interface Subtitulo {
   id: string;
   tituloSubtitulo: string;
+  titulo?: string;
   textoEnriquecido: string;
   videoFile?: File;
   videoUrl?: string; 
