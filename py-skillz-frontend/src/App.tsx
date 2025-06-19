@@ -10,7 +10,7 @@ import { LoadingIndicator } from './components/shared/LoadingIndicator';
 import { Toaster } from 'sonner';
 
 // all
-const Home = lazy(() => import('./features/common/Home').then(module => ({ default: module.Home })));
+const Home = lazy(() => import('./features/common/Home'))
 const Catalog = lazy(() => import('./features/common/Catalog').then(module => ({ default: module.Catalog })));
 const NotFound = lazy(() => import('./features/common/NotFound').then(module => ({ default: module.NotFound })));
 const Profile = lazy(() => import('./features/users/Profile').then(module => ({ default: module.Profile })));
