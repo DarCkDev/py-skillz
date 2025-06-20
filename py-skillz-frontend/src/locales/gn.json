@@ -13,7 +13,21 @@
     "back": "Ejevy",
     "next": "Tenonderã",
     "previous": "Mboyvegua",
-    "search": "Eheka"
+    "search": "Eheka",
+    "closeMenu": "Emboty menú",
+    "openMenu": "Eipe'a menú",
+    "spanish": "Karaiñe'ẽ",
+    "quechua": "Kichwa ñe'ẽ",
+    "aymara": "Aymara ñe'ẽ",
+    "guarani": "Guarani ñe'ẽ"
+  },
+  "myCourses": {
+    "title": "Che mbo'esyry",
+    "createCourse": "Emoheñói mbo'esyry",
+    "noCourses": "Ndaipóri mbo'esyry",
+    "createFirstCourse": "Emoheñói peteĩ mbo'esyry pyahu",
+    "topics": "Temakuéra",
+    "viewCourse": "Ehecha mbo'esyry"
   },
   "auth": {
     "login": "Eike",
@@ -27,7 +41,9 @@
     "loginSuccess": "Reike porãma",
     "loginFailed": "Ndaikatúi reike",
     "registerSuccess": "Eñemboguapy porãma",
-    "registerFailed": "Ndaikatúi eñemboguapy"
+    "registerFailed": "Ndaikatúi eñemboguapy",
+    "alreadyHaveAccount": "Iniciar sesión",
+    "noAccount": "Registrarse"
   },
   "nav": {
     "home": "Ñepyrũ",
@@ -41,7 +57,8 @@
     "createCourse": "Emoheñói mbo'esyry",
     "reports": "Marandu",
     "settings": "Ñemboheko",
-    "help": "Pytyvõ"
+    "help": "Pytyvõ",
+    "codeEditor": "código editor rehegua"
   },
   "accessibility": {
     "highContrast": "Ojuavy hatã",
@@ -73,6 +90,37 @@
     "reportsDescription": "Ehecha papapy ha emoheñói tembiapo marandu.",
     "totalUsers": "Puruhára Papapy",
     "totalCourses": "Mbo'esyry Papapy",
-    "activeStudents": "Temimbo'e Oikóva"
+    "activeStudents": "Temimbo'e Oikóva",
+    "name": "Ñanduti",
+    "fullName": "Ñanduti veve",
+    "password": "Ñe'ẽñemi",
+    "email": "Ñanduti veve",
+    "role": "Puruhára",
+    "createdAt": "Ñanduti",
+    "updatedAt": "Ñanduti",
+    "actions": "Ñanduti",
+    "editUser": "Emoambue",
+    "deleteUser": "Emboguepáke",
+    "createUser": "Emohenda",
+    "admin": "Ñangareko",
+    "teacher": "Mbo'ehára",
+    "student": "Temimbo'e",
+    "close": "Ehecha",
+    "edit": "Emoambue",
+    "delete": "Emboguepáke",
+    "save": "Eñongatu",
+    "cancel": "Eheja",
+    "create": "Mboypy",
+    "update": "Mbopyahu"
+  },
+  "user": {
+    "userUpdatedSuccessfully": "Pojoapy ombopyahu porã",
+    "userCreatedSuccessfully": "Pojoapy omoheñóiva hekopete",
+    "userDeletedSuccessfully": "Pojoapy puruhára oñembogue porã",
+    "userNotFound": "Usuario ndojejuhúi",
+    "errorUpdatingUser": "Ojejavy oñembopyahúvo puruhára",
+    "errorCreatingUser": "Ojejavy omoheñóivo puruhára",
+    "errorDeletingUser": "Ojejavy oñembogue jave puruhára",
+    "areYouSure": "¿Ere katuete rembogueseha ko puruhára?"
   }
 }

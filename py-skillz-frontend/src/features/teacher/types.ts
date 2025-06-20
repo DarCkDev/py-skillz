@@ -23,13 +23,13 @@ export interface EjercicioCodigo extends EjercicioBase {
 }
 
 export interface EjercicioOpcionMultiple extends EjercicioBase {
-  tipo: 'opcionMultiple';
+  tipo: 'opcion_multiple';
   respuestas: RespuestaOpcionMultiple[];
 }
 
 export interface EjercicioQuiz extends EjercicioBase {
   tipo: 'quiz';
-  respuestas: string; 
+  respuestasString: string; 
 }
 
 export type Ejercicio = EjercicioLink | EjercicioCodigo | EjercicioOpcionMultiple | EjercicioQuiz;
@@ -37,6 +37,7 @@ export type Ejercicio = EjercicioLink | EjercicioCodigo | EjercicioOpcionMultipl
 export interface Subtitulo {
   id: string;
   tituloSubtitulo: string;
+  titulo?: string;
   textoEnriquecido: string;
   videoFile?: File;
   videoUrl?: string; 

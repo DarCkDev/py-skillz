@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { OpenAIModule } from './openai/openai.module';
+import { HuggingFaceModule } from './huggingface/huggingface.module';
 import { CursoModule } from './modules/curso/curso.module';
 import { Curso } from './modules/curso/entities/curso.entity';
 import { Tema } from './modules/curso/entities/tema.entity';
@@ -21,6 +22,7 @@ import { EjercicioExa } from './modules/curso/entities/ejercicio-exa.entity';
 import { Upload } from './modules/upload/entities/upload.entity';
 import { PythonModule } from './python/python.module';
 import { Task } from './modules/curso/entities/task.entity';
+import { GeminiModule } from './gemini/gemini.module';
 
 @Module({
   imports: [
@@ -45,6 +47,13 @@ import { Task } from './modules/curso/entities/task.entity';
         Task,
       ],
       synchronize: true,
+      logging: true,
+      autoLoadEntities: true,
+      useUTC: true,
+      extra: {
+        max: 20,
+        connectionTimeoutMillis: 5000,
+      },
     }),
     TypeOrmModule.forFeature([
       Curso,
@@ -83,7 +92,9 @@ import { Task } from './modules/curso/entities/task.entity';
     UserModule,
     UploadModule,
     OpenAIModule,
+    HuggingFaceModule,
     CursoModule,
+    GeminiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

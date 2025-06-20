@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { BackButton } from '../../components/shared/BackButton';
 import FileUpload from '../../components/shared/fileUpload';
@@ -37,6 +36,7 @@ export function CreateTask() {
     title: '',
     description: '',
     instructions: '',
+    tag: '',
   });
 
   useEffect(() => {
@@ -84,6 +84,15 @@ export function CreateTask() {
       console.log('Token:', token);
       console.log('Task Data:', taskData);
       
+      if (!taskData.tag) {
+        toast({
+          title: "Error",
+          description: "Debes seleccionar una etiqueta de tarea",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const response = await fetch('http://localhost:3003/curso/tasks', {
         method: 'POST',
         headers: {
@@ -93,6 +102,7 @@ export function CreateTask() {
         body: JSON.stringify({
           ...taskData,
           courseId: parseInt(taskData.courseId),
+          tag: taskData.tag || undefined,
         }),
       });
 
@@ -102,10 +112,7 @@ export function CreateTask() {
 
       if (!response.ok) throw new Error('Error al crear la tarea');
 
-      toast({
-        title: 'Tarea creada',
-        description: 'La tarea se ha creado correctamente',
-      })
+      toast("Tarea creada correctamente");
 
       navigate('/my-courses');
     } catch (error) {

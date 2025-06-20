@@ -85,3 +85,15 @@
     @apply ring-2 ring-accent ring-offset-4 ring-offset-background;
   }
 }
+
+/* líneas guía para el timeline de subtítulos */
+.prose ol > li::before {
+  content: none; /* quitamos numeración nativa */
+}
+/* Color muted para modo claro/oscuro */
+.text-muted-foreground {
+  @apply text-gray-500 dark:text-gray-400;
+}
+.border-muted {
+  @apply border-gray-200 dark:border-gray-700;
+}

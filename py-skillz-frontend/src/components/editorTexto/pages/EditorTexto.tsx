@@ -3,6 +3,7 @@ import { Editor as MonacoEditor } from '@monaco-editor/react';
 import OutputPanel from '../OutputPanel';
 import '../styles/editorTexto.css';
 import ChatAssistant from "../../assistant/chatAssistant";
+import { useToast } from '../../../components/ui/use-toast';
 
 interface PyFile {
   name: string;
@@ -14,6 +15,7 @@ const initialFiles: PyFile[] = [
 ];
 
 const EditorTexto: React.FC = () => {
+  const { toast } = useToast();
   const [files, setFiles] = useState<PyFile[]>(initialFiles);
   const [selectedFile, setSelectedFile] = useState<string>('index.py');
   const [output, setOutput] = useState<string>('');
@@ -27,7 +29,7 @@ const EditorTexto: React.FC = () => {
   };
 
   const handleFileAdd = () => {
-    let baseName = 'archivo';
+    const baseName = 'archivo';
     let idx = 1;
     let newName = `${baseName}${idx}.py`;
     while (files.some(f => f.name === newName)) {
@@ -49,7 +51,7 @@ const EditorTexto: React.FC = () => {
   const handleRunCode = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/python/run', {
+      const response = await fetch('http://localhost:3003/python/run', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,11 +84,11 @@ const EditorTexto: React.FC = () => {
 
   const handleRenameFile = (oldName: string, newName: string) => {
     if (!newName.endsWith('.py')) {
-      alert('El archivo debe tener extensión .py');
+      toast.error('El archivo debe tener extensión .py');
       return;
     }
     if (files.some(f => f.name === newName && f.name !== oldName)) {
-      alert('Ya existe un archivo con ese nombre');
+      toast.error('Ya existe un archivo con ese nombre');
       return;
     }
     setFiles(files.map(f => f.name === oldName ? { ...f, name: newName } : f));
@@ -185,12 +187,16 @@ const EditorTexto: React.FC = () => {
           </div>
           <OutputPanel output={output} />
         </div>
-      </div>
-      <div className="chat-section">
-         <ChatAssistant />
-       </div>
+         {/* Chat Assistant */}
+    <div className="h-[250px] overflow-y-auto bg-gray-800 border-t border-gray-700">
+      <ChatAssistant />
     </div>
+      </div>
+    
+    
+    </div>
+    
   );
 };
 
-export default EditorTexto; 
+export default EditorTexto;

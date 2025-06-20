@@ -25,9 +25,6 @@ export class EjercicioExa {
   })
   tipo: EjercicioTipo;
 
-  @Column({ type: 'text' })
-  pregunta: string;
-
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'jsonb' })
   contenido: Record<string, any>;
 }

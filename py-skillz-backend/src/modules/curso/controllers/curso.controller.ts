@@ -1,4 +1,13 @@
-import { Body, Controller, Post, Req, UseGuards, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  UseGuards,
+  Get,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../../common/guards/jwt-auht.guard';
 import { CreateCursoDto } from '../dto/create-curso.dto';
@@ -29,6 +38,23 @@ export class CursoController {
     return this.cursoService.findByUser(req.user);
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    try {
+      return await this.cursoService.findOne(+id);
+    } catch (error) {
+      console.error('Error en el controlador al obtener curso:', error);
+      throw error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.TEACHER, Role.STUDENT)
+  @Get('publica')
+  async findAll() {
+    return this.cursoService.findAll();
+  }
+
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.TEACHER, Role.ADMIN)
   @Post('tasks')
@@ -41,5 +67,12 @@ export class CursoController {
   async getTasksByCourse(@Req() req: Request) {
     const courseId = parseInt(req.params.courseId);
     return await this.cursoService.getTasksByCourse(courseId);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.cursoService.remove(+id);
   }
 }

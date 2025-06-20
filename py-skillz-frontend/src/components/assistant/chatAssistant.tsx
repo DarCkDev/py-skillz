@@ -12,8 +12,8 @@ const Chat: React.FC = () => {
     setInput('');
 
     try {
-      const response = await axios.post('/chat', { message: input });
-      const botMessage = { sender: 'bot', text: response.data.response };
+      const response = await axios.post('/gemini/chat', { message: input });
+      const botMessage = { sender: 'bot', text: response.data.reply };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error('Error al enviar el mensaje:', error);

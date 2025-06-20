@@ -14,13 +14,11 @@
     "@types/react-router-dom": "^5.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "sonner": "^2.0.5"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "npm@10.9.0",
-  "devDependencies": {
-    
-  }
+  "packageManager": "npm@10.9.0"
 }

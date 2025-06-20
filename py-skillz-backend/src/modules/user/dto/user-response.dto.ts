@@ -10,4 +10,8 @@ export class UserResponseDto {
   email: string;
   @ApiProperty()
   role: Role;
+  @ApiProperty()
+  createdAt?: Date;
+  @ApiProperty()
+  updatedAt?: Date;
 }
