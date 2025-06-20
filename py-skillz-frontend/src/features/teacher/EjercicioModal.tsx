@@ -154,10 +154,12 @@ const EjercicioModal: React.FC<EjercicioModalProps> = ({
                 <label htmlFor="codigoBase" className="block text-sm font-medium text-muted-foreground mb-1">Código Base / Enunciado</label>
                 <Textarea id="codigoBase" value={codigoBase} onChange={(e) => setCodigoBase(e.target.value)} rows={4} placeholder="Ej: Escribe una función en Python que devuelva el cuadrado de un número." className="bg-background border-border text-foreground" />
               </div>
+
               <div>
                 <label htmlFor="resultadoEsperado" className="block text-sm font-medium text-muted-foreground mb-1">Resultado Esperado</label>
                 <Textarea id="resultadoEsperado" value={resultadoEsperado} onChange={(e) => setResultadoEsperado(e.target.value)} rows={2} placeholder="Ej: cuadrado(5) debería retornar 25" className="bg-background border-border text-foreground" />
               </div>
+              
               <div>
                 <label htmlFor="feedbackSugerido" className="block text-sm font-medium text-muted-foreground mb-1">Feedback Sugerido (opcional)</label>
                 <Textarea id="feedbackSugerido" value={feedbackSugerido} onChange={(e) => setFeedbackSugerido(e.target.value)} rows={2} placeholder="Ej: Asegúrate de que la función maneje números negativos correctamente." className="bg-background border-border text-foreground"/>

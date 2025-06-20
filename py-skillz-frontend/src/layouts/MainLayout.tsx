@@ -15,11 +15,13 @@ export function MainLayout({ children }: MainLayoutProps) {
   const { setLoading } = useLoading();
   const location = useLocation();
 
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false); // Clear loading state after a delay
     }, 500); // 500ms delay
 
+    
     return () => clearTimeout(timer); // Cleanup the timer
   }, [location.pathname, setLoading]);
   

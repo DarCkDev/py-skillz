@@ -136,6 +136,7 @@ const TemaComponent: React.FC<TemaComponentProps> = ({
                   <Button variant="ghost" size="sm" className="mr-1 text-xs text-primary hover:text-primary/80" onClick={() => abrirModalEjercicio('examen', tema.id, undefined, ejercicio)}>Editar</Button>
                   <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive/80 text-xs" onClick={() => eliminarEjercicioExamen(tema.id, ejercicio.id)}>Eliminar</Button>
                 </div>
+                
               </div>
             ))}
           </div>

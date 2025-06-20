@@ -69,6 +69,7 @@ const SubtituloComponent: React.FC<SubtituloComponentProps> = ({
             <p className='text-xs mt-1 text-muted-foreground'>Documento cargado: {subtitulo.documentoFile.name}</p>
           )}
         </div>
+        
       </div>
 
       {/* Ejercicios del Subtítulo */}

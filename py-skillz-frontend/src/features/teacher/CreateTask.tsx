@@ -191,6 +191,7 @@ export function CreateTask() {
                   onChange={handleInputChange}
                 />
               </div>
+
                <div>
                   <label className="block text-sm font-medium mb-2">Etiqueta de Tarea</label>
                   <Select onValueChange={(value) => setTaskData(prev => ({ ...prev, tag: value }))}>
@@ -225,6 +226,7 @@ export function CreateTask() {
                     onChange={handleInputChange}
                 />
                 </div>
+                
                 <div>
                 <label className="block text-sm font-medium mb-2">Archivos Adjuntos</label>
                 <FileUpload

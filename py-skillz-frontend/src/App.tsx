@@ -22,6 +22,7 @@ const Progress = lazy(() => import('./features/common/Progress').then(module => 
 const Login = lazy(() => import('./features/auth/Login').then(module => ({ default: module.Login })));
 const Register = lazy(() => import('./features/auth/Register').then(module => ({ default: module.Register })));
 
+
 // Páginas de administrador
 const AdminPanel = lazy(() => import('./features/admin/AdminPanel').then(module => ({ default: module.AdminPanel })));
 const UserManagement = lazy(() => import('./features/admin/UserManagement').then(module => ({ default: module.UserManagement })));
@@ -36,6 +37,7 @@ const EditorTexto = lazy(() => import('./components/editorTexto/pages/EditorText
 const EditorTextoApi = lazy(() => import('./components/editorTexto/pages/EditorTextoApi'));
 const CreateTask = lazy(() => import('./features/teacher/CreateTask').then(module => ({ default: module.CreateTask })));
 const MyCourses = lazy(() => import('./features/common/MyCourses').then(module => ({ default: module.MyCourses })));
+
 //paginas de estudiante
 const Cursos = lazy(() => import('./features/users/Cursos').then(module => ({ default: module.Cursos })));
 
