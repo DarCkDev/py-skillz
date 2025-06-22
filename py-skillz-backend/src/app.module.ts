@@ -23,6 +23,7 @@ import { Upload } from './modules/upload/entities/upload.entity';
 import { PythonModule } from './python/python.module';
 import { Task } from './modules/curso/entities/task.entity';
 import { GeminiModule } from './gemini/gemini.module';
+import { S3Module } from './modules/s3/s3.module';
 
 @Module({
   imports: [
@@ -95,6 +96,7 @@ import { GeminiModule } from './gemini/gemini.module';
     HuggingFaceModule,
     CursoModule,
     GeminiModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService],

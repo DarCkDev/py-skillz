@@ -2,7 +2,7 @@ import {
   Injectable,
   BadRequestException,
   NotFoundException,
-  InternalServerErrorException,
+  //InternalServerErrorException,
 } from '@nestjs/common';
 import * as fs from 'node:fs';
 import { FileType } from './upload.filetype';
@@ -13,6 +13,7 @@ import { Upload } from './entities/upload.entity';
 import { Repository } from 'typeorm';
 import { Source } from './entities/source.entity';
 import { I18nContext, I18nService } from 'nestjs-i18n';
+import { S3Service } from 'src/modules/s3/s3.service';
 
 @Injectable()
 export class UploadService {
@@ -20,6 +21,7 @@ export class UploadService {
     @InjectRepository(Upload)
     private readonly uploadRepository: Repository<Upload>,
     private readonly i18n: I18nService,
+    private readonly s3Service: S3Service,
   ) {}
 
   async handleUpload(
@@ -62,10 +64,12 @@ export class UploadService {
       });
     }
 
-    const filePath = file.path.replace('public/', '').replace(/\\/g, '/');
+    //const filePath = file.path.replace('public/', '').replace(/\\/g, '/');
+    const key = await this.s3Service.uploadFile(file, dto.type);
+    const publicUrl = this.s3Service.getPublicUrl(key);
 
     const entity = this.uploadRepository.create({
-      url: filePath,
+      url: publicUrl,
       source: Source.UPLOAD,
       type: dto.type,
       name: file.originalname,
@@ -128,7 +132,7 @@ export class UploadService {
         error: 'Not Found',
       });
 
-    if (upload.source === Source.UPLOAD) {
+    /*if (upload.source === Source.UPLOAD) {
       try {
         await fs.promises.unlink(upload.url);
       } catch (err) {
@@ -144,6 +148,10 @@ export class UploadService {
           });
         }
       }
+    }*/
+    if (upload.source === Source.UPLOAD) {
+      const key = upload.url.split(`/${this.s3Service['bucketName']}/`)[1];
+      if (key) await this.s3Service.deleteFileResponse(key);
     }
 
     await this.uploadRepository.delete(id);
