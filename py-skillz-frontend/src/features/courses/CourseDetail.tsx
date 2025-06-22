@@ -174,11 +174,11 @@ function TopicPanel({ tema }: { tema: Course['temas'][number] }) {
 
             <div className="space-y-3">
               {sub.videoUrl && (
-                <video controls src={`http://localhost:3003/${sub.videoUrl}`}
+                <video controls src={sub.videoUrl}
                        className="w-full rounded-md" />
               )}
               {sub.documentoUrl && (
-                <iframe src={`http://localhost:3003/${sub.documentoUrl}`}
+                <iframe src={sub.documentoUrl}
                         className="w-full h-96 rounded-md border" />
               )}
 
