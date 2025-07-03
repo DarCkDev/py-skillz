@@ -1,12 +1,6 @@
 import {
-  Body,
-  Controller,
-  Post,
-  Req,
-  UseGuards,
-  Get,
-  Delete,
-  Param,
+  Body, Controller, Post, Req, UseGuards,
+  Get, Delete, Param,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../../common/guards/jwt-auht.guard';
@@ -23,18 +17,14 @@ export class CursoController {
   constructor(private readonly cursoService: CursoService) {}
 
   @Post()
-  async create(@Body() createCursoDto: CreateCursoDto, @Req() req: Request) {
-    if (!req.user) {
-      throw new Error('Usuario no autenticado');
-    }
-    return this.cursoService.create(createCursoDto, req.user);
+  async create(@Body() dto: CreateCursoDto, @Req() req: Request) {
+    if (!req.user) throw new Error('Usuario no autenticado');
+    return this.cursoService.create(dto, req.user);
   }
 
   @Get('mis-cursos')
   async getMyCourses(@Req() req: Request) {
-    if (!req.user) {
-      throw new Error('Usuario no autenticado');
-    }
+    if (!req.user) throw new Error('Usuario no autenticado');
     return this.cursoService.findByUser(req.user);
   }
 
@@ -43,7 +33,7 @@ export class CursoController {
     try {
       return await this.cursoService.findOne(+id);
     } catch (error) {
-      console.error('Error en el controlador al obtener curso:', error);
+      console.error('Error al obtener curso:', error);
       throw error;
     }
   }
@@ -58,15 +48,14 @@ export class CursoController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.TEACHER, Role.ADMIN)
   @Post('tasks')
-  async createTask(@Body() createTaskDto: CreateTaskDto, @Req() req: Request) {
-    return await this.cursoService.createTask(createTaskDto, req.user as any);
+  async createTask(@Body() dto: CreateTaskDto, @Req() req: Request) {
+    return this.cursoService.createTask(dto, req.user as any);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('tasks/:courseId')
-  async getTasksByCourse(@Req() req: Request) {
-    const courseId = parseInt(req.params.courseId);
-    return await this.cursoService.getTasksByCourse(courseId);
+  async getTasksByCourse(@Param('courseId') courseId: string) {
+    return this.cursoService.getTasksByCourse(+courseId);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
